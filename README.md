@@ -7,6 +7,8 @@ Repositório destinado ao prototipo da aplicação para o Cliente.
 
 Iremos usar o [Node Web Kit](https://github.com/rogerwang/node-webkit) e [NodeJS](https://github.com/joyent/node) para desenvolver a aplicação.
 
+Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-projects-github).
+
 
 ##Links Uteis
 
