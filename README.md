@@ -9,6 +9,14 @@ Iremos usar o [Node Web Kit](https://github.com/rogerwang/node-webkit) e [NodeJS
 
 Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-projects-github).
 
+## Dependências
+
+* NodeJS
+* NPM
+* [Node-Webkit-Build](https://github.com/mllrsohn/node-webkit-builder)
+
+
+
 
 ##Links Uteis
 

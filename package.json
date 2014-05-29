@@ -1,7 +1,18 @@
 {
-    "name": "projeto-historia",
-    "main": "index.html"
-    // "window": {
-    //     "frame": false
-    // }
+  "name": "projeto-historia",
+  "main": "app://host/index.html",
+  "version": "0.0.1",
+  "window": {
+    "title": "Com.Tudo",
+    "toolbar": false,
+    "frame": false,
+    "width": 962,
+    "height": 600,
+    "min_width": 962,
+    "min_height": 600,
+    "resizable": true
+  },
+  "dependencies": {
+    "i18n": "*"
+  }
 }
