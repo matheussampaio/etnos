@@ -40,7 +40,7 @@ var App = {
 };
 
 // render header buttons
-$("#header").html(_.template($('#header-tpl').html(), {buttons: BUTTON_ORDER}));
+// $("#header").html(_.template($('#header-tpl').html(), {buttons: BUTTON_ORDER}));
 
 
 // Not debugging, hide all messages!

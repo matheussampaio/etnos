@@ -1,7 +1,9 @@
+// Handles general UI buttons, like maximization, etc
+
 jQuery(function ($) {
 
   // Maximize, minimize
-  $('.btn-os.max').on('click', function () {
+  $('#btn-quit').on('click', function () {
     if(win.isFullscreen){
       win.toggleFullscreen();
     }else{
@@ -21,9 +23,10 @@ jQuery(function ($) {
   $('.btn-os.close').on('click', function () {
     win.close();
   });
-
+  
   $('.btn-os.fullscreen').on('click', function () {
     win.toggleFullscreen();
     $('.btn-os.fullscreen').toggleClass('active');
   });
+
 });
