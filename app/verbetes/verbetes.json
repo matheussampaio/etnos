@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "snippet": "Verbete 1.",
+    "imageUrl": "files/AL/1/1.TIF"
+  },
+  {
+    "id": "2",
+    "snippet": "Verbete 2.",
+    "imageUrl": "files/AL/2/1.TIF"
+  },
+  {
+    "id": "3",
+    "snippet": "Verbete 3.",
+    "imageUrl": "files/AL/3/1.TIF"
+  }
+]

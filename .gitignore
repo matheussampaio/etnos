@@ -31,6 +31,7 @@ node_modules/
 *Thumbs.db
 
 # Node Web Kit Files
+
 credits.html
 icudt.dll
 ffmpegsumo.dll
@@ -41,3 +42,10 @@ nw.pak
 nwsnapshot.exe
 
 build/
+
+
+node_modules
+
+build/
+
+bower_components/

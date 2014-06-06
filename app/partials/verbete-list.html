@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <ul class="phones">
+        <li ng-repeat="verbete in verbetes | filter:query" class="thumbnail">
+
+          <a href="#/verbetes/{{verbete.id}}" class="thumb"><img ng-src="{{verbete.imageUrl}}"></a>
+          <a href="#/verbetes/{{verbete.id}}">{{verbete.id}}</a>
+          <p>{{verbete.snippet}}</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

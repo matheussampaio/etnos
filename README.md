@@ -26,3 +26,18 @@ Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-project
 ##Copyright
 
 [GPLv2](http://www.gnu.org/licenses/gpl-2.0.html)
+=======
+# Projeto Historia
+
+## Dependencias
+
+* Nodejs
+* NPM
+* Nodewebkit
+
+## Intruções
+
+$ npm install
+$ bower install
+
+## Como executar
