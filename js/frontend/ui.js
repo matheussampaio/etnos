@@ -3,7 +3,7 @@
 jQuery(function ($) {
 
   // Maximize, minimize
-  $('#btn-quit').on('click', function () {
+  $('.btn-os-max').on('click', function () {
     if(win.isFullscreen){
       win.toggleFullscreen();
     }else{
@@ -16,17 +16,17 @@ jQuery(function ($) {
     }
   });
 
-  $('.btn-os.min').on('click', function () {
+  $('.btn-os-min').on('click', function () {
     win.minimize();
   });
 
-  $('.btn-os.close').on('click', function () {
+  $('.btn-os-close').on('click', function () {
     win.close();
   });
   
-  $('.btn-os.fullscreen').on('click', function () {
+  $('.btn-os-fullscreen').on('click', function () {
     win.toggleFullscreen();
-    $('.btn-os.fullscreen').toggleClass('active');
+    $('.btn-os-fullscreen').toggleClass('active');
   });
 
 });

@@ -28,4 +28,16 @@ node_modules
 
 node_modules/
 
+*Thumbs.db
+
+# Node Web Kit Files
+credits.html
+icudt.dll
+ffmpegsumo.dll
+libEGL.dll
+libGLESv2.dll
+nw.exe
+nw.pak
+nwsnapshot.exe
+
 build/
