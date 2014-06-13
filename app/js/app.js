@@ -17,12 +17,5 @@ verbeteApp.config(['$routeProvider',
       redirectTo: '/verbetes'
     });
 
-  }]);
-
-verbeteApp.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
-
-  $http.get('verbetes/verbetes.json').success( function (data) {
-    $scope.verbetes = data;
-  });
-
-}]);
+  }
+]);

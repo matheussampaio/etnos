@@ -9,11 +9,11 @@
     <div class="col-md-10">
       <!--Body content-->
 
-      <ul class="phones">
+      <ul>
         <li ng-repeat="verbete in verbetes | filter:query" class="thumbnail">
 
-          <a href="#/verbetes/{{verbete.id}}" class="thumb"><img ng-src="{{verbete.imageUrl}}"></a>
-          <a href="#/verbetes/{{verbete.id}}">{{verbete.id}}</a>
+          <a href="#/verbete/{{verbete.id}}" class="thumb"><img ng-src="{{verbete.imageUrl}}"></a>
+          <a href="#/verbete/{{verbete.id}}">{{verbete.id}}</a>
           <p>{{verbete.snippet}}</p>
         </li>
       </ul>
