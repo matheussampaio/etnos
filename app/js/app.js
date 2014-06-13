@@ -1,9 +1,9 @@
-var verbeteApp = angular.module('verbeteApp', [
+var app = angular.module('verbeteApp', [
   'ngRoute',
   'verbeteControllers'
 ]);
 
-verbeteApp.config(['$routeProvider',
+app.config(['$routeProvider',
   function ($routeProvider) {
     $routeProvider.when('/verbetes', {
       templateUrl: 'partials/verbete-list.html',

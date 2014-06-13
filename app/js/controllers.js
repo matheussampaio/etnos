@@ -13,3 +13,10 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams',
   function($scope, $routeParams) {
     $scope.verbeteId = $routeParams.verbeteId;
 }]);
+
+verbeteControllers.directive('navbar', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'partials/navbar.html'
+  };
+});
