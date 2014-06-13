@@ -21,7 +21,7 @@ Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-project
 ##Links Uteis
 
 * [Slack](https://projeto-historia.slack.com)
-
+* [Node Webkit Builder](https://github.com/mllrsohn/node-webkit-builder)
 
 ##Copyright
 
