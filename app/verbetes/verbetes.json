@@ -1,17 +1,37 @@
 [
   {
     "id": "1",
-    "snippet": "Verbete 1. A",
-    "imageUrl": "../files/AL/1/1.TIF"
+    "snippet": "Verbete 1.",
+    "imageUrl": "../files/AL/1/1.png"
   },
   {
     "id": "2",
-    "snippet": "Verbete 2. B",
-    "imageUrl": "../files/AL/2/1.TIF"
+    "snippet": "Verbete 2.",
+    "imageUrl": "../files/AL/2/1.png"
   },
   {
     "id": "3",
-    "snippet": "Verbete 3. C",
-    "imageUrl": "../files/AL/3/1.TIF"
+    "snippet": "Verbete 3.",
+    "imageUrl": "../files/AL/3/1.png"
+  },
+  {
+    "id": "4",
+    "snippet": "Verbete 4.",
+    "imageUrl": "../files/AL/4/1.png"
+  },
+  {
+    "id": "5",
+    "snippet": "Verbete 5.",
+    "imageUrl": "../files/AL/5/1.png"
+  },
+  {
+    "id": "7",
+    "snippet": "Verbete 7.",
+    "imageUrl": "../files/AL/7/1.png"
+  },
+  {
+    "id": "8",
+    "snippet": "Verbete 8.",
+    "imageUrl": "../files/AL/8/1.png"
   }
 ]

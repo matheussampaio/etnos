@@ -1,22 +1,30 @@
+<nav class="navbar navbar-inverse" role="navigation" style="-webkit-app-region: drag">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <a class="navbar-header navbar-brand" href="">Com.Tudo</a>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <form class="navbar-form navbar-right" role="search">
+          <input type="text" class="form-control" placeholder="Search" ng-model="query">
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2">
-      <!--Sidebar content-->
 
-      Search: <input ng-model="query">
-
-    </div>
     <div class="col-md-10">
       <!--Body content-->
-
-      <ul>
-        <li ng-repeat="verbete in verbetes | filter:query" class="thumbnail">
-
-          <a href="#/verbete/{{verbete.id}}" class="thumb"><img ng-src="{{verbete.imageUrl}}"></a>
-          <a href="#/verbete/{{verbete.id}}">{{verbete.id}}</a>
-          <p>{{verbete.snippet}}</p>
-        </li>
-      </ul>
+      <div ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2">
+        <div class="thumbnail" style="-webkit-app-region: no-drag">
+          <div class="caption">
+            <span class="text-center"><h4>{{verbete.snippet}}</h4></span>
+          </div>
+          <a href="#/verbete/{{verbete.id}}"><img ng-src="{{verbete.imageUrl}}" style="max-height: 150px;"></a>
+        </div>
+      </div>
 
     </div>
   </div>

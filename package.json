@@ -2,7 +2,18 @@
   "name": "projeto-historia",
   "version": "0.0.0",
   "private": true,
-  "main": "index.html",
+  "main": "app/index.html",
+  "window": {
+    "title": "Com.Tudo",
+    "toolbar": true,
+    "frame": false,
+    "width": 1200,
+    "height": 960,
+    "width": 1200,
+    "height": 960,
+    "icon":"images/favicon.ico",
+    "resizable": true
+  },
   "devDependencies": {
     "karma": "~0.10",
     "protractor": "~0.20.1",
