@@ -5,16 +5,16 @@
 
     <div class="col-md-10">
       <!--Body content-->
-      <div ng-show='query' ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2">
+      <div ng-show='query.id' ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2">
         <div class="thumbnail" style="-webkit-app-region: no-drag">
           <div class="caption">
             <span class="text-center"><h4>{{verbete.snippet}}</h4></span>
           </div>
-          <a href="#/verbete/{{verbete.id}}"><img ng-src="{{verbete.imageUrl}}" style="max-height: 150px;"></a>
+          <a href="#/verbete/{{verbete.id}}"><img ng-src="{{verbete.path + '/' + verbete.images[0]}}" style="max-height: 150px;"></a>
         </div>
       </div>
 
-      <div ng-hide='query'>
+      <div ng-hide='query.id'>
         <h2>Faça uma pesquisa!</h2>
       </div>
 

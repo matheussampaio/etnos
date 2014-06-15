@@ -2,36 +2,43 @@
   {
     "id": "1",
     "snippet": "Verbete 1.",
-    "imageUrl": "../files/AL/1/1.png"
+    "path": "../files/AL/1",
+    "images": [ "1.png", "2.png" ]
   },
   {
     "id": "2",
     "snippet": "Verbete 2.",
-    "imageUrl": "../files/AL/2/1.png"
+    "path": "../files/AL/2",
+    "images": [ "1.png", "2.png" ]
   },
   {
     "id": "3",
     "snippet": "Verbete 3.",
-    "imageUrl": "../files/AL/3/1.png"
+    "path": "../files/AL/3",
+    "images": [ "1.png", "2.png" ]
   },
   {
     "id": "4",
     "snippet": "Verbete 4.",
-    "imageUrl": "../files/AL/4/1.png"
+    "path": "../files/AL/4",
+    "images": [ "1.png", "2.png", "3.png", "4.png" ]
   },
   {
     "id": "5",
     "snippet": "Verbete 5.",
-    "imageUrl": "../files/AL/5/1.png"
+    "path": "../files/AL/5",
+    "images": [ "1.png", "2.png", "3.png", "4.png" ]
   },
   {
     "id": "7",
     "snippet": "Verbete 7.",
-    "imageUrl": "../files/AL/7/1.png"
+    "path": "../files/AL/7",
+    "images": [ "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png" ]
   },
   {
     "id": "8",
     "snippet": "Verbete 8.",
-    "imageUrl": "../files/AL/8/1.png"
+    "path": "../files/AL/8",
+    "images": [ "1.png", "2.png", "3.png", "4.png", "5.png" ]
   }
 ]
