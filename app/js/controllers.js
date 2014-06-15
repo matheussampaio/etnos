@@ -9,9 +9,10 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    $scope.verbeteId = $routeParams.verbeteId;
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+    $http.get('verbetes/verbetes.json').success( function (data) {
+	  $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
+	});
 }]);
 
 verbeteControllers.directive('navbar', function() {
