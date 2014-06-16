@@ -5,7 +5,7 @@
 
     <div class="col-md-10">
       <!--Body content-->
-      <div ng-show='query.id' ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2">
+      <div ng-show='query.id' ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2 animate-fadeInOut">
         <div class="thumbnail" style="-webkit-app-region: no-drag">
           <div class="caption">
             <span class="text-center"><h4>{{verbete.snippet}}</h4></span>
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div ng-hide='query.id'>
+      <div ng-hide='query.id' class="animate-fadeInOut">
         <h2>Faça uma pesquisa!</h2>
       </div>
 

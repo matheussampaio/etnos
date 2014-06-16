@@ -1,5 +1,6 @@
 var app = angular.module('verbeteApp', [
   'ngRoute',
+  'ngAnimate',
   'verbeteControllers'
 ]);
 
