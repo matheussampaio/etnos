@@ -5,8 +5,8 @@
   "main": "app/index.html",
   "window": {
     "title": "Com.Tudo",
-    "toolbar": true,
-    "frame": false,
+    "toolbar": false,
+    "frame": true,
     "width": 1200,
     "height": 960,
     "width": 1200,
