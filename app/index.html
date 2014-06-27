@@ -3,18 +3,36 @@
 <head>
   <meta charset="utf-8">
   <title>Com.Tudo</title>
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/animate.css">
+
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/animate.css"/>
+  <link rel="stylesheet" href="css/custom.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css"/>
+
+</head>
+<body trianglify>
+
+  <div class="toolbar-container">
+    <div class="container-fluid window-buttons navbar-fixed-top drag">
+      <div class="pull-right">
+        <i class="fa fa-circle minus no-drag"></i>
+        <i class="fa fa-circle plus no-drag"></i>
+        <i class="fa fa-circle times no-drag"></i>
+      </div>
+    </div>
+    <navbar></navbar>
+  </div>
+  <div ng-view></div>
+
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
 
-</head>
-<body>
-
-  <div ng-view></div>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="js/trianglify.js"></script>
 
 </body>
 </html>
