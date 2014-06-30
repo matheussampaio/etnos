@@ -42,7 +42,6 @@ nw.pak
 nwsnapshot.exe
 nw
 nwsnapshot
-libffmpegsumo.so
 
 build/
 
