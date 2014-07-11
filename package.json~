@@ -6,7 +6,7 @@
   "window": {
     "title": "Com.Tudo",
     "toolbar": false,
-    "frame": true,
+    "frame": false,
     "width": 800,
     "height": 600,
     "min_width": 800,
