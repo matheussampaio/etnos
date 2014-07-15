@@ -9,12 +9,12 @@ fs = require('fs'),
 // TMP Folder		
 tmpFolder = path.join(os.tmpDir(), 'historia');
 //create tmpfolder if not exits
- fs.mkdir('.'+tmpFolder);
+if( ! fs.existsSync(os.tmpDir()) ) { fs.mkdir(os.tmpDir()); }
 if( ! fs.existsSync(tmpFolder) ) { fs.mkdir(tmpFolder); }
 var getFilePath = function(filepath, callback){
 	var destFilePath = tmpFolder + '/'+filepath.replace(/\//gi, ".") + '.png';
 console.log(destFilePath);
-	im.convert(['-verbose', '.'+filepath, destFilePath],
+	im.convert(['-verbose', './'+filepath, destFilePath],
 
 	  function(err, stdout) {
 	  if (err)
@@ -36,8 +36,12 @@ var wipeTmpFolder = function() {
 
 getFilePath('files/AL/1/1.TIF', function(filepath, err){
 	if (err){
-		//console.log(err);
+		console.log(err);
+
+		setTimeout( wipeTmpFolder, 3000 );
 	}else{
 		console.log(filepath);
+
+		//teste de lipeza apos 3 segundos ==> setTimeout( wipeTmpFolder, 3000 );
 	}
 })
