@@ -2,43 +2,50 @@
   {
     "id": "1",
     "snippet": "Verbete 1.",
-    "path": "../files/AL/1",
-    "images": [ "1.png", "2.png" ]
+    "path": "../../files/AL/1",
+    "images": [ "1", "2" ],
+    "converted": []
   },
   {
     "id": "2",
     "snippet": "Verbete 2.",
-    "path": "../files/AL/2",
-    "images": [ "1.png", "2.png" ]
+    "path": "../../files/AL/2",
+    "images": [ "1", "2" ],
+    "converted": []
   },
   {
     "id": "3",
     "snippet": "Verbete 3.",
-    "path": "../files/AL/3",
-    "images": [ "1.png", "2.png" ]
+    "path": "../../files/AL/3",
+    "images": [ "1", "2" ],
+    "converted": []
   },
   {
     "id": "4",
     "snippet": "Verbete 4.",
-    "path": "../files/AL/4",
-    "images": [ "1.png", "2.png", "3.png", "4.png" ]
+    "path": "../../files/AL/4",
+    "images": [ "1", "2", "3", "4" ],
+    "converted": []
   },
   {
     "id": "5",
     "snippet": "Verbete 5.",
-    "path": "../files/AL/5",
-    "images": [ "1.png", "2.png", "3.png", "4.png" ]
+    "path": "../../files/AL/5",
+    "images": [ "1", "2", "3", "4" ],
+    "converted": []
   },
   {
     "id": "7",
     "snippet": "Verbete 7.",
-    "path": "../files/AL/7",
-    "images": [ "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png", "11.png", "12.png", "13.png", "14.png", "15.png" ]
+    "path": "../../files/AL/7",
+    "images": [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
+    "converted": []
   },
   {
     "id": "8",
     "snippet": "Verbete 8.",
-    "path": "../files/AL/8",
-    "images": [ "1.png", "2.png", "3.png", "4.png", "5.png" ]
+    "path": "../../files/AL/8",
+    "images": [ "1", "2", "3", "4", "5" ],
+    "converted": []
   }
 ]
