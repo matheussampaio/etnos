@@ -1,29 +1,37 @@
 <navbar></navbar>
 
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<!-- <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> -->
   <!-- Indicators -->
-  <ol class="carousel-indicators">
+<!--   <ol class="carousel-indicators">
     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
+  </ol> -->
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active" ng-repeat="image in verbeteDetail.images">
-      <img ng-src="{{verbeteDetail.path + '/' + image}}">
+<!--   <div class="carousel-inner">
+    <div class="item active" ng-repeat="image in verbeteDetail.converted">
+      <img ng-src="{{image}}">
       <div class="carousel-caption">
         ...
       </div>
     </div>
     ...
-  </div>
+  </div> -->
+
 
   <!-- Controls -->
-  <a class="left carousel-control" href="#" data-slide="prev">
+<!--   <a class="left carousel-control" href="#" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left"></span>
   </a>
   <a class="right carousel-control" href="#" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right"></span>
   </a>
+</div> -->
+
+
+<div ng-repeat="image in verbeteDetail.converted" class="col-sm-3 col-md-2 animate-fadeInOut">
+  <div class="thumbnail" style="-webkit-app-region: no-drag">
+    <img ng-src="{{image}}" style="max-height: 150px;">
+  </div>
 </div>

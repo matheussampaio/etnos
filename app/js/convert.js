@@ -18,6 +18,7 @@ var mkdirp = require('mkdirp');
 // TMP Folder
 var tmpFolder = path.join(os.tmpDir(), 'historia');
 
+console.log("temp folder is: ", tmpFolder);
 
 //create tmpfolder if not exits
 if (!fs.existsSync(os.tmpDir())) {
@@ -30,8 +31,10 @@ if (!fs.existsSync(tmpFolder)) {
 
 
 function convertImage (filepath, destpath) {
+  console.log('Converting image', filepath);
+
   return new Promise(function (fulfill, reject) {
-    im.convert(['-verbose', filepath, destpath], function (err) {
+    im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
       if (err) reject(err);
       else fulfill(destpath);
     });
@@ -40,6 +43,8 @@ function convertImage (filepath, destpath) {
 
 
 function createFolder (foldername) {
+  console.log('Creating folder', foldername);
+
   return new Promise(function (fulfill, reject) {
      mkdirp(foldername, function (err) {
       if (err) reject(err);
@@ -50,13 +55,15 @@ function createFolder (foldername) {
 
 
 function convertImages (verbetePath, verbeteImages, foldername) {
-  return Promise.all(verbeteImages.map(function (img) {
+  return new Promise.all(verbeteImages.map(function (img) {
     return convertImage(path.join(verbetePath, img + '.TIF'), path.join(foldername, img + '.png'));
   }));
 }
 
 exports.convertVerbete = function (verbete) {
-  var foldername = path.join(tmpFolder, verbete.path.slice(6));
+  console.log('Converting verbete', verbete.id);
+
+  var foldername = path.join(tmpFolder, verbete.path.slice(3));
 
   return new Promise(function (fulfill, reject) {
     createFolder(foldername).then(
