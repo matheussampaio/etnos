@@ -10,6 +10,9 @@
     "angular-route": "*",
     "angular-resource": "*",
     "jquery": "*",
-    "angular-animate": "*"
+    "angular-animate": "*",
+    "mkdirp": "*",
+    "promise": "*",
+    "imagemagick": "*"
   }
 }
