@@ -14,6 +14,11 @@
     "icon":"images/favicon.ico",
     "resizable": true
   },
+  "dependencies": {
+    "mkdirp": "*",
+    "promise": "*",
+    "imagemagick": "*"
+  },
   "devDependencies": {
     "karma": "~0.10",
     "protractor": "~0.20.1",
