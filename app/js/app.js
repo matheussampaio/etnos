@@ -1,3 +1,17 @@
+// Load native UI library
+var gui = require('nw.gui');
+
+var win = gui.Window.get();
+
+// Focus the window when the app opens
+win.focus();
+
+// Cancel all new windows (Middle clicks / New Tab)
+win.on('new-win-policy', function (frame, url, policy) {
+    policy.ignore();
+});
+
+
 var app = angular.module('verbeteApp', [
   'ngRoute',
   'ngAnimate',
