@@ -1,6 +1,6 @@
 var convert = require('./js/convert');
 
-var verbeteControllers = angular.module('verbeteControllers', []);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
 
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
 
@@ -19,14 +19,10 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     convert.convertVerbete(data[$routeParams.verbeteId - 1]).done(function (results) {
       $scope.verbeteDetail.converted = results;
       $scope.$apply();
-      console.log('scope', $scope.verbeteDetail);
     }, function (err) {
       console.error(err);
     });
 
-    // $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
-
-    console.log('scope', $scope.verbeteDetail);
   });
 }]);
 
@@ -50,4 +46,18 @@ verbeteControllers.directive('trianglify', ['$window', function($window) {
       });
 
     };
+}]);
+
+verbeteControllers.directive('phResizable', ['$window', function($window) {
+  return function($scope) {
+    $scope.initializeWindowSize = function() {
+      $scope.windowHeight = $window.innerHeight;
+      return $scope.windowWidth = $window.innerWidth;
+    };
+    $scope.initializeWindowSize();
+    return angular.element($window).bind('resize', function() {
+      $scope.initializeWindowSize();
+      return $scope.$apply();
+    });
+  };
 }]);
