@@ -1,15 +1,14 @@
 <navbar></navbar>
 
 <ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class=" no-drag">
-  <li ng-repeat="image in verbeteDetail.converted" >
-    <!-- <div class="layer"> -->
-    <img ph-resizable ng-src="{{image}}" class="img-responsive" style="max-height: {{windowHeight - 120}}px">
-    <!-- </div> -->
-  </li>
-</ul>
 
+    <li ng-repeat="image in verbeteDetail.converted" style="max-height: {{windowHeight - 120}}px;" >
+
+      <img ph-resizable ng-src="{{image}}" class="img-responsive" style="max-height: {{windowHeight - 120}}px;">
+
+    </li>
+
+  </ul>
 
 <div class="controls">
-
-
 </div>

@@ -52,4 +52,9 @@ body{
   height: 40px;
   text-align: center;
   width: 100%;
+
+}
+
+.img-responsive {
+    margin: 0 auto;
 }
