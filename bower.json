@@ -11,6 +11,11 @@
     "angular-resource": "*",
     "jquery": "*",
     "angular-animate": "*",
-    "angular-carousel": "*"
+    "angular-carousel": "*",
+    "angular-mousewheel": "*",
+    "hamsterjs": "*",
+    "jquery": "*",
+    "angular-touch": "*"
+
   }
 }
