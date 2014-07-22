@@ -1,14 +1,21 @@
-<navbar></navbar>
+<div ph-resizable class="focus" style="height: {{windowHeight}}px;">
 
-<ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class=" no-drag">
+  <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
+    <ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class="no-drag">
+      <li ng-repeat="image in verbeteDetail.converted" >
+        <img ng-src="{{image}}" class="img-responsive no-drag" style="max-height: {{windowHeight - 80}}px; padding-bottom: 8px; padding-top: 8px;">
+      </li>
+    </ul>
+  </div>
 
-    <li ng-repeat="image in verbeteDetail.converted" style="max-height: {{windowHeight - 120}}px;" >
+  <div ng-hide="verbeteDetail.converted" style="height: {{windowHeight - 80}}px;">
+      <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag" style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"></i>
+  </div>
 
-      <img ph-resizable ng-src="{{image}}" class="img-responsive" style="max-height: {{windowHeight - 120}}px;">
+  <div class="controls">
+    <a class="pull-left" href="#">
+      <i class="fa fa-times fa-2x fa-inverse no-drag"></i>
+    </a>
+  </div>
 
-    </li>
-
-  </ul>
-
-<div class="controls">
 </div>

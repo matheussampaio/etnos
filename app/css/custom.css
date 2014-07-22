@@ -1,60 +1,34 @@
-body{
-    padding-top: 60px;
-}
-
-.navbar {
-  background-color: #232323 !important;
-  border-radius: 0;
-}
-
-.window-buttons i {
-  color: #000000;
-  cursor: pointer;
-  margin-right: 1px;
-  margin-top: 8px;
-}
-
-.window-buttons {
-  background-color: #232323;
-  color: #FFFFFF;
-  height: 30px;
-  width: 100%;
-}
-.navbar-inverse {
-  border-color: #232323 !important;
-}
-
-.window-buttons i.minus:hover{
-    color: rgb(241,196,15);
-}
-.window-buttons i.plus:hover{
-    color: rgb(39,174,96);
-}
-.window-buttons i.times:hover{
-    color: rgb(231,76,60);
-}
-.navbar-form.navbar-right:last-child {
-  margin-right: -15px !important;
-}
-.drag{
-    -webkit-app-region: drag
-}
-.no-drag{
-    -webkit-app-region: no-drag
-}
-.toolbar-container {
-  box-shadow: 9px -21px 3px 14px rgba(0, 0, 0, 0.89);
-}
-
-.controls {
+.controls{
+  position:fixed;
+  height:60px;
+  bottom:0px;
+  left:0px;
+  right:0px;
+  margin-bottom:0px;
   background-color: rgba(0, 0, 0, 0.6);
-  bottom: 0;
-  height: 40px;
-  text-align: center;
-  width: 100%;
+}
 
+.drag{
+  -webkit-app-region: drag
+}
+
+.no-drag{
+  -webkit-app-region: no-drag
 }
 
 .img-responsive {
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+.focus {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.padding-top {
+  padding-top: 60px;
+}
+
+.indicators {
+  background-color: rgba(0, 0, 0, 0.6);
+  height:20px;
 }
