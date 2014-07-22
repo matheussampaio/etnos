@@ -1,3 +1,13 @@
+html, body {
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .controls{
   position:fixed;
   height:60px;
@@ -26,9 +36,4 @@
 
 .padding-top {
   padding-top: 60px;
-}
-
-.indicators {
-  background-color: rgba(0, 0, 0, 0.6);
-  height:20px;
 }

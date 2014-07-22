@@ -2,11 +2,20 @@ var convert = require('./js/convert');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
 
+
+function removeZoomContainer() {
+  console.log("Removing zoom containers...");
+
+  $('.zoomContainer').remove();
+}
+
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
   });
+
+  // $.removeData(image, 'elevateZoom');//remove zoom instance from image
 
 }]);
 
@@ -61,3 +70,19 @@ verbeteControllers.directive('phResizable', ['$window', function($window) {
     });
   };
 }]);
+
+verbeteControllers.directive('phElevateZoom', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      element.attr('data-zoom-image',attrs.zoomImage);
+      $(element).elevateZoom({
+        scrollZoom : true,
+        // zoomType  : "inner"
+        zoomType   : "lens",
+        lensShape : "round",
+        lensSize : 200
+      });
+    }
+  };
+});

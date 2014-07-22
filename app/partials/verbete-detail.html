@@ -3,7 +3,7 @@
   <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
     <ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class="no-drag">
       <li ng-repeat="image in verbeteDetail.converted" >
-        <img ng-src="{{image}}" class="img-responsive no-drag" style="max-height: {{windowHeight - 80}}px; padding-bottom: 8px; padding-top: 8px;">
+        <img ph-elevate-zoom class="img-responsive no-drag" ng-src="{{image}}" zoom-image="{{image}}" style="max-height: {{windowHeight - 80}}px; padding-bottom: 8px; padding-top: 8px;">
       </li>
     </ul>
   </div>
@@ -14,7 +14,7 @@
 
   <div class="controls">
     <a class="pull-left" href="#">
-      <i class="fa fa-times fa-2x fa-inverse no-drag"></i>
+      <i class="fa fa-times fa-2x fa-inverse no-drag" ng-click="removeZoomContainer()"></i>
     </a>
   </div>
 
