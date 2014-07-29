@@ -80,7 +80,9 @@ verbeteControllers.directive('phElevateZoom', function() {
         // zoomType  : "inner"
         zoomType   : "lens",
         lensShape : "round",
-        lensSize : 200
+        lensSize : 200,
+        zoomWindowFadeIn: 500,
+        lensFadeIn: 500
       });
     }
   };
