@@ -77,8 +77,8 @@ verbeteControllers.directive('phElevateZoom', function() {
       element.attr('data-zoom-image',attrs.zoomImage);
       $(element).elevateZoom({
         scrollZoom : true,
-        // zoomType  : "inner"
-        zoomType   : "lens",
+        //zoomType  : "inner",
+         zoomType   : "lens",
         lensShape : "round",
         lensSize : 200,
         zoomWindowFadeIn: 500,

@@ -17,6 +17,11 @@ var mkdirp = require('mkdirp');
 
 // TMP Folder
 var tmpFolder = path.join(os.tmpDir(), 'historia');
+var sys = require('sys')
+var exec = require('child_process').exec;
+
+
+
 
 console.log("temp folder is: ", tmpFolder);
 
@@ -34,9 +39,10 @@ function convertImage (filepath, destpath) {
   console.log('Converting image', filepath);
 
   return new Promise(function (fulfill, reject) {
+     // exec("./convert -verbose /home/fagner/git/projeto-historia/files/AL/1/1.TIF /home/fagner/git/projeto-historia/files/AL/1/15.png", console.log);
     im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
-      if (err) reject(err);
-      else fulfill(destpath);
+       if (err) reject(err);
+       else fulfill(destpath);
     });
   });
 }
