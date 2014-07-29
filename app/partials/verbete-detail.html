@@ -12,19 +12,34 @@
       <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag" style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"></i>
   </div>
 
-  <div class="controls">
+  <!-- <div class="controls"> -->
    <!--  <a class="pull-left" href="#">
       <i class="fa fa-times fa-2x fa-fw fa-inverse no-drag" ng-click="removeZoomContainer()"></i>
     </a> -->
 
-    <a class="btn btn-default" href="#"><i class="fa fa-times" ng-click="removeZoomContainer()"></i></a>
+    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse controls">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="#" ng-click="removeZoomContainer()"><i class="btn fa fa-2x fa-times"></i></a></li>
+      </ul>
 
-    <div class="btn-group text-center">
-      <a class="btn btn-default"><i class="fa fa-search"></i></a>
-      <a class="btn btn-default"><i class="fa fa-align-center"></i></a>
-    </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a><i class="btn fa fa-2x fa-search"></i></a>
+        </li>
+        <li>
+          <a><i class="btn fa fa-2x fa-search-plus"></i></a>
+        </li>
+        <li>
+          <a><i class="btn fa fa-2x fa-search-minus"></i></a>
+        </li>
+        <li>
+          <a><i class="btn fa fa-2x fa-download"></i></a>
+        </li>
+      </ul>
 
-  </div>
+    </nav>
+
+  <!-- </div> -->
 
 
 

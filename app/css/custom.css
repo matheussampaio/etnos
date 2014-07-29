@@ -9,12 +9,8 @@ html, body {
 }
 
 .controls{
-  position:fixed;
   height:60px;
-  bottom:0px;
-  left:0px;
-  right:0px;
-  margin-bottom:0px;
+  border: none;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -36,4 +32,7 @@ html, body {
 
 .padding-top {
   padding-top: 60px;
+}
+.fa-search-plus:hover, .fa-search-minus:hover, .fa-search:hover, .fa-download:hover, .fa-times:hover, .rn-carousel-control {
+  color: white !important;
 }

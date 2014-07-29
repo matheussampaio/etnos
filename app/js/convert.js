@@ -61,7 +61,7 @@ function convertImages (verbetePath, verbeteImages, foldername) {
 }
 
 exports.convertVerbete = function (verbete) {
-  console.log('Converting verbete', verbete.id);
+  console.log('Converting verbete', verbete);
 
   var foldername = path.join(tmpFolder, verbete.path.slice(3));
 

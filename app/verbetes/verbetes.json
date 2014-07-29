@@ -35,16 +35,16 @@
     "converted": []
   },
   {
-    "id": "7",
-    "snippet": "Verbete 7.",
-    "path": "../../files/AL/7",
-    "images": [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" ],
+    "id": "6",
+    "snippet": "Verbete 6.",
+    "path": "../../files/AL/6",
+    "images": [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"],
     "converted": []
   },
   {
-    "id": "8",
-    "snippet": "Verbete 8.",
-    "path": "../../files/AL/8",
+    "id": "7",
+    "snippet": "Verbete 7.",
+    "path": "../../files/AL/7",
     "images": [ "1", "2", "3", "4", "5" ],
     "converted": []
   }

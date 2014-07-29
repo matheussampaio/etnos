@@ -3,12 +3,6 @@ var convert = require('./js/convert');
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
 
 
-function removeZoomContainer() {
-  console.log("Removing zoom containers...");
-
-  $('.zoomContainer').remove();
-}
-
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $http.get('verbetes/verbetes.json').success( function (data) {
@@ -32,6 +26,11 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       console.error(err);
     });
 
+    $scope.removeZoomContainer = function() {
+      console.log("Removing zoom containers...");
+
+      $('.zoomContainer').remove();
+    }
   });
 }]);
 
