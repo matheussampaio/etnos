@@ -1,4 +1,4 @@
-var convert = require('./js/convert');
+var convert = require('./js/convertVerbete');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
 

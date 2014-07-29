@@ -1,5 +1,5 @@
-// ImageMagick Object
-var im = require('imagemagick');
+// // ImageMagick Object
+// var im = require('imagemagick');
 
 // os Object
 var os = require('os');
@@ -20,9 +20,6 @@ var tmpFolder = path.join(os.tmpDir(), 'historia');
 var sys = require('sys')
 var exec = require('child_process').exec;
 
-
-
-
 console.log("temp folder is: ", tmpFolder);
 
 //create tmpfolder if not exits
@@ -39,10 +36,12 @@ function convertImage (filepath, destpath) {
   console.log('Converting image', filepath);
 
   return new Promise(function (fulfill, reject) {
-     // exec("./convert -verbose /home/fagner/git/projeto-historia/files/AL/1/1.TIF /home/fagner/git/projeto-historia/files/AL/1/15.png", console.log);
-    im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
-       if (err) reject(err);
-       else fulfill(destpath);
+
+    var cmd = [path.join(__dirname, 'convert'), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
+
+    exec(cmd, function (err) {
+      if (err) reject(err);
+      else fulfill(destpath);
     });
   });
 }
