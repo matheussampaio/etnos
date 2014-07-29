@@ -15,20 +15,20 @@
     "resizable": true
   },
   "dependencies": {
-    "mkdirp": "1.3.x",
-    "promise": "5.0.X",
-    "gm": "1.16.X",
-    "nwbuild": "0.0.X",
-    "requirejs": "2.1.X",
-    "imagemagick": "0.1.X",
-    "grunt-node-webkit-builder": "0.1.X"
+    "mkdirp": "*",
+    "promise": "~5.0.X",
+    "gm": "~1.16.X",
+    "nwbuild": "~0.0.X",
+    "requirejs": "~2.1.X",
+    "imagemagick": "~0.1.X",
+    "grunt-node-webkit-builder": "~0.1.X"
   },
   "devDependencies": {
-    "karma":  "0.12.X",
-    "protractor":  "1.0.X",
-    "http-server":  "0.6.X",
-    "bower":  "1.3.X",
-    "shelljs":  "0.3.X"
+    "karma":  "~0.12.X",
+    "protractor":  "~1.0.X",
+    "http-server":  "~0.6.X",
+    "bower":  "~1.3.X",
+    "shelljs":  "~0.3.X"
   },
   "scripts": {
     "postinstall": "bower install",

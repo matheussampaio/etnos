@@ -4,18 +4,16 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "*",
-    "angular-mocks": "*",
-    "bootstrap": "*",
-    "angular-route": "*",
-    "angular-resource": "*",
-    "jquery": "*",
-    "angular-animate": "*",
-    "angular-carousel": "*",
-    "angular-mousewheel": "*",
-    "hamsterjs": "*",
-    "jquery": "*",
-    "angular-touch": "*"
-
+    "angular": "1.2.21",
+    "angular-animate": "~1.2.X",
+    "angular-carousel": "~0.2.X",
+    "angular-mocks": "~1.2.X",
+    "angular-mousewheel": "~1.0.X",
+    "angular-resource": "~1.2.X",
+    "angular-route": "~1.2.X",
+    "angular-touch": "~1.2.X",
+    "bootstrap": "~3.1.X",
+    "hamsterjs": "~1.0.X",
+    "jquery": "~2.1.X"
   }
 }
