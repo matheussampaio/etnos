@@ -1,5 +1,5 @@
 // // ImageMagick Object
-// var im = require('imagemagick');
+var im = require('imagemagick');
 
 // os Object
 var os = require('os');
@@ -33,16 +33,21 @@ if (!fs.existsSync(tmpFolder)) {
 
 
 function convertImage (filepath, destpath) {
-  console.log('Converting image', filepath);
+  console.log('Converting image', filepath, destpath);
 
   return new Promise(function (fulfill, reject) {
 
-    var cmd = [path.join(__dirname, 'convert'), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
+//    var cmd = [path.join(__dirname, 'convert'), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
+//
+//    exec(cmd, function (err) {
+//      if (err) reject(err);
+//      else fulfill(destpath);
+//    });
 
-    exec(cmd, function (err) {
-      if (err) reject(err);
-      else fulfill(destpath);
-    });
+      im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
+          if (err) reject(err);
+          else fulfill(destpath);
+      });
   });
 }
 
@@ -68,7 +73,7 @@ function convertImages (verbetePath, verbeteImages, foldername) {
 exports.convertVerbete = function (verbete) {
   console.log('Converting verbete', verbete);
 
-  var foldername = path.join(tmpFolder, verbete.path.slice(3));
+  var foldername = path.join(tmpFolder, verbete.path.slice(6));
 
   return new Promise(function (fulfill, reject) {
     createFolder(foldername).then(
