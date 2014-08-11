@@ -33,6 +33,6 @@ html, body {
 .padding-top {
   padding-top: 60px;
 }
-.fa-search-plus:hover, .fa-search-minus:hover, .fa-search:hover, .fa-download:hover, .fa-times:hover, .rn-carousel-control {
+.fa-search-plus:hover, .fa-search-minus:hover, .fa-search:hover, .fa-download:hover, .fa-times:hover, .rn-carousel-control, .fa-print:hover, .fa-volume-up:hover {
   color: white !important;
 }
