@@ -3,6 +3,15 @@ var gui = require('nw.gui');
 
 var win = gui.Window.get();
 
+// os Object
+var os = require('os');
+
+// path Object
+var path = require('path');
+
+// fs Object
+var fs = require('fs');
+
 // Focus the window when the app opens
 win.focus();
 
@@ -11,12 +20,32 @@ win.on('new-win-policy', function (frame, url, policy) {
     policy.ignore();
 });
 
+var tmpFolder = path.join(os.tmpDir(), 'historia');
+
+var deleteFolderRecursive = function(folder) {
+    if ( fs.existsSync(folder) ) {
+        fs.readdirSync(folder).forEach(function(file, index){
+            var curPath = folder + "/" + file;
+
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+
+        fs.rmdirSync(folder);
+    }
+};
+
+
 // Wipe the tmpFolder when closing the app (this frees up disk space)
 win.on('close', function(){
     console.log('Closing app...');
 
     // @TODO: Wipe temp folder.
     console.log('Wiping temp folder...');
+    deleteFolderRecursive(tmpFolder);
 
     win.close(true);
 });
