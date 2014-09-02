@@ -20,6 +20,16 @@ var tmpFolder = path.join(os.tmpDir(), 'historia');
 var sys = require('sys')
 var exec = require('child_process').exec;
 
+var isWin = (process.platform === 'win32');
+var isLinux = (process.platform === 'linux');
+var isOSX = (process.platform === 'darwin');
+
+
+if (isWin)   { imageMagickPath = '/imagemagick-win/bin/convert'; }
+if (isLinux) { imageMagickPath = '/imagemagick-linux/bin/convert'; }
+if (isOSX)   { imageMagickPath = '/imagemagick-macos/bin/convert'; }
+
+
 console.log("temp folder is: ", tmpFolder);
 
 //create tmpfolder if not exits
@@ -37,18 +47,18 @@ function convertImage (filepath, destpath) {
 
   return new Promise(function (fulfill, reject) {
 
-//    var cmd = [path.join(__dirname, 'convert'), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
-//
-//    exec(cmd, function (err) {
-//      if (err) reject(err);
-//      else fulfill(destpath);
-//    });
+   var cmd = [path.join(__dirname, imageMagickPath), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
+   console.log(cmd);
+   exec(cmd, function (err) {
+     if (err) reject(err);
+     else fulfill(destpath);
+   });
 
-      im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
-          if (err) reject(err);
-          else fulfill(destpath);
-      });
-  });
+      // im.convert(['-verbose', path.join(__dirname, filepath), destpath], function (err) {
+      //     if (err) reject(err);
+      //     else fulfill(destpath);
+      // });
+});
 }
 
 
@@ -56,11 +66,11 @@ function createFolder (foldername) {
   console.log('Creating folder', foldername);
 
   return new Promise(function (fulfill, reject) {
-     mkdirp(foldername, function (err) {
-      if (err) reject(err);
-      else fulfill();
-    });
+   mkdirp(foldername, function (err) {
+    if (err) reject(err);
+    else fulfill();
   });
+ });
 }
 
 
@@ -78,7 +88,7 @@ exports.convertVerbete = function (verbete) {
   return new Promise(function (fulfill, reject) {
     createFolder(foldername).then(
       convertImages(verbete.path, verbete.images, foldername).then(fulfill, reject)
-    );
+      );
   });
 }
 
