@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.21",
+    "angular": "~1.2.X",
     "angular-animate": "~1.2.X",
     "angular-carousel": "~0.2.X",
     "angular-mocks": "~1.2.X",

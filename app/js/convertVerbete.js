@@ -25,7 +25,7 @@ var isLinux = (process.platform === 'linux');
 var isOSX = (process.platform === 'darwin');
 
 
-if (isWin)   { imageMagickPath = '/imagemagick-win/bin/convert'; }
+if (isWin)   { imageMagickPath = '/imagemagick-win/convert'; }
 if (isLinux) { imageMagickPath = '/imagemagick-linux/bin/convert'; }
 if (isOSX)   { imageMagickPath = '/imagemagick-macos/bin/convert'; }
 

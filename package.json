@@ -15,6 +15,7 @@
     "resizable": true
   },
   "dependencies": {
+    "nodewebkit":"*",
     "mkdirp": "*",
     "promise": "~5.0.X",
     "gm": "~1.16.X",
