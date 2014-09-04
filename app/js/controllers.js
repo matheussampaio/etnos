@@ -57,15 +57,11 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.data.zip = verbete.zip;
       $scope.data.zipname = verbete.zipname;
       $scope.$apply();
-
-      console.log('data', $scope.data);
     }, function (err) {
       console.error(err);
     });
 
     $scope.removeZoomContainer = function() {
-      console.log("Removing zoom containers...");
-
       $('.zoomContainer').remove();
     }
   });

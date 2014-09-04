@@ -1,5 +1,4 @@
-// // ImageMagick Object
-var im = require('imagemagick');
+var config = require('./config.js').config;
 
 // os Object
 var os = require('os');
@@ -25,12 +24,15 @@ var isLinux = (process.platform === 'linux');
 var isOSX = (process.platform === 'darwin');
 
 
-if (isWin)   { imageMagickPath = '/imagemagick-win/convert'; }
-if (isLinux) { imageMagickPath = '/imagemagick-linux/convert'; }
-if (isOSX)   { imageMagickPath = '/imagemagick-macos/bin/convert'; }
-
-
-console.log("temp folder is: ", tmpFolder);
+if (config.DEBUG) {
+  if (isWin)   { imageMagickPath = path.join(__dirname, '/imagemagick-win/convert'); }
+  if (isLinux) { imageMagickPath = path.join(__dirname, '/imagemagick-linux/convert'); }
+  if (isOSX)   { imageMagickPath = path.join(__dirname, '/imagemagick-macos/bin/convert'); }
+} else {
+  if (isWin)   { imageMagickPath = path.join(path.dirname(process.execPath), '/imagemagick-win/convert'); }
+  if (isLinux) { imageMagickPath = path.join(path.dirname(process.execPath), '/imagemagick-linux/convert'); }
+  if (isOSX)   { imageMagickPath = path.join(path.dirname(process.execPath),'/imagemagick-macos/bin/convert'); }
+}
 
 //create tmpfolder if not exits
 if (!fs.existsSync(os.tmpDir())) {
@@ -43,13 +45,15 @@ if (!fs.existsSync(tmpFolder)) {
 
 
 function convertImage (filepath, destpath) {
-  console.log('Converting image', filepath, destpath);
+  if (config.DEBUG) {
+    filepath = path.join(__dirname, filepath);
+  } else {
+    filepath = path.join(path.dirname( process.execPath ), filepath);
+  }
 
   return new Promise(function (fulfill, reject) {
 
-   var cmd = [path.join(__dirname, imageMagickPath), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
-
-   console.log('cmd', cmd);
+   var cmd = [imageMagickPath, '-verbose', filepath, destpath].join(' ');
 
    exec(cmd, function (err) {
      if (err) reject(err);
@@ -82,9 +86,8 @@ function convertImages (verbetePath, verbeteImages, foldername) {
   }));
 }
 
-exports.convertVerbete = function (verbete) {
-  console.log('Converting verbete', verbete);
 
+exports.convertVerbete = function (verbete) {
   var foldername = path.join(tmpFolder, verbete.path.slice(6));
 
   return new Promise(function (fulfill, reject) {
@@ -93,6 +96,7 @@ exports.convertVerbete = function (verbete) {
       );
   });
 }
+
 
 exports.wipeTmpFolder = function() {
   if (typeof tmpFolder != 'string') {
