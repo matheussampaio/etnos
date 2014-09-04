@@ -1,14 +1,41 @@
 var convert = require('./js/convertVerbete');
 var zipVerbete = require('./js/zipVerbete');
+var fs = require('fs');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster']);
 
-verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
+verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
   });
 
-  // $.removeData(image, 'elevateZoom');//remove zoom instance from image
+  $scope.pop = function(err){
+    if (err) {
+      toaster.pop('error', "Erro na instalação", 'Não será possível visualizar as imagens.', 5000, 'trustedHtml');
+    } else {
+      toaster.pop('success', "Dependências instaladas.", 'Todas as dependências foram instaladas com sucesso.', 5000, 'trustedHtml');
+    }
+  };
+
+  if (process.platform === 'linux') {
+    fs.exists('/usr/lib/libtiff.so.5', function(exists) {
+        if (!exists) {
+          var cmd = "gksudo cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/ -m 'Você deve inserir sua senha para podermos instalar as dependencias necessárias para converter imagens.'";
+          var exec = require('child_process').exec;
+
+          exec(cmd, function (err) {
+            $scope.install = true;
+            $scope.err = err;
+            $scope.$apply();
+          });
+        }
+    });
+  }
+
+  $scope.$watch('install', function () {
+    if ($scope.install)
+      $scope.pop($scope.err);
+  });
 
 }]);
 

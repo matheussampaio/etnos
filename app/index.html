@@ -5,7 +5,8 @@
   <title>Com.Tudo</title>
 
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="bower_components/angular-carousel/dist/angular-carousel.css" type="text/css"/>
+  <link rel="stylesheet" href="bower_components/angular-carousel/dist/angular-carousel.css"/>
+  <link rel="stylesheet" href="bower_components/angularjs-toaster/toaster.css"/>
 
   <link rel="stylesheet" href="css/animate.css"/>
   <link rel="stylesheet" href="css/custom.css"/>
@@ -16,6 +17,7 @@
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
   <script src="bower_components/angular-touch/angular-touch.min.js"></script>
   <script src="bower_components/angular-carousel/dist/angular-carousel.js"></script>
+  <script src="bower_components/angularjs-toaster/toaster.js"></script>
 
   <script src="bower_components/jquery/dist/jquery.js"></script>
 
@@ -32,5 +34,6 @@
 
   <div ng-view></div>
 
+  <toaster-container toaster-options="{'time-out': 3000,'spinner':false}"></toaster-container>
 </body>
 </html>
