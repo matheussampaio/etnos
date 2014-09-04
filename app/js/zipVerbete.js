@@ -3,9 +3,6 @@ var path = require('path');
 
 var EasyZip = require('easy-zip').EasyZip;
 
-//zip a folder
-var zip = new EasyZip();
-
 // os Object
 var os = require('os');
 
@@ -21,11 +18,13 @@ var path = require('path');
 
 exports.zipVerbete = function(verbete) {
 
-  var folderpath = path.resolve(__dirname, verbete.path);
+  var folderpath = path.resolve(__dirname, verbete.path) + '/';
   var distpath = path.join(tmpFolder, verbete.path.slice(6));
   var filename = 'verbete-' + verbete.id + '.zip';
 
   return new Promise(function (fulfill, reject) {
+    //zip a folder
+    var zip = new EasyZip();
     zip.zipFolder(folderpath, function (err) {
       if (err)
         reject(err);
