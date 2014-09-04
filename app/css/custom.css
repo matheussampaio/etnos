@@ -14,6 +14,10 @@ html, body {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.transparent {
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .drag{
   -webkit-app-region: drag
 }
@@ -33,6 +37,7 @@ html, body {
 .padding-top {
   padding-top: 80px;
 }
+
 .fa-search-plus:hover, .fa-search-minus:hover, .fa-search:hover, .fa-download:hover, .fa-times:hover, .rn-carousel-control, .fa-print:hover, .fa-volume-up:hover {
   color: white !important;
 }
@@ -43,4 +48,9 @@ html, body {
 
 .navbar-nav>li>a {
   padding-top: 8px !important;
+}
+
+.copyright {
+  margin-top: 24px;
+  color: #555;
 }

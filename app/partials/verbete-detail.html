@@ -3,7 +3,7 @@
   <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
     <ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class="no-drag">
       <li ng-repeat="image in verbeteDetail.converted" >
-        <img ph-elevate-zoom class="img-responsive no-drag" ng-src="{{image}}" zoom-image="{{image}}" style="max-height: {{windowHeight - 80}}px; padding-bottom: 8px; padding-top: 8px;">
+        <img ph-elevate-zoom class="img-responsive no-drag" ng-src="{{image}}" zoom-image="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
 
       </li>
     </ul>
@@ -13,33 +13,33 @@
       <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag" style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"></i>
   </div>
 
-    <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse controls">
-      <ul class="nav navbar-nav navbar-left">
-        <li><a href="#" ng-click="removeZoomContainer()"><i class="btn fa fa-2x fa-times"></i> <p class="text-center">Voltar</p> </a></li>
-      </ul>
+  <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse controls">
+    <ul class="nav navbar-nav navbar-left">
+      <li><a href="#" ng-click="removeZoomContainer()"><i class="btn fa fa-2x fa-times"></i> <p class="text-center">Voltar</p> </a></li>
+    </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a><i class="btn fa fa-2x fa-volume-up"></i> <p class="text-center">Áudio</p> </a>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+          <a><i class="btn fa fa-2x fa-volume-up"></i> <p class="text-center">Áudio</p> </a>
 
-        </li>
-        <li>
-          <a><i class="btn fa fa-2x fa-search"></i> <p class="text-center">Lupa</p> </a>
-        </li>
-        <li>
-          <a><i class="btn fa fa-2x fa-search-plus"></i> <p class="text-center">+ Zoom</p> </a>
-        </li>
-        <li>
-          <a><i class="btn fa fa-2x fa-search-minus"></i> <p class="text-center"> - Zoom</p> </a>
-        </li>
-        <li>
-          <a target="_self" href="{{data.zip}}" download="{{data.zipname}}"><i class="btn fa fa-2x fa-download"></i> <p class="text-center">Salvar</p> </a>
-        </li>
-        <li>
-          <a><i class="btn fa fa-2x fa-print"></i> <p class="text-center">Imprimir</p> </a>
-        </li>
-      </ul>
+      </li>
+      <li>
+        <a><i class="btn fa fa-2x fa-search"></i> <p class="text-center">Lupa</p> </a>
+      </li>
+      <li>
+        <a><i class="btn fa fa-2x fa-search-plus"></i> <p class="text-center">+ Zoom</p> </a>
+      </li>
+      <li>
+        <a><i class="btn fa fa-2x fa-search-minus"></i> <p class="text-center"> - Zoom</p> </a>
+      </li>
+      <li>
+        <a target="_self" href="{{data.zip}}" download="{{data.zipname}}"><i class="btn fa fa-2x fa-download"></i> <p class="text-center">Salvar</p> </a>
+      </li>
+      <li>
+        <a><i class="btn fa fa-2x fa-print"></i> <p class="text-center">Imprimir</p> </a>
+      </li>
+    </ul>
 
-    </nav>
+  </nav>
 
 </div>

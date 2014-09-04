@@ -26,7 +26,7 @@ var isOSX = (process.platform === 'darwin');
 
 
 if (isWin)   { imageMagickPath = '/imagemagick-win/convert'; }
-if (isLinux) { imageMagickPath = '/imagemagick-linux/bin/convert'; }
+if (isLinux) { imageMagickPath = '/imagemagick-linux/convert'; }
 if (isOSX)   { imageMagickPath = '/imagemagick-macos/bin/convert'; }
 
 
@@ -48,7 +48,9 @@ function convertImage (filepath, destpath) {
   return new Promise(function (fulfill, reject) {
 
    var cmd = [path.join(__dirname, imageMagickPath), '-verbose', path.join(__dirname, filepath), destpath].join(' ');
-   console.log(cmd);
+
+   console.log('cmd', cmd);
+
    exec(cmd, function (err) {
      if (err) reject(err);
      else fulfill(destpath);

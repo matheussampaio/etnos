@@ -81,3 +81,19 @@ app.config(['$routeProvider',
 
   }
 ]);
+
+if (process.platform === 'linux') {
+  fs.exists('/usr/lib/libtiff.so.5', function(exists) {
+      if (!exists) {
+        var cmd = "gksudo cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/ -m 'Você deve inserir sua senha para podermos instalar as dependencias necessárias para converter imagens.'";
+        var exec = require('child_process').exec;
+
+        exec(cmd, function (err) {
+          if (err) {
+            console.log(err);
+            alert('Não será possível visualizar as imagens. Reinicie o programa e forneça sua senha.');
+          }
+        });
+      }
+  });
+}
