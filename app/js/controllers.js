@@ -1,10 +1,9 @@
 var convert = require('./js/convertVerbete');
+var zipVerbete = require('./js/zipVerbete');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel']);
 
-
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', function ($scope, $http) {
-
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
   });
@@ -22,6 +21,17 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     convert.convertVerbete(data[$routeParams.verbeteId - 1]).done(function (results) {
       $scope.verbeteDetail.converted = results;
       $scope.$apply();
+    }, function (err) {
+      console.error(err);
+    });
+
+    zipVerbete.zipVerbete(data[$routeParams.verbeteId - 1]).done(function (verbete) {
+      $scope.data = {};
+      $scope.data.zip = verbete.zip;
+      $scope.data.zipname = verbete.zipname;
+      $scope.$apply();
+
+      console.log('data', $scope.data);
     }, function (err) {
       console.error(err);
     });

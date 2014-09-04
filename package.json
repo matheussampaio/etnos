@@ -5,7 +5,7 @@
   "main": "app/index.html",
   "window": {
     "title": "Com.Tudo",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -22,6 +22,7 @@
     "nwbuild": "~0.0.X",
     "requirejs": "~2.1.X",
     "imagemagick": "~0.1.X",
+    "easy-zip": "*",
     "grunt-node-webkit-builder": "~0.1.X"
   },
   "devDependencies": {
