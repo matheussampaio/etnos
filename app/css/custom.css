@@ -9,7 +9,7 @@ html, body {
 }
 
 .controls{
-  height:60px;
+  height:80px;
   border: none;
   background-color: rgba(0, 0, 0, 0.6);
 }
@@ -31,8 +31,16 @@ html, body {
 }
 
 .padding-top {
-  padding-top: 60px;
+  padding-top: 80px;
 }
 .fa-search-plus:hover, .fa-search-minus:hover, .fa-search:hover, .fa-download:hover, .fa-times:hover, .rn-carousel-control, .fa-print:hover, .fa-volume-up:hover {
   color: white !important;
+}
+
+.nav.navbar-nav.navbar-right {
+  margin-right: 16px;
+}
+
+.navbar-nav>li>a {
+  padding-top: 8px !important;
 }
