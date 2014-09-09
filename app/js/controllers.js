@@ -3,11 +3,23 @@ var zipVerbete = require('./js/zipVerbete');
 var fs = require('fs');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster']);
+var scp;
 
-verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', 'toaster', function ($scope, $http, toaster) {
+verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', function ($scope, $http, $location, toaster) {
+  scp = $scope;
+
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
   });
+
+  $scope.go = function(verbete) {
+    if (verbete > $scope.verbetes.length || verbete < 1) {
+      toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
+    } else {
+      $location.path('/verbete/' + verbete);
+    }
+
+  }
 
   $scope.pop = function(err){
     if (err) {

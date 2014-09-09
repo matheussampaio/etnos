@@ -1,9 +1,8 @@
-<navbar></navbar>
-
-<div class="container-fluid padding-top">
+<div class="container-fluid">
   <div class="row">
 
     <div class="col-md-12">
+
       <!--Body content-->
       <div ng-show='query.id' ng-repeat="verbete in verbetes | filter:query" class="col-sm-3 col-md-2 animate-fadeInOut">
         <div class="thumbnail" style="-webkit-app-region: no-drag">
@@ -15,6 +14,19 @@
       </div>
 
       <h2 ng-hide='query.id' class="animate-fadeInOut text-center">Faça uma pesquisa!</h2>
+
+      <div class="vertical-center">
+        <div class="container text-center">
+          <div class="input-group col-sm-4 col-md-offset-4">
+              <!-- <form role="form" novalidate > -->
+                <input class="form-control" type="text" ng-model="data.search" required />
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="go(data.search)" ng-disabled="form.$invalid">Pesquisar</button>
+                </div>
+              <!-- </form> -->
+          </div>
+        </div>
+      </div>
 
       <nav class="navbar navbar-default navbar-fixed-bottom controls transparent">
         <p class="text-center copyright">© Copyright 2014-2015. Projeto História - Universidade Federal de Campina Grande</p>
