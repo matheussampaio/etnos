@@ -86,3 +86,7 @@ html, body {
 .toast-top-right {
   top: 40px !important;
 }
+
+.super-rounded {
+  border-radius: 20px !important;
+}
