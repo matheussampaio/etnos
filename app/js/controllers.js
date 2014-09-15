@@ -52,7 +52,7 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
   $http.get('verbetes/verbetes.json').success( function (data) {
 
     $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
@@ -88,7 +88,7 @@ verbeteControllers.directive('navbar', function() {
 });
 
 
-verbeteControllers.directive('trianglify', ['$window', function($window) {
+verbeteControllers.directive('trianglify', ['$window', function ($window) {
     return function(scope, element, attr) {
 
       var t = new Trianglify({x_gradient: ["#FFCC29", "#00A859", "#3E4095"]});
@@ -101,7 +101,7 @@ verbeteControllers.directive('trianglify', ['$window', function($window) {
     };
 }]);
 
-verbeteControllers.directive('phResizable', ['$window', function($window) {
+verbeteControllers.directive('phResizable', ['$window', function ($window) {
   return function($scope) {
     $scope.initializeWindowSize = function() {
       $scope.windowHeight = $window.innerHeight;
@@ -132,3 +132,4 @@ verbeteControllers.directive('phElevateZoom', function() {
     }
   };
 });
+
