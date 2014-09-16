@@ -2,7 +2,7 @@ var convert = require('./js/convertVerbete');
 var zipVerbete = require('./js/zipVerbete');
 var fs = require('fs');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys']);
 var scp;
 
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', function ($scope, $http, $location, toaster) {
@@ -52,7 +52,7 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', function ($scope, $routeParams, $http, $location, hotkeys) {
   $http.get('verbetes/verbetes.json').success( function (data) {
 
     $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
@@ -81,6 +81,26 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     $scope.toggleZoom = function() {
       $scope.zoomActive = !$scope.zoomActive;
     }
+
+    hotkeys.bindTo($scope)
+    .add({
+      combo: 'esc',
+      description: 'Move to index',
+      callback: function() {
+        console.log("Esc pressed, moving to index");
+        $scope.removeZoomContainer();
+        $location.path('/');
+      }
+    })
+    .add({
+      combo: 'z',
+      description: 'Toggle Zoom',
+      callback: function() {
+        console.log("Z pressed, togglin zoom");
+        $scope.toggleZoom();
+      }
+    });
+
   });
 }]);
 
