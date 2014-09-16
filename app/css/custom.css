@@ -43,6 +43,10 @@ html, body {
   color: white !important;
 }
 
+.active {
+  color: white !important;
+}
+
 .nav.navbar-nav.navbar-right {
   margin-right: 16px;
 }

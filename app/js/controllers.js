@@ -56,6 +56,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
   $http.get('verbetes/verbetes.json').success( function (data) {
 
     $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
+    $scope['zoomActive'] = false;
 
     convert.convertVerbete(data[$routeParams.verbeteId - 1]).done(function (results) {
       $scope.verbeteDetail.converted = results;
@@ -75,6 +76,10 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
     $scope.removeZoomContainer = function() {
       $('.zoomContainer').remove();
+    }
+
+    $scope.toggleZoom = function() {
+      $scope.zoomActive = !$scope.zoomActive;
     }
   });
 }]);
