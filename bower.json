@@ -15,6 +15,7 @@
     "angularjs-toaster": "~0.4.X",
     "bootstrap": "~3.1.X",
     "hamsterjs": "~1.0.X",
-    "jquery": "~2.1.X"
+    "jquery": "~2.1.X",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.4"
   }
 }
