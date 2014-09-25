@@ -1,11 +1,11 @@
 {
-  "name": "projeto-historia",
+  "name": "etnos",
   "version": "0.0.0",
   "private": true,
   "main": "app/index.html",
   "window": {
     "title": "Com.Tudo",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
