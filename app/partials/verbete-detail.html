@@ -1,9 +1,9 @@
 <div ph-resizable class="focus" style="height: {{windowHeight}}px;">
 
   <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
-    <ul rn-carousel rn-carousel-indicator rn-carousel-slides rn-carousel-control class="no-drag">
+    <ul rn-carousel rn-carousel-indicator rn-carousel-control class="no-drag">
       <li ng-repeat="image in verbeteDetail.converted" >
-        <img ng-show="zoomActive" ph-elevate-zoom class="img-responsive no-drag" ng-src="{{image}}" zoom-image="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
+        <img ph-elevate-zoom zoom-image="{{image}}" ng-show="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
         <img ng-hide="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
       </li>
     </ul>
@@ -21,7 +21,6 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
           <a><i class="btn fa fa-2x fa-volume-up"></i> <p class="text-center">Áudio</p> </a>
-
       </li>
       <li>
         <a ng-class="{ 'active' : zoomActive }"><i class="btn fa fa-2x fa-search" ng-click="toggleZoom()"></i> <p class="text-center">Lupa</p> </a>

@@ -4,19 +4,5 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "~1.2.X",
-    "angular-animate": "~1.2.X",
-    "angular-carousel": "~0.2.X",
-    "angular-mocks": "~1.2.X",
-    "angular-mousewheel": "~1.0.X",
-    "angular-resource": "~1.2.X",
-    "angular-route": "~1.2.X",
-    "angular-touch": "~1.2.X",
-    "angularjs-toaster": "~0.4.X",
-    "bootstrap": "~3.1.X",
-    "hamsterjs": "~1.0.X",
-    "jquery": "~2.1.X",
-    "angular-hotkeys": "chieffancypants/angular-hotkeys#~1.4.4",
-    "d3": "~3.4.11"
   }
 }
