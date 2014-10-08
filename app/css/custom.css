@@ -35,6 +35,10 @@ html, body {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.margintop {
+  margin-top: 20px;
+}
+
 .padding-top {
   padding-top: 80px;
 }
@@ -56,12 +60,14 @@ html, body {
 }
 
 .copyright {
-  margin-top: 24px;
+  height: 60px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
   color: #555;
 }
 
-.container{
-  width:1025px;
+.container {
+  width: 1025px;
 }
 
 .vertical-center {

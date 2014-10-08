@@ -93,11 +93,26 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       }
     })
     .add({
-      combo: 'z',
+      combo: 'l',
       description: 'Toggle Zoom',
       callback: function() {
         console.log("Z pressed, togglin zoom");
         $scope.toggleZoom();
+      }
+    })
+    .add({
+      combo: 'ctrl+p',
+      description: 'Print',
+      callback: function() {
+        console.log("Ctrl+P pressed, printing");
+        window.print()
+      }
+    })
+    .add({
+      combo: '?',
+      description: 'Help',
+      callback: function() {
+        console.log("? pressed, showing help");
       }
     });
 

@@ -1,25 +1,35 @@
 <div ph-resizable class="container-fluid">
   <div class="row">
 
-      <h1 class="animate-fadeInOut text-center" style="margin-top: {{(windowHeight / 3) - 50}}px;">Etnos</h1>
+    <h1 class="animate-fadeInOut text-center" style="margin-top: {{(windowHeight / 3) - 50}}px;">Etnos</h1>
 
-      <form class="form-horizontal" role="form" name="searchVerbete" style="margin-top: 50px;">
-        <div class="form-group">
-          <div class="col-sm-6 col-sm-offset-3">
-            <input class="form-control super-rounded" type="text" ng-model="data.search" ng-pattern="/^\d+$/" ng-minlength="1" ng-maxlength="7" placeholder="Digite o número do verbete." title="Número do Verbete" required autofocus  />
-          </div>
+    <form class="form-horizontal" role="form" name="searchVerbete" style="margin-top: 50px;">
+      <div class="form-group">
+        <div class="col-sm-6 col-sm-offset-3">
+          <input class="form-control super-rounded" type="text" ng-model="data.search" ng-pattern="/^\d+$/" ng-minlength="1" ng-maxlength="7" placeholder="Digite o número do verbete." title="Número do Verbete" required autofocus  />
         </div>
+      </div>
 
-        <div class="form-group">
-          <div style="margin-left: {{(windowWidth / 2) - 35}}px;">
-            <button type="submit" class="btn btn-default" ng-click="go(data.search)" ng-hide="searchVerbete.$invalid">Pesquisar</button>
-          </div>
+      <div class="form-group">
+        <div style="margin-left: {{(windowWidth / 2) - 35}}px;">
+          <button type="submit" class="btn btn-default" ng-click="go(data.search)" ng-hide="searchVerbete.$invalid">Pesquisar</button>
         </div>
-      </form>
+      </div>
+    </form>
 
-      <nav class="navbar navbar-default navbar-fixed-bottom controls transparent">
-        <p class="text-center copyright">© Copyright 2014-2015. Etnos - Universidade Federal de Campina Grande</p>
-      </nav>
+    <nav class="navbar navbar-default navbar-fixed-bottom copyright">
+      <p class="text-center copyright margintop">© Copyright 2014-2015. Etnos - Universidade Federal de Campina Grande</p>
+    </nav>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom copyright">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <a>
+            <i class="btn fa fa-2x fa-bars"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
   </div>
 </div>
