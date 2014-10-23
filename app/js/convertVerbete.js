@@ -82,7 +82,7 @@ function createFolder (foldername) {
 
 function convertImages (verbetePath, verbeteImages, foldername) {
   return new Promise.all(verbeteImages.map(function (img) {
-    return convertImage(path.join(verbetePath, img + '.TIF'), path.join(foldername, img + '.png'));
+    return convertImage(path.join(verbetePath, img + '.tif'), path.join(foldername, img + '.png'));
   }));
 }
 

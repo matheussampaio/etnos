@@ -13,7 +13,7 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
   });
 
   $scope.go = function(verbete) {
-    if (verbete > $scope.verbetes.length || verbete < 1) {
+    if ($scope.verbetes[verbete] == undefined) {
       toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
     } else {
       $location.path('/verbete/' + verbete);
@@ -59,17 +59,20 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', function ($scope, $routeParams, $http, $location, hotkeys) {
   $http.get('verbetes/verbetes.json').success( function (data) {
 
-    $scope.verbeteDetail = data[$routeParams.verbeteId - 1];
+    $scope.verbeteDetail = data[$routeParams.verbeteId];
+
+    console.log('TESTE', $scope.verbeteDetail, $routeParams.verbeteId);
+
     $scope['zoomActive'] = false;
 
-    convert.convertVerbete(data[$routeParams.verbeteId - 1]).done(function (results) {
+    convert.convertVerbete(data[$routeParams.verbeteId]).done(function (results) {
       $scope.verbeteDetail.converted = results;
       $scope.$apply();
     }, function (err) {
       console.error(err);
     });
 
-    zipVerbete.zipVerbete(data[$routeParams.verbeteId - 1]).done(function (verbete) {
+    zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
       $scope.data = {};
       $scope.data.zip = verbete.zip;
       $scope.data.zipname = verbete.zipname;
