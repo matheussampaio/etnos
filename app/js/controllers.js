@@ -33,25 +33,25 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
     disable: 'right'
   };
 
-  if (process.platform === 'linux') {
-    fs.exists('/usr/lib/libtiff.so.5', function(exists) {
-        if (!exists) {
-          var cmd = "gksudo cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/ -m 'Você deve inserir sua senha para podermos instalar as dependencias necessárias para converter imagens.'";
-          var exec = require('child_process').exec;
+  // if (process.platform === 'linux') {
+  //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
+  //       if (!exists) {
+  //         var cmd = "pkexec cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/";
+  //         var exec = require('child_process').exec;
 
-          exec(cmd, function (err) {
-            $scope.install = true;
-            $scope.err = err;
-            $scope.$apply();
-          });
-        }
-    });
-  }
+  //         exec(cmd, function (err) {
+  //           $scope.install = true;
+  //           $scope.err = err;
+  //           $scope.$apply();
+  //         });
+  //       }
+  //   });
+  // }
 
-  $scope.$watch('install', function () {
-    if ($scope.install)
-      $scope.pop($scope.err);
-  });
+  // $scope.$watch('install', function () {
+  //   if ($scope.install)
+  //     $scope.pop($scope.err);
+  // });
 
 }]);
 

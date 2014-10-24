@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ -f "/lib/x86_64-linux-gnu/libudev.so.1" ] # Ubuntu, Xubuntu, Mint
+if [ -f "/lib/x86_64-linux-gnu/libudev.so.1" ] && [ ! -h "/lib/x86_64-linux-gnu/libudev.so.0" ] # Ubuntu, Xubuntu, Mint
 then
     pkexec ln -sf /lib/x86_64-linux-gnu/libudev.so.1 /lib/x86_64-linux-gnu/libudev.so.0
-elif [ -f "/usr/lib64/libudev.so.1" ] # SUSE, Fedora
+elif [ -f "/usr/lib64/libudev.so.1" ] && [ ! -h "/usr/lib64/libudev.so.0" ] # SUSE, Fedora
 then
-    ln -sf /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
-elif [ -f "/usr/lib/libudev.so.1" ] # Arch, Fedora 32bit
+    pkexec ln -sf /usr/lib64/libudev.so.1 /usr/lib64/libudev.so.0
+elif [ -f "/usr/lib/libudev.so.1" ] && [ ! -h "/usr/lib/libudev.so.0" ] # Arch, Fedora 32bit
 then
-    ln -sf /usr/lib/libudev.so.1 /usr/lib/libudev.so.0
-elif [ -f "/lib/i386-linux-gnu/libudev.so.1" ]  # Ubuntu 32bit
+    pkexec ln -sf /usr/lib/libudev.so.1 /usr/lib/libudev.so.0
+elif [ -f "/lib/i386-linux-gnu/libudev.so.1" ] && [ ! -h "/lib/i386-linux-gnu/libudev.so.0" ]  # Ubuntu 32bit
 then
-    ln -sf /lib/i386-linux-gnu/libudev.so.1 /lib/i386-linux-gnu/libudev.so.0
+    pkexec ln -sf /lib/i386-linux-gnu/libudev.so.1 /lib/i386-linux-gnu/libudev.so.0
 fi
