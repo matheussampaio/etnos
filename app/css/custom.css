@@ -9,6 +9,11 @@ html, body {
   height: 100%;
 }
 
+body.snapjs-left .hide-when-open,
+body.snapjs-right .hide-when-open {
+  display: none;
+}
+
 .controls{
   height:80px;
   border: none;

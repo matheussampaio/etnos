@@ -57,8 +57,6 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
     $scope.verbeteDetail = data[$routeParams.verbeteId];
 
-    console.log('TESTE', $scope.verbeteDetail, $routeParams.verbeteId);
-
     $scope['zoomActive'] = false;
 
     convert.convertVerbete(data[$routeParams.verbeteId]).done(function (results) {
