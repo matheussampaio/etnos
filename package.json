@@ -25,7 +25,7 @@
     "node-webkit-builder": "*"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install; ./createsymslink",
     "prestart": "npm install",
     "start": "nodewebkit"
   }
