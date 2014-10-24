@@ -67,16 +67,30 @@ var app = angular.module('verbeteApp', [
 
 app.config(['$routeProvider',
   function ($routeProvider) {
-    $routeProvider.when('/verbetes', {
-      templateUrl: 'partials/verbete-list.html',
+
+    $routeProvider
+    .when('/home', {
+      templateUrl: 'partials/home.html',
       controller: 'VerbeteListCtrl'
-    }).
-    when('/verbete/:verbeteId', {
+    })
+    .when('/home/professores', {
+      templateUrl: 'partials/professores.html',
+      controller: 'VerbeteListCtrl'
+    })
+    .when('/home/alunos', {
+      templateUrl: 'partials/alunos.html',
+      controller: 'VerbeteListCtrl'
+    })
+    .when('/home/developers', {
+      templateUrl: 'partials/developers.html',
+      controller: 'VerbeteListCtrl'
+    })
+    .when('/verbete/:verbeteId', {
       templateUrl: 'partials/verbete-detail.html',
       controller: 'VerbeteDetailCtrl'
-    }).
-    otherwise({
-      redirectTo: '/verbetes'
+    })
+    .otherwise({
+      redirectTo: '/home'
     });
   }
 ]);

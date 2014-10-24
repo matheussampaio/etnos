@@ -9,6 +9,11 @@ html, body {
   height: 100%;
 }
 
+body.snapjs-left .hide-when-open,
+body.snapjs-right .hide-when-open {
+  display: none;
+}
+
 .controls{
   height:80px;
   border: none;
@@ -70,6 +75,11 @@ html, body {
   width: 1025px;
 }
 
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
 .vertical-center {
   height:100%;
   width:100%;
@@ -100,6 +110,7 @@ html, body {
 .super-rounded {
   border-radius: 20px !important;
 }
+
 
 
 /* Side Menu */
@@ -171,7 +182,7 @@ html, body {
 .drawer-container{
   /*display:none;*/
   height:100%;
-  overflow:auto;
+  overflow: auto;
   /*overflow-scrolling:touch;*/
   /*-webkit-box-shadow:inset -1px 0 3px rgba(0,0,0,.3);*/
   box-shadow:inset -1px 0 3px rgba(0,0,0,.3);
