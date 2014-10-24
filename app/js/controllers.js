@@ -5,7 +5,7 @@ var fs = require('fs');
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'snap']);
 
 var scp;
-verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', function ($scope, $http, $location, toaster) {
+verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'snapRemote', function ($scope, $http, $location, toaster, snapRemote) {
   scp = $scope;
 
   $http.get('verbetes/verbetes.json').success( function (data) {
@@ -28,6 +28,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
       toaster.pop('success', "Dependências instaladas.", 'Todas as dependências foram instaladas com sucesso.', 5000, 'trustedHtml');
     }
   };
+
+  snapRemote.close();
 
   // if (process.platform === 'linux') {
   //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
@@ -52,8 +54,10 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', function ($scope, $routeParams, $http, $location, hotkeys) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'snapRemote', function ($scope, $routeParams, $http, $location, hotkeys, snapRemote) {
   $http.get('verbetes/verbetes.json').success( function (data) {
+
+    snapRemote.close();
 
     $scope.verbeteDetail = data[$routeParams.verbeteId];
 
@@ -82,6 +86,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     $scope.toggleZoom = function() {
       $scope.zoomActive = !$scope.zoomActive;
     }
+
     $scope.printPDF = function() {
         //       var doc = new jsPDF();
         // doc.text(20, 20, 'Hello world!');
@@ -92,6 +97,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
         // doc.output("dataurlnewwindow", "text.pdf");
       window.print();
     }
+
     hotkeys.bindTo($scope)
     .add({
       combo: 'esc',
