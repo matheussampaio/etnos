@@ -29,8 +29,6 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
     }
   };
 
-  snapRemote.close();
-
   // if (process.platform === 'linux') {
   //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
   //       if (!exists) {
@@ -135,6 +133,14 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
   });
 }]);
+
+
+verbeteControllers.controller("MenuCtrl", function ($scope, $location) {
+  $scope.menuClass = function(page) {
+    var current = $location.path().substring(1);
+    return page === current ? "active" : "";
+  };
+});
 
 
 verbeteControllers.directive('navbar', function() {
