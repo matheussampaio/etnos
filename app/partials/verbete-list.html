@@ -1,8 +1,37 @@
-  <div ph-resizable class="container-fluid">
-    <div class="row">
+<snap-drawer class="drawer">
+  <div class="drawer-container">
+    <ul role="navigation" class="drawer-list">
+      <li class="drawer-list-item">
+        <a href="#" data-pjax="">
+          <i class="fa fa-home"></i>Home
+        </a>
+      </li>
+      <li class="drawer-list-divider"></li>
+      <li class="drawer-list-item drawer-list-title">
+        Conheça
+      </li>
+      <li class="drawer-list-item">
+        <a href="#!professores" target="_blank">
+          <i class="fa fa-linkedin"></i>Professores
+        </a>
+      </li>
+      <li class="drawer-list-item">
+        <a href="#!alunos" target="_blank">
+          <i class="fa fa-twitter"></i>Alunos
+        </a>
+      </li>
+      <li class="drawer-list-item">
+        <a href="#developers" target="_blank">
+          <i class="fa fa-github"></i>Desenvolvedores
+        </a>
+      </li>
+    </ul>
+  </div>
+</snap-drawer>
 
-      <snap-dragger>
-      </snap-dragger>
+<snap-content trianglify>
+  <div ph-resizable class="container-fluid" data-snap-ignore="true">
+    <div class="row">
 
       <h1 class="animate-fadeInOut text-center" style="margin-top: {{(windowHeight / 3) - 50}}px;">Etnos</h1>
 
@@ -36,3 +65,4 @@
 
     </div>
   </div>
+</snap-content>

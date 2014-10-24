@@ -29,10 +29,6 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
     }
   };
 
-  $scope.opts = {
-    disable: 'right'
-  };
-
   // if (process.platform === 'linux') {
   //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
   //       if (!exists) {
