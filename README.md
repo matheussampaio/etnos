@@ -37,7 +37,6 @@ Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-project
 
 ## Intruções
 
-$ npm install
-$ bower install
+$ npm start
 
 ## Como executar
