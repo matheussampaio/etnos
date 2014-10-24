@@ -67,15 +67,21 @@ var app = angular.module('verbeteApp', [
 
 app.config(['$routeProvider',
   function ($routeProvider) {
-    $routeProvider.when('/verbetes', {
+
+    $routeProvider
+    .when('/verbetes', {
       templateUrl: 'partials/verbete-list.html',
       controller: 'VerbeteListCtrl'
-    }).
-    when('/verbete/:verbeteId', {
+    })
+    .when('/verbete/:verbeteId', {
       templateUrl: 'partials/verbete-detail.html',
       controller: 'VerbeteDetailCtrl'
-    }).
-    otherwise({
+    })
+    .when('/developers', {
+      templateUrl: 'partials/developers.html',
+      controller: 'DevelopersCtrl'
+    })
+    .otherwise({
       redirectTo: '/verbetes'
     });
   }
