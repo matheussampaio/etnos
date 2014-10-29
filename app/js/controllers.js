@@ -1,7 +1,7 @@
 var convert = require('./js/convertVerbete');
 var zipVerbete = require('./js/zipVerbete');
 var fs = require('fs');
-
+var pdf = require('./js/pdfCreator');
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'snap']);
 
 var scp;
@@ -63,19 +63,35 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
     convert.convertVerbete(data[$routeParams.verbeteId]).done(function (results) {
       $scope.verbeteDetail.converted = results;
+      data[$routeParams.verbeteId].converted = results
       $scope.$apply();
+
+      zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
+        if($scope.data == undefined)
+          $scope.data = {};
+        $scope.data.zip = verbete.zip;
+        $scope.data.zipname = verbete.zipname;
+        $scope.$apply();
+      }, function (err) { 
+        console.error(err);
+      });
+
+      pdf.create(data[$routeParams.verbeteId]).done(function(pdffile){
+        if($scope.data == undefined)
+          $scope.data = {};
+        $scope.data.pdfpath= pdffile.filepath;
+        $scope.data.pdfname= pdffile.filename;
+        $scope.$apply();
+      },function(err){
+        console.error(err);
+      });
+
     }, function (err) {
       console.error(err);
     });
 
-    zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
-      $scope.data = {};
-      $scope.data.zip = verbete.zip;
-      $scope.data.zipname = verbete.zipname;
-      $scope.$apply();
-    }, function (err) {
-      console.error(err);
-    });
+
+    
 
     $scope.removeZoomContainer = function() {
       $('.zoomContainer').remove();
@@ -85,16 +101,15 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.zoomActive = !$scope.zoomActive;
     }
 
-    $scope.printPDF = function() {
-        //       var doc = new jsPDF();
-        // doc.text(20, 20, 'Hello world!');
-        // doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
-        // doc.addPage();
-        // doc.text(20, 20, 'Do you like that?');
 
-        // doc.output("dataurlnewwindow", "text.pdf");
-      window.print();
+    
+
+    $scope.printPDF = function() {
+      
+
     }
+
+
 
     hotkeys.bindTo($scope)
     .add({
@@ -118,7 +133,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       combo: 'ctrl+p',
       description: 'Print',
       callback: function() {
-      console.log("CTRL + P, Printing...");
+        console.log("CTRL + P, Printing...");
         $scope.printPDF();
 
       }
@@ -152,16 +167,16 @@ verbeteControllers.directive('navbar', function() {
 
 
 verbeteControllers.directive('trianglify', ['$window', function ($window) {
-    return function(scope, element, attr) {
+  return function(scope, element, attr) {
 
-      var t = new Trianglify({x_gradient: ["#FFCC29", "#00A859", "#3E4095"]});
-      var pattern = t.generate(2500, 1500);
+    var t = new Trianglify({x_gradient: ["#FFCC29", "#00A859", "#3E4095"]});
+    var pattern = t.generate(2500, 1500);
 
-      element.css({
-       backgroundImage: pattern.dataUrl
-      });
+    element.css({
+     backgroundImage: pattern.dataUrl
+   });
 
-    };
+  };
 }]);
 
 verbeteControllers.directive('phResizable', ['$window', function ($window) {
@@ -186,7 +201,7 @@ verbeteControllers.directive('phElevateZoom', function() {
       $(element).elevateZoom({
         scrollZoom : true,
         //zoomType  : "inner",
-         zoomType   : "lens",
+        zoomType   : "lens",
         lensShape : "round",
         lensSize : 200,
         zoomWindowFadeIn: 500,
