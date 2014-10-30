@@ -46,7 +46,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   position: relative;
   bottom: 0;
-  cursor: pointer; }
+  color: #999; }
   .rn-carousel-indicator span {
     -webkit-transition: color .2s ease-out;
     transition: color .2s ease-out;
