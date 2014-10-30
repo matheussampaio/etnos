@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="css/bootstrap.css"/>
   <link rel="stylesheet" href="css/angular-carousel.css"/>
   <link rel="stylesheet" href="css/toaster.css"/>
-  <link rel="stylesheet" href="css/snap.css"/>
-  <link rel="stylesheet" href="css/angular-snap.css"/>
   <!-- <link rel="stylesheet" href="css/angular-snap-only.css"/> -->
 
   <link rel="stylesheet" href="css/animate.css"/>
@@ -22,8 +20,6 @@
   <script src="js/dependencies/angular-carousel.js"></script>
   <script src="js/dependencies/toaster.js"></script>
   <script src="js/dependencies/hotkeys.js"></script>
-  <script src="js/dependencies/snap.js"></script>
-  <script src="js/dependencies/angular-snap.js"></script>
 
   <script src="js/dependencies/d3.js"></script>
   <script src="js/dependencies/trianglify.js"></script>
@@ -35,18 +31,12 @@
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
 
-  
- 
+
+
 </head>
 <body trianglify>
 
-  <snap-drawer class="drawer">
-  <navbar></navbar>
-</snap-drawer>
-
-<snap-content trianglify data-snap-ignore="true">
 <div ng-view></div>
-</snap-content>
 
 <toaster-container toaster-options="{'time-out': 3000,'spinner':false}"></toaster-container>
 </body>

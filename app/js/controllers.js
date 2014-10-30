@@ -4,11 +4,22 @@ var fs = require('fs');
 var pdf = require('./js/pdfCreator');
 var loadAudio = require('./js/loadAudio');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'snap']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys']);
 
-var scp;
-verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'snapRemote', function ($scope, $http, $location, toaster, snapRemote) {
-  scp = $scope;
+
+verbeteControllers.factory('MyService', function(){
+  return {
+    data: {
+      showMenu: false,
+      toggleMenu: function() {
+        this.showMenu = !this.showMenu;
+      }
+    }
+    // Other methods or objects can go here
+  };
+});
+
+verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'MyService', function ($scope, $http, $location, toaster, MyService) {
 
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
@@ -30,6 +41,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
       toaster.pop('success', "Dependências instaladas.", 'Todas as dependências foram instaladas com sucesso.', 5000, 'trustedHtml');
     }
   };
+
+  $scope.data = MyService.data;
 
   // if (process.platform === 'linux') {
   //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
@@ -54,10 +67,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'snapRemote', function ($scope, $routeParams, $http, $location, hotkeys, snapRemote) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', function ($scope, $routeParams, $http, $location, hotkeys) {
   $http.get('verbetes/verbetes.json').success( function (data) {
-
-    snapRemote.close();
 
     $scope.verbeteDetail = data[$routeParams.verbeteId];
 
