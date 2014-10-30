@@ -12,10 +12,6 @@ var tmpFolder = path.join(os.tmpDir(), 'historia');
 // Promise Object
 var Promise = require('promise');
 
-// path Object
-var path = require('path');
-
-
 exports.zipVerbete = function(verbete) {
 
   var folderpath = path.resolve(__dirname, verbete.path) + '/';

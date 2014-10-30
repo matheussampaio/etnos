@@ -2,6 +2,8 @@ var convert = require('./js/convertVerbete');
 var zipVerbete = require('./js/zipVerbete');
 var fs = require('fs');
 var pdf = require('./js/pdfCreator');
+var loadAudio = require('./js/loadAudio');
+
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'snap']);
 
 var scp;
@@ -61,24 +63,14 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
     $scope['zoomActive'] = false;
 
+    $scope.data = {};
+
     convert.convertVerbete(data[$routeParams.verbeteId]).done(function (results) {
       $scope.verbeteDetail.converted = results;
       data[$routeParams.verbeteId].converted = results
       $scope.$apply();
 
-      zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
-        if($scope.data == undefined)
-          $scope.data = {};
-        $scope.data.zip = verbete.zip;
-        $scope.data.zipname = verbete.zipname;
-        $scope.$apply();
-      }, function (err) { 
-        console.error(err);
-      });
-
       pdf.create(data[$routeParams.verbeteId]).done(function(pdffile){
-        if($scope.data == undefined)
-          $scope.data = {};
         $scope.data.pdfpath= pdffile.filepath;
         $scope.data.pdfname= pdffile.filename;
         $scope.$apply();
@@ -90,8 +82,23 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       console.error(err);
     });
 
+    zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
+      $scope.data.zip = verbete.zip;
+      $scope.data.zipname = verbete.zipname;
+      $scope.$apply();
+    }, function (err) {
+      console.error(err);
+    });
 
-    
+
+    loadAudio.load(data[$routeParams.verbeteId]).done(function (audio) {
+      console.log(audio);
+      $scope.data.audio = audio;
+      $scope.$apply();
+    }, function (err) {
+      console.error(err);
+    });
+
 
     $scope.removeZoomContainer = function() {
       $('.zoomContainer').remove();
@@ -101,15 +108,8 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.zoomActive = !$scope.zoomActive;
     }
 
-
-    
-
     $scope.printPDF = function() {
-      
-
     }
-
-
 
     hotkeys.bindTo($scope)
     .add({

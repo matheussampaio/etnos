@@ -1,17 +1,17 @@
 {
-  "name": "etnos",
+  "name": "Etnos",
   "version": "0.0.0",
   "private": true,
   "main": "app/index.html",
   "window": {
-    "title": "Com.Tudo",
+    "title": "Etnos",
     "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
     "min_width": 800,
     "min_height": 600,
-    "icon": "images/favicon.ico",
+    "icon": "favicon.ico",
     "resizable": true
   },
   "dependencies": {
