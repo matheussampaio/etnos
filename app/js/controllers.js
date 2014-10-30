@@ -4,7 +4,7 @@ var fs = require('fs');
 var pdf = require('./js/pdfCreator');
 var loadAudio = require('./js/loadAudio');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
 
 
 verbeteControllers.factory('MyService', function(){
