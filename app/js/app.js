@@ -73,16 +73,20 @@ app.config(['$routeProvider',
       templateUrl: 'partials/home.html',
       controller: 'VerbeteListCtrl'
     })
-    .when('/home/professores', {
-      templateUrl: 'partials/professores.html',
+    .when('/home/apresentacao', {
+      templateUrl: 'partials/apresentacao.html',
       controller: 'VerbeteListCtrl'
     })
-    .when('/home/alunos', {
-      templateUrl: 'partials/alunos.html',
+    .when('/home/fichatecnica', {
+      templateUrl: 'partials/fichatecnica.html',
       controller: 'VerbeteListCtrl'
     })
-    .when('/home/developers', {
-      templateUrl: 'partials/developers.html',
+    .when('/home/catalogo', {
+      templateUrl: 'partials/catalogo.html',
+      controller: 'VerbeteListCtrl'
+    })
+    .when('/home/help', {
+      templateUrl: 'partials/help.html',
       controller: 'VerbeteListCtrl'
     })
     .when('/verbete/:verbeteId', {
