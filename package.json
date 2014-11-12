@@ -1,5 +1,5 @@
 {
-  "name": "Etnos",
+  "name": "etnos",
   "version": "0.1.0",
   "private": true,
   "main": "app/index.html",
@@ -19,11 +19,15 @@
     "promise": "~5.0.X",
     "easy-zip": "*",
     "jade-pdf-redline": "*",
-    "node-webkit-builder": "0.1.2",
     "nodewebkit": "0.10.5"
   },
   "scripts": {
     "prestart": "npm install",
     "start": "nodewebkit"
+  },
+  "devDependencies": {
+    "node-webkit-builder": "^0.2.0",
+    "gulp-util": "^3.0.1",
+    "gulp": "^3.8.10"
   }
 }

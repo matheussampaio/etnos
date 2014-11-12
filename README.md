@@ -40,3 +40,13 @@ Deem uma lida nesse [site](http://www.lullabot.com/blog/article/managing-project
 $ npm start
 
 ## Como executar
+
+```
+$ npm start
+```
+
+## Build
+
+```
+
+```
