@@ -1,11 +1,11 @@
 {
   "name": "Etnos",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "main": "app/index.html",
   "window": {
     "title": "Etnos",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -18,15 +18,11 @@
     "mkdirp": "*",
     "promise": "~5.0.X",
     "easy-zip": "*",
-    "jade-pdf-redline":"*"
-  },
-  "devDependencies": {
-    "bower": "~1.3.X",
-    "nodewebkit": "0.10.4",
-    "node-webkit-builder": "0.1.3"
+    "jade-pdf-redline": "*",
+    "node-webkit-builder": "0.1.2",
+    "nodewebkit": "0.10.5"
   },
   "scripts": {
-    "postinstall": "bower install; ./createsymslink",
     "prestart": "npm install",
     "start": "nodewebkit"
   }
