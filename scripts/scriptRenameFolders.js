@@ -1,13 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 
-var parent_dir = '/home/matheussampaio/historia_indigena/x_codices' || process.argv[1];
-var num_begin = 3046 || process.argv[2];
-var num_end = 3118 || process.argv[3];
-
 var rename = function(parent, folder, new_name) {
-  console.log('->', folder, ' to ', new_name);
-
   var old_folder = path.join(parent, folder);
   var new_folder = path.join(parent, new_name);
 
@@ -42,27 +36,38 @@ function natcmp(a, b) {
 /** ate aqui **/
 
 
-var files = fs.readdirSync(parent_dir);
-files = files.sort(natcmp);
+if (process.length < 5) {
+  console.error('Numero de argumentos errados.');
+} else {
+  var parent_dir = process.argv[2]
+  var num_begin = process.argv[3];
+  var num_end = process.argv[4];
+
+  var files = fs.readdirSync(parent_dir);
+  files = files.sort(natcmp);
 
 
-for (i in files) {
+  for (i in files) {
 
-  var verbete_folder = path.join(parent_dir, files[i]);
+    var verbete_folder = path.join(parent_dir, files[i]);
 
-  var tifs = fs.readdirSync(verbete_folder);
+    var tifs = fs.readdirSync(verbete_folder);
 
-  var count_tifs = 1;
+    var count_tifs = 1;
 
-  for (j in tifs) {
-    rename(verbete_folder, tifs[j], count_tifs++ + '.tif');
+    for (j in tifs) {
+      rename(verbete_folder, tifs[j], count_tifs++ + '.tif');
+    }
+     rename(parent_dir, files[i], '' + num_begin++);
+
   }
-   rename(parent_dir, files[i], '' + num_begin++);
 
-}
+  num_begin--;
 
-num_begin--;
+  if (num_begin != num_end) {
+    console.error(parent_dir.split('/')[4], " ERROR", 'Numero de arquivos alterados errado. Deveria ter alterado ', num_end, ' porem alterou ', num_begin, '.');
+  } else {
+    console.log(parent_dir.split('/')[4], " renamed");
+  }
 
-if (num_begin != num_end) {
-  console.error('Numero de arquivos alterados errado. Deveria ter alterado ', num_end, ' porem alterou ', num_begin, '.');
 }

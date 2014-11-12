@@ -1,7 +1,6 @@
 var path = require('path');
 var fs = require('fs');
 
-var parent_dir = '/home/matheussampaio/historia_indigena'
 
 var rename = function(parent, folder) {
   var old_folder = path.join(parent, folder);
@@ -46,6 +45,13 @@ function natcmp(a, b) {
 }
 /** ate aqui **/
 
+if (process.argv.length < 3) {
+  console.error("ERROR");
+  return;
+}
+
+var parent_dir = process.argv[2];
+
 var json = {};
 
 var files = fs.readdirSync(parent_dir).sort(natcmp);
@@ -62,4 +68,10 @@ for (i in files) {
   }
 }
 
-console.log( JSON.stringify(json, null, '  ').replace(/.tif/g, ''));
+fs.writeFile("verbetes.json", JSON.stringify(json, null, '  ').replace(/.tif/g, ''), function(err) {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log("The JSON file was saved!");
+    }
+});

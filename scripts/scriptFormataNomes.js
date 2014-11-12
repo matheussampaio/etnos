@@ -47,3 +47,5 @@ var rename = function(parent, folder) {
 }
 
 rename(parent_dir, dir_name);
+
+console.log("Folder's name formated.");
