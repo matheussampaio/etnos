@@ -18,8 +18,7 @@
     "mkdirp": "*",
     "promise": "~5.0.X",
     "easy-zip": "*",
-    "jade-pdf-redline": "*",
-    "nodewebkit": "0.10.5"
+    "jade-pdf-redline": "*"
   },
   "scripts": {
     "prestart": "npm install",
@@ -28,6 +27,9 @@
   "devDependencies": {
     "node-webkit-builder": "^0.2.0",
     "gulp-util": "^3.0.1",
-    "gulp": "^3.8.10"
+    "gulp": "^3.8.10",
+    "gulp-clean": "^0.3.1",
+    "gulp-preprocess": "^1.1.1",
+    "nodewebkit": "0.10.5"
   }
 }

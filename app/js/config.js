@@ -1,3 +1,3 @@
 exports.config = {
-  'DEBUG': true
+  'DEBUG': process.env.DEBUG || false
 };

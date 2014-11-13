@@ -63,7 +63,7 @@ for (i in files) {
   for (j in subfiles) {
     var verbeteFiles = fs.readdirSync(path.join(verbete_folder, subfiles[j])).sort(natcmp);
 
-    json[subfiles[j]] = { 'id' : subfiles[j], 'images': verbeteFiles, 'path': '../../files/' + files[i] + '/' + subfiles[j], "snippet": "Verbete " + subfiles[j] + ".", "converted": []};
+    json[subfiles[j]] = { 'id' : subfiles[j], 'images': verbeteFiles, 'path': '../files/' + files[i] + '/' + subfiles[j], "snippet": "Verbete " + subfiles[j] + ".", "converted": []};
 
   }
 }
