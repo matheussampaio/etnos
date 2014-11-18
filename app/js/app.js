@@ -3,8 +3,7 @@ var logger = require('./js/log');
 
 // Load native UI library
 var config = require('./js/config');
-
-logger.warn(config);
+logger.warn(JSON.stringify(config));
 
 var gui = require('nw.gui');
 
@@ -48,7 +47,7 @@ win.on('close', function(){
       logger.info('Wiping temp folder...');
       deleteFolderRecursive(config.TEMP_FOLDER);
     }catch(err){
-      
+
     }
     win.close(true);
 });

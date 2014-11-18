@@ -18,9 +18,10 @@ if (!fs.existsSync(tmpFolder)) {
   fs.mkdir(tmpFolder);
 }
 
-var DEBUG = process.env.DEBUG || true
+var DEBUG = process.env.DEBUG || false
 
 module.exports = {
   'DEBUG': DEBUG,
-  'TEMP_FOLDER': tmpFolder
+  'TEMP_FOLDER': tmpFolder,
+  'DIRNAME': __dirname
 };

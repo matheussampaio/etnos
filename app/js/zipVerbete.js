@@ -16,7 +16,14 @@ var Promise = require('promise');
 
 exports.zipVerbete = function(verbete) {
 
-  var folderpath = path.resolve(__dirname, verbete.path) + '/';
+  if (config.DEBUG) {
+    var folderpath = path.resolve(__dirname, verbete.path) + '/';
+  } else {
+    var folderpath = path.join(path.dirname(process.execPath), verbete.path);
+  }
+
+  logger.info('Ziping folder to ' + folderpath);
+
   var distpath = path.join(config.TEMP_FOLDER, verbete.path.slice(3));
   logger.log(distpath);
   var filename = 'verbete-' + verbete.id + '.zip';
@@ -27,6 +34,7 @@ exports.zipVerbete = function(verbete) {
     zip.zipFolder(folderpath, function (err) {
       if (err) {
         logger.error(err);
+        logger.error(folderpath);
         reject(err);
       } else {
         zip.writeToFile(path.join(distpath, filename));

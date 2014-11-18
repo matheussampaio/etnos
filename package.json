@@ -23,7 +23,7 @@
   },
   "scripts": {
     "prestart": "npm install",
-    "start": "nodewebkit"
+    "start": "DEBUG=true nodewebkit"
   },
   "devDependencies": {
     "node-webkit-builder": "^0.2.0",

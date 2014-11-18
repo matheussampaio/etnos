@@ -8,7 +8,7 @@ var filesBuild = [
   './app/css/**',
   './app/fonts/**',
   './app/img/**',
-  './app/js/dependencies/**',
+  './app/js/lib/**',
   './app/js/*.js',
   './app/partials/**',
   './app/verbetes/**',
@@ -17,6 +17,7 @@ var filesBuild = [
   './node_modules/jade-pdf-redline/**',
   './node_modules/mkdirp/**',
   './node_modules/promise/**',
+  './node_modules/winston/**',
   'package.json',
   'favicon.ico'
 ];
