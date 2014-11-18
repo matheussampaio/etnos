@@ -9,7 +9,7 @@ var logger = require('./js/log');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
 
-verbeteControllers.factory('MyService', function(){
+verbeteControllers.factory('Menu', function(){
   return {
     data: {
       showMenu: false,
@@ -21,7 +21,7 @@ verbeteControllers.factory('MyService', function(){
   };
 });
 
-verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'MyService', function ($scope, $http, $location, toaster, MyService) {
+verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'Menu', function ($scope, $http, $location, toaster, Menu) {
 
   $http.get('verbetes/verbetes.json').success( function (data) {
     $scope.verbetes = data;
@@ -44,7 +44,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
     }
   };
 
-  $scope.data = MyService.data;
+  $scope.data = Menu.data;
+  $scope.data.search = "";
 
   // if (process.platform === 'linux') {
   //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
@@ -69,7 +70,10 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', function ($scope, $routeParams, $http, $location, hotkeys) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'Menu', function ($scope, $routeParams, $http, $location, hotkeys, Menu) {
+
+  Menu.data.showMenu = false;
+
   $http.get('verbetes/verbetes.json').success( function (data) {
 
     $scope.verbeteDetail = data[$routeParams.verbeteId];
