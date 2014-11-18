@@ -22,11 +22,10 @@ exports.zipVerbete = function(verbete) {
     //zip a folder
     var zip = new EasyZip();
     zip.zipFolder(folderpath, function (err) {
-      if (err){
+      if (err) {
         console.error(err);
         reject(err);
-      }
-      else {
+      } else {
         zip.writeToFile(path.join(distpath, filename));
         verbete.zip = path.join(distpath, filename);
         verbete.zipname = filename;
