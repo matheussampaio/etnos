@@ -3,6 +3,7 @@ var logger = require('./js/log');
 
 // Load native UI library
 var config = require('./js/config');
+
 logger.warn(config);
 
 var gui = require('nw.gui');
@@ -40,12 +41,15 @@ var deleteFolderRecursive = function(folder) {
 
 // Wipe the tmpFolder when closing the app (this frees up disk space)
 win.on('close', function(){
-    logger.info('Closing app...');
+    try{
+      logger.info('Closing app...');
 
-    // @TODO: Wipe temp folder.
-    logger.info('Wiping temp folder...');
-    deleteFolderRecursive(config.TEMP_FOLDER);
-
+      // @TODO: Wipe temp folder.
+      logger.info('Wiping temp folder...');
+      deleteFolderRecursive(config.TEMP_FOLDER);
+    }catch(err){
+      
+    }
     win.close(true);
 });
 
