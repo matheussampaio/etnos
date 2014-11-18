@@ -1,4 +1,4 @@
-var config = require('./config.js').config;
+var config = require('./config').config;
 
 // os Object
 var os = require('os');
@@ -13,9 +13,6 @@ var fs = require('fs');
 var Promise = require('promise');
 
 var mkdirp = require('mkdirp');
-
-// TMP Folder
-var tmpFolder = path.join(os.tmpDir(), 'historia');
 var sys = require('sys')
 var exec = require('child_process').exec;
 
@@ -34,14 +31,6 @@ if (config.DEBUG) {
   if (isOSX)   { imageMagickPath = path.join(path.dirname(process.execPath),'/imagemagick-macos/bin/convert'); }
 }
 
-//create tmpfolder if not exits
-if (!fs.existsSync(os.tmpDir())) {
-  fs.mkdir(os.tmpDir());
-}
-
-if (!fs.existsSync(tmpFolder)) {
-  fs.mkdir(tmpFolder);
-}
 
 
 function convertImage (filepath, destpath) {
@@ -88,7 +77,7 @@ function convertImages (verbetePath, verbeteImages, foldername) {
 
 
 exports.convertVerbete = function (verbete) {
-  var foldername = path.join(tmpFolder, verbete.path.slice(6));
+  var foldername = path.join(config.TEMP_FOLDER, verbete.path.slice(3));
 
   return new Promise(function (fulfill, reject) {
     createFolder(foldername).then(
@@ -99,13 +88,13 @@ exports.convertVerbete = function (verbete) {
 
 
 exports.wipeTmpFolder = function() {
-  if (typeof tmpFolder != 'string') {
+  if (typeof config.TEMP_FOLDER != 'string') {
     return;
   }
 
-  fs.readdir(tmpFolder, function(err, files){
+  fs.readdir(config.TEMP_FOLDER, function(err, files){
     for (var i in files) {
-      fs.unlink(path.join(tmpFolder, files[i]));
+      fs.unlink(path.join(config.TEMP_FOLDER, files[i]));
     }
   });
 }

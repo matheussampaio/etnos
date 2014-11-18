@@ -1,12 +1,8 @@
 var path = require('path');
 
-var EasyZip = require('easy-zip').EasyZip;
-
+var config = require("./config").config;
 // os Object
 var os = require('os');
-
-// TMP Folder
-var tmpFolder = path.join(os.tmpDir(), 'historia');
 
 // Promise Object
 var Promise = require('promise');
@@ -17,13 +13,10 @@ var path = require('path');
 var jadepdf = require('jade-pdf-redline');
 var fs = require('fs');
 
-
-
-
 exports.create = function(verbete) {
 
   var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n'
-  var distpath = path.join(tmpFolder, verbete.path.slice(6));
+  var distpath = path.join(config.TEMP_FOLDER, verbete.path.slice(3));
   var filename = 'verbete-' + verbete.id + '.pdf';
   var filenamejade = 'verbete-' + verbete.id + '.jade';
 

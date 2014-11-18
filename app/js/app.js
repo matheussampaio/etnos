@@ -1,4 +1,6 @@
 // Load native UI library
+var config = require('./js/config').config;
+
 var gui = require('nw.gui');
 
 var win = gui.Window.get();
@@ -12,6 +14,18 @@ var path = require('path');
 // fs Object
 var fs = require('fs');
 
+var console = window.console;
+/*
+//create tmpfolder if not exits
+if (!fs.existsSync(os.tmpDir())) {
+  fs.mkdir(os.tmpDir());
+}
+var tmpFolder = path.join(os.tmpDir(), 'etnos');
+
+if (!fs.existsSync(tmpFolder)) {
+  fs.mkdir(tmpFolder);
+}
+*/
 // Focus the window when the app opens
 win.focus();
 
@@ -20,7 +34,6 @@ win.on('new-win-policy', function (frame, url, policy) {
     policy.ignore();
 });
 
-var tmpFolder = path.join(os.tmpDir(), 'historia');
 
 var deleteFolderRecursive = function(folder) {
     if ( fs.existsSync(folder) ) {
@@ -45,7 +58,7 @@ win.on('close', function(){
 
     // @TODO: Wipe temp folder.
     console.log('Wiping temp folder...');
-    deleteFolderRecursive(tmpFolder);
+    deleteFolderRecursive(config.TEMP_FOLDER);
 
     win.close(true);
 });
