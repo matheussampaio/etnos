@@ -18,7 +18,8 @@
     "mkdirp": "*",
     "promise": "~5.0.X",
     "easy-zip": "*",
-    "jade-pdf-redline": "*"
+    "jade-pdf-redline": "*",
+    "winston": "^0.8.3"
   },
   "scripts": {
     "prestart": "npm install",

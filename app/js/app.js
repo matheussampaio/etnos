@@ -1,31 +1,17 @@
+// Logger
+var logger = require('./js/log');
+
 // Load native UI library
-var config = require('./js/config').config;
+var config = require('./js/config');
+logger.warn(config);
 
 var gui = require('nw.gui');
 
 var win = gui.Window.get();
 
-// os Object
-var os = require('os');
-
-// path Object
-var path = require('path');
-
 // fs Object
 var fs = require('fs');
 
-var console = window.console;
-/*
-//create tmpfolder if not exits
-if (!fs.existsSync(os.tmpDir())) {
-  fs.mkdir(os.tmpDir());
-}
-var tmpFolder = path.join(os.tmpDir(), 'etnos');
-
-if (!fs.existsSync(tmpFolder)) {
-  fs.mkdir(tmpFolder);
-}
-*/
 // Focus the window when the app opens
 win.focus();
 
@@ -54,10 +40,10 @@ var deleteFolderRecursive = function(folder) {
 
 // Wipe the tmpFolder when closing the app (this frees up disk space)
 win.on('close', function(){
-    console.log('Closing app...');
+    logger.info('Closing app...');
 
     // @TODO: Wipe temp folder.
-    console.log('Wiping temp folder...');
+    logger.info('Wiping temp folder...');
     deleteFolderRecursive(config.TEMP_FOLDER);
 
     win.close(true);

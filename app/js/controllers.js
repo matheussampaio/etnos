@@ -4,8 +4,10 @@ var fs = require('fs');
 var pdf = require('./js/pdfCreator');
 var loadAudio = require('./js/loadAudio');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
+// Logger
+var logger = require('./js/log');
 
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
 
 verbeteControllers.factory('MyService', function(){
   return {
@@ -86,11 +88,11 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
         $scope.data.pdfname= pdffile.filename;
         $scope.$apply();
       },function(err){
-        console.error(err);
+        logger.error(err);
       });
 
     }, function (err) {
-      console.error(err);
+      logger.error(err);
     });
 
     zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
@@ -98,16 +100,16 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.data.zipname = verbete.zipname;
       $scope.$apply();
     }, function (err) {
-      console.error(err);
+      logger.error(err);
     });
 
 
     loadAudio.load(data[$routeParams.verbeteId]).done(function (audio) {
-      console.log(audio);
+      logger.info(audio);
       $scope.data.audio = audio;
       $scope.$apply();
     }, function (err) {
-      console.error(err);
+      logger.error(err);
     });
 
 
@@ -127,7 +129,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       combo: 'esc',
       description: 'Move to index',
       callback: function() {
-        console.log("Esc pressed, moving to index");
+        logger.info("Esc pressed, moving to index");
         $scope.removeZoomContainer();
         $location.path('/');
       }
@@ -136,7 +138,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       combo: 'l',
       description: 'Toggle Zoom',
       callback: function() {
-        console.log("Z pressed, togglin zoom");
+        logger.info("Z pressed, togglin zoom");
         $scope.toggleZoom();
       }
     })
@@ -144,7 +146,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       combo: 'ctrl+p',
       description: 'Print',
       callback: function() {
-        console.log("CTRL + P, Printing...");
+        logger.info("CTRL + P, Printing...");
         $scope.printPDF();
 
       }
@@ -153,7 +155,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       combo: '?',
       description: 'Help',
       callback: function() {
-        console.log("? pressed, showing help");
+        logger.info("? pressed, showing help");
       }
     });
 

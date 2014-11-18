@@ -4,6 +4,7 @@ var os = require('os');
 // path Object
 var path = require('path');
 
+// fs Object
 var fs = require('fs');
 
 var tmpFolder = path.join(os.tmpDir(), 'etnos');
@@ -17,7 +18,9 @@ if (!fs.existsSync(tmpFolder)) {
   fs.mkdir(tmpFolder);
 }
 
-exports.config = {
-  'DEBUG': process.env.DEBUG || true,
+var DEBUG = process.env.DEBUG || true
+
+module.exports = {
+  'DEBUG': DEBUG,
   'TEMP_FOLDER': tmpFolder
 };

@@ -1,6 +1,10 @@
+// Logger
+var logger = require('./log');
+
 var path = require('path');
 
-var config = require("./config").config;
+var config = require("./config");
+
 // os Object
 var os = require('os');
 
@@ -32,13 +36,13 @@ exports.create = function(verbete) {
      fs.createReadStream(path.join(distpath,filenamejade))
      .pipe(jadepdf())
      .pipe(fs.createWriteStream(path.join(distpath,filename)));
-     
+
 
      var pdf = {}
      pdf.filename = filename;
      pdf.filepath = path.join(distpath,filename);
-     
-     fulfill(pdf)     
+
+     fulfill(pdf)
    });
 
 
@@ -51,10 +55,10 @@ function createImgTag(pathname){
   return '    img(src="' + normalizepath(pathname) + '.png" width = "1000" height= "1400")\n'.replace("\\", "//");;
 }
 
-function normalizepath(pathname){ 
+function normalizepath(pathname){
   var temp = pathname.split(path.sep);
   var returned = ''
-  for (i = 0; i < temp.length; i++) { 
+  for (i = 0; i < temp.length; i++) {
     returned += temp[i];
     if( i != temp.length - 1)
       returned += '/'

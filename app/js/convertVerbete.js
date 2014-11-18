@@ -1,4 +1,7 @@
-var config = require('./config').config;
+// Logger
+var logger = require('./log');
+
+var config = require('./config');
 
 // os Object
 var os = require('os');
@@ -58,7 +61,7 @@ function convertImage (filepath, destpath) {
 
 
 function createFolder (foldername) {
-  console.log('Creating folder', foldername);
+  logger.info('Creating folder', foldername);
 
   return new Promise(function (fulfill, reject) {
    mkdirp(foldername, function (err) {
