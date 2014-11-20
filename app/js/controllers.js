@@ -7,7 +7,7 @@ var loadAudio = require('./js/loadAudio');
 // Logger
 var logger = require('./js/log');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate', 'ngScrollbar']);
 
 verbeteControllers.factory('Menu', function(){
   return {
@@ -186,12 +186,12 @@ verbeteControllers.directive('phResizable', ['$window', function ($window) {
   return function($scope) {
     $scope.initializeWindowSize = function() {
       $scope.windowHeight = $window.innerHeight;
-      return $scope.windowWidth = $window.innerWidth;
+      $scope.windowWidth = $window.innerWidth;
+      $scope.$apply()
     };
     $scope.initializeWindowSize();
     return angular.element($window).bind('resize', function() {
       $scope.initializeWindowSize();
-      return $scope.$apply();
     });
   };
 }]);

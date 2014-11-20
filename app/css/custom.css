@@ -10,7 +10,6 @@ html, body {
   background-image: url('../img/background.jpg');
 }
 .texto-info{
-  overflow: auto !important;
   padding: 2%;
   text-align: justify;
   text-justify: inter-word;
@@ -21,6 +20,9 @@ html, body {
   float: none;
 }
 
+.scrollme {
+  max-height: 200px;
+}
 
 body.snapjs-left .hide-when-open,
 body.snapjs-right .hide-when-open {
