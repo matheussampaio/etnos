@@ -187,11 +187,11 @@ verbeteControllers.directive('phResizable', ['$window', function ($window) {
     $scope.initializeWindowSize = function() {
       $scope.windowHeight = $window.innerHeight;
       $scope.windowWidth = $window.innerWidth;
-      $scope.$apply()
     };
     $scope.initializeWindowSize();
     return angular.element($window).bind('resize', function() {
       $scope.initializeWindowSize();
+      $scope.$apply()
     });
   };
 }]);

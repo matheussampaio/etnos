@@ -5,7 +5,7 @@
   "main": "app/index.html",
   "window": {
     "title": "Etnos",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
