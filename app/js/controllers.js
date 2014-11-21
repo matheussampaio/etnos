@@ -7,7 +7,7 @@ var loadAudio = require('./js/loadAudio');
 // Logger
 var logger = require('./js/log');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate', 'ngScrollbar']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
 
 verbeteControllers.factory('Menu', function(){
   return {

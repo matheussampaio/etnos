@@ -1,9 +1,5 @@
-html {
-    overflow: hidden;
-}
-
-body {
-  /*overflow: hidden;*/
+html, body {
+  overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -19,7 +15,7 @@ body {
   top: 10px;
   bottom: 10px;
   right: 20px;
-  overflow-y: hidden;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -46,6 +42,16 @@ body {
 
 ::-webkit-scrollbar-track-piece {
   background:transparent;
+}
+
+.min-padding {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.max-padding {
+  padding-left: 240px;
+  padding-right: 240px;
 }
 
 .texto-info{
