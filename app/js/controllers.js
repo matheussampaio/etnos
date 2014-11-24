@@ -180,7 +180,7 @@ verbeteControllers.directive('hyperlink', function () {
     restrict: 'E',
     transclude: true,
     scope: { href:'@' },
-    template: "<div><a ng-click='openURL(href)' ng-transclude></a></div>",
+    template: "<a ng-click='openURL(href)' ng-transclude></a>",
     link: function (scope, element) {
       scope.openURL = function (href) {
         gui.Shell.openExternal(href)

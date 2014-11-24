@@ -1,13 +1,19 @@
 <div ph-resizable class="container-fluid" data-snap-ignore="true">
-    <div class="row">
-
+    <div class="row scrollable">
         <div class="animate drawer drawer-open drawer-container col-xs-1 col-md-2 col-sm-3" ng-show="data.showMenu">
             <navbar></navbar>
         </div>
 
-        <div ng-class="{'col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : data.showMenu}" >
+        <div ng-class="{'col-md-10 col-sm-9 col-xs-11 col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : data.showMenu, 'col-md-12 col-sm-12 col-xs-12 centered' : !data.showMenu}" style="max-height: {{windowHeight }}px" class="texto-info">
 
-            <h1 class="animate-fadeInOut text-center" style="margin-top: {{(windowHeight / 3) - 50}}px;">Catalogo!</h1>
+            <div style="padding-left: {{windowWidth * 0.1}}px; padding-right: {{windowWidth * 0.1}}px">
+
+                <h1 class="text-center">CATALOGO</h1>
+
+                <p>Lorem ipsum Adipisicing Duis aute occaecat in amet minim Ut fugiat culpa et quis nulla et Duis non id do incididunt esse officia consequat proident est dolor ullamco cupidatat.</p>
+                <p>Lorem ipsum Minim proident sed esse labore cupidatat aliqua reprehenderit voluptate elit in dolore officia Excepteur dolore exercitation in minim id deserunt id commodo mollit consequat ea do Duis voluptate eu sed Ut sit dolor culpa minim enim pariatur.</p>
+
+            </div>
 
             <nav class="navbar navbar-default navbar-fixed-bottom copyright">
                 <ul class="nav navbar-nav navbar-left">
@@ -18,7 +24,7 @@
                     </li>
                 </ul>
             </nav>
-
         </div>
+
     </div>
 </div>
