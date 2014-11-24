@@ -9,7 +9,7 @@ var logger = require('./js/log');
 
 var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
 
-verbeteControllers.factory('Menu', function(){
+verbeteControllers.factory('Menu', function() {
   return {
     data: {
       showMenu: false,
@@ -167,6 +167,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 }]);
 
 
+
 verbeteControllers.controller("MenuCtrl", function ($scope, $location) {
   $scope.menuClass = function(page) {
     var current = $location.path().substring(1);
@@ -174,6 +175,19 @@ verbeteControllers.controller("MenuCtrl", function ($scope, $location) {
   };
 });
 
+verbeteControllers.directive('hyperlink', function () {
+  return {
+    restrict: 'E',
+    transclude: true,
+    scope: { href:'@' },
+    template: "<div><a ng-click='openURL(href)' ng-transclude></a></div>",
+    link: function (scope, element) {
+      scope.openURL = function (href) {
+        gui.Shell.openExternal(href)
+      }
+    }
+  };
+});
 
 verbeteControllers.directive('navbar', function() {
   return {
