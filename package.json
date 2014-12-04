@@ -5,7 +5,7 @@
   "main": "app/index.html",
   "window": {
     "title": "Etnos",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -19,7 +19,8 @@
     "promise": "~5.0.X",
     "easy-zip": "*",
     "jade-pdf-redline": "*",
-    "winston": "^0.8.3"
+    "winston": "^0.8.3",
+    "q": "^1.1.2"
   },
   "scripts": {
     "prestart": "npm install",

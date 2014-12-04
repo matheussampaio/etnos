@@ -7,7 +7,7 @@ var loadAudio = require('./js/loadAudio');
 // Logger
 var logger = require('./js/log');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate']);
+var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate', 'ngProgress']);
 
 verbeteControllers.factory('Menu', function() {
   return {
@@ -77,7 +77,7 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 }]);
 
 
-verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'Menu', function ($scope, $routeParams, $http, $location, hotkeys, Menu) {
+verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'Menu', 'ngProgress', function ($scope, $routeParams, $http, $location, hotkeys, Menu, ngProgress) {
 
   Menu.data.showMenu = false;
 
@@ -89,21 +89,32 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
 
     $scope.data = {};
 
-    convert.convertVerbete(data[$routeParams.verbeteId]).done(function (results) {
+    ngProgress.set(1);
+    ngProgress.color('white')
+    ngProgress.height('8px')
+
+    convert.convertVerbete(data[$routeParams.verbeteId], $scope).done(function (results) {
       $scope.verbeteDetail.converted = results;
       data[$routeParams.verbeteId].converted = results
+      ngProgress.complete()
       $scope.$apply();
 
       pdf.create(data[$routeParams.verbeteId]).done(function(pdffile){
-        $scope.data.pdfpath= pdffile.filepath;
-        $scope.data.pdfname= pdffile.filename;
+        $scope.data.pdfpath = pdffile.filepath;
+        $scope.data.pdfname = pdffile.filename;
         $scope.$apply();
+
       },function(err){
-        logger.error(err);
+        logger.error(err.stack);
       });
 
     }, function (err) {
-      logger.error(err);
+      logger.error(err.stack);
+    }, function (progress) {
+      var value = progress.length * 100 / data[$routeParams.verbeteId].images.length;
+      ngProgress.set(value);
+      $scope.verbeteDetail.converted = progress;
+      $scope.$apply();
     });
 
     zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
@@ -111,7 +122,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.data.zipname = verbete.zipname;
       $scope.$apply();
     }, function (err) {
-      logger.error(err);
+      logger.error(err.stack);
     });
 
 
@@ -120,7 +131,7 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.data.audio = audio;
       $scope.$apply();
     }, function (err) {
-      logger.error(err);
+      logger.error(err.stack);
     });
 
 

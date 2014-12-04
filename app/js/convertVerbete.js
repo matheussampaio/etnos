@@ -15,6 +15,8 @@ var fs = require('fs');
 // Promise Object
 var Promise = require('promise');
 
+var Q = require('q');
+
 var mkdirp = require('mkdirp');
 var exec = require('child_process').exec;
 
@@ -77,19 +79,14 @@ function createFolder (foldername) {
 }
 
 
-function seq() {
-
-}
-
-
-function convertImages (fulfill, reject, verbetePath, verbeteImages, foldername, result) {
+function convertImages (deferred, verbetePath, verbeteImages, foldername, result) {
     if (verbeteImages.length == 0) {
         logger.warn('convert finished : ' + result.length);
-        fulfill(result);
+        deferred.resolve(result);
     } else {
 
-        var min = 5;
-        var max = 10;
+        var min = 1;
+        var max = 5;
 
         var max_length = Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -97,26 +94,34 @@ function convertImages (fulfill, reject, verbetePath, verbeteImages, foldername,
         logger.info('converting group : ' + verbeteImages.slice(0, max_index));
 
         var groupPromise = new Promise.all(verbeteImages.slice(0, max_index).map(function (img) {
-            return convertImage(path.join(verbetePath, img + '.tif'), path.join(foldername, img + '.png'));
+            var filepath = path.join(verbetePath, img + '.tif');
+            var destpath = path.join(foldername, img + '.png');
+
+            return convertImage(filepath, destpath);
         })).then( function (value) {
             value.forEach(function (item) {
                 result.push(item);
             });
 
-            convertImages(fulfill, reject, verbetePath, verbeteImages.slice(max_index), foldername, result);
+            deferred.notify(result);
+
+            convertImages(deferred, verbetePath, verbeteImages.slice(max_index), foldername, result);
         }, function (error) {
-            reject(error);
+            deferred.reject(error);
         });
     }
 }
 
 
-exports.convertVerbete = function (verbete, $scope) {
+exports.convertVerbete = function (verbete) {
+    // use Q.defer() to create a deferred.
+    var deferred = Q.defer();
+
     var foldername = path.join(config.TEMP_FOLDER, verbete.path.slice(3));
 
-    return new Promise(function (fulfill, reject) {
-        createFolder(foldername).then(
-            convertImages(fulfill, reject, verbete.path, verbete.images, foldername, [])
-        );
-    });
+    createFolder(foldername).then(
+        convertImages(deferred, verbete.path, verbete.images, foldername, [])
+    );
+
+    return deferred.promise;
 }
