@@ -29,23 +29,23 @@ var format = function (unformat) {
 var parent_dir = '/home/matheussampaio'
 var dir_name = 'historia_indigena'
 
-var rename = function(parent, folder) {
+var formatNames = function(parent, folder) {
   var old_folder = path.join(parent, folder);
   var new_folder = path.join(parent, format(folder));
 
   // Renomeia o arquivo.
   fs.renameSync(old_folder , new_folder);
 
-  // Se for diretorio, ler os arquivos filhos e chama recursivamente o rename para cada arquivo filho.
+  // Se for diretorio, ler os arquivos filhos e chama recursivamente o formatNames para cada arquivo filho.
   if (fs.lstatSync(new_folder).isDirectory()) {
     var files = fs.readdirSync(new_folder);
 
     for (var i in files) {
-      rename(new_folder, files[i]);
+      formatNames(new_folder, files[i]);
     }
   }
 }
 
-rename(parent_dir, dir_name);
+formatNames(parent_dir, dir_name);
 
 console.log("Folder's name formated.");

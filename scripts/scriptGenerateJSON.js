@@ -19,7 +19,7 @@ var rename = function(parent, folder) {
   }
 }
 
-/** aqui **/
+/** Inicio do codigo para ordenação das pastas de acordo com a ordem alfabetica **/
 function strcmp(a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
 }
@@ -43,27 +43,37 @@ function natcmp(a, b) {
 
     return 0;
 }
-/** ate aqui **/
+/** Fim do codigo para ordenação das pastas de acordo com a ordem alfabetica **/
 
 if (process.argv.length < 3) {
-  console.error("ERROR");
+  console.error("ERROR, missing args");
   return;
 }
 
-var parent_dir = process.argv[2];
+// Caminho do diretorio raiz dos verbetes
+var root_path = process.argv[2];
 
+// Criando JSON que irá possuir os verbetes
 var json = {};
 
-var files = fs.readdirSync(parent_dir).sort(natcmp);
+// Leitura sincronizada da paste raiz dos verbetes
+var root_folder = fs.readdirSync(root_path).sort(natcmp);
 
-for (i in files) {
-  var verbete_folder = path.join(parent_dir, files[i]);
-  var subfiles = fs.readdirSync(verbete_folder);
+// Para cada pasta (estado) no diretorio raiz dos verbetes
+for (i in root_folder) {
+  var estado_path = path.join(root_path, root_folder[i]);
+  var estado_folder = fs.readdirSync(estado_path);
 
-  for (j in subfiles) {
-    var verbeteFiles = fs.readdirSync(path.join(verbete_folder, subfiles[j])).sort(natcmp);
+  // Para cada verbete dentro do estado
+  for (j in estado_folder) {
+    var verbete_folder = fs.readdirSync(path.join(estado_path, estado_folder[j])).sort(natcmp);
 
-    json[subfiles[j]] = { 'id' : subfiles[j], 'images': verbeteFiles, 'path': '../files/' + files[i] + '/' + subfiles[j], "snippet": "Verbete " + subfiles[j] + ".", "converted": []};
+    json[estado_folder[j]] = {
+      'id' : estado_folder[j],
+      'images': verbete_folder,
+      'path': '../files/' + root_folder[i] + '/' + estado_folder[j],
+      "converted": []
+    };
 
   }
 }

@@ -21,6 +21,11 @@ verbeteControllers.factory('Menu', function() {
   };
 });
 
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'Menu', function ($scope, $http, $location, toaster, Menu) {
 
   $http.get('verbetes/verbetes.json').success( function (data) {
@@ -28,6 +33,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
   });
 
   $scope.go = function(verbete) {
+    verbete = zeroPad(verbete, 5);
+
     if ($scope.verbetes[verbete] == undefined) {
       toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
     } else {

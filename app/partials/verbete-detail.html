@@ -1,7 +1,7 @@
 <div ph-resizable class="focus" style="height: {{windowHeight}}px;">
 
   <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
-    <ul rn-carousel rn-carousel-indicator rn-carousel-control class="no-drag">
+    <ul rn-carousel rn-carousel-indicator rn-carousel-control rn-carousel-buffered class="no-drag">
       <li ng-repeat="image in verbeteDetail.converted" >
         <img ph-elevate-zoom zoom-image="{{image}}" ng-show="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
         <img ng-hide="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">

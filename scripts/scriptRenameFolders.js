@@ -6,7 +6,15 @@ var rename = function(parent, folder, new_name) {
   var new_folder = path.join(parent, new_name);
 
   // Renomeia o arquivo.
-  fs.renameSync(old_folder , new_folder);
+  if (old_folder != new_folder) {
+    fs.renameSync(old_folder , new_folder);
+  }
+
+}
+
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
 }
 
 /** aqui **/
@@ -40,32 +48,41 @@ if (process.length < 5) {
   console.error('Numero de argumentos errados.');
 } else {
   var parent_dir = process.argv[2]
-  var num_begin = process.argv[3];
+  var bk_num_begin = num_begin = process.argv[3];
   var num_end = process.argv[4];
 
   var files = fs.readdirSync(parent_dir);
   files = files.sort(natcmp);
 
-
   for (i in files) {
+    var new_name = zeroPad(num_begin, 5)
+    num_begin++;
 
-    var verbete_folder = path.join(parent_dir, files[i]);
+    rename(parent_dir, files[i],  new_name);
+
+    var verbete_folder = path.join(parent_dir, new_name);
 
     var tifs = fs.readdirSync(verbete_folder);
 
-    var count_tifs = 1;
+    var count_tifs = 0;
 
     for (j in tifs) {
-      rename(verbete_folder, tifs[j], count_tifs++ + '.tif');
+      // console.log(j)
+      count_tifs++;
+
+      rename(verbete_folder, tifs[j], zeroPad(count_tifs, 5) + '.tif');
     }
-     rename(parent_dir, files[i], '' + num_begin++);
+
+    // if (count_tifs - tifs.length != 0) {
+    //   console.error('error', parent_dir, 'tifs renamed dont match:', count_tifs, tifs.length);
+    // } else {
+    //   console.log(count_tifs, tifs.length)
+    // }
 
   }
 
-  num_begin--;
-
-  if (num_begin != num_end) {
-    console.error(parent_dir.split('/')[4], " ERROR", 'Numero de arquivos alterados errado. Deveria ter alterado ', num_end, ' porem alterou ', num_begin, '.');
+  if (num_begin - num_end != bk_num_begin) {
+    console.error(parent_dir.split('/')[4], " ERROR", 'Numero de arquivos alterados errado. Deveria ter alterado ', num_end, ' porem alterou ', num_begin - bk_num_begin, '.');
   } else {
     console.log(parent_dir.split('/')[4], " renamed");
   }
