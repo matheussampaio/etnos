@@ -84,18 +84,26 @@ function seq() {
 
 function convertImages (fulfill, reject, verbetePath, verbeteImages, foldername, result) {
     if (verbeteImages.length == 0) {
+        logger.warn('convert finished : ' + result.length);
         fulfill(result);
     } else {
 
-        var filepath = path.join(verbetePath, verbeteImages[0] + '.tif');
-        var destpath = path.join(foldername, verbeteImages[0] + '.png');
+        var min = 5;
+        var max = 10;
 
-        result.push(destpath);
+        var max_length = Math.floor(Math.random() * (max - min + 1)) + min;
 
-        logger.info('converting ' + verbeteImages[0]);
+        var max_index = verbeteImages.length > max_length ? max_length : verbeteImages.length;
+        logger.info('converting group : ' + verbeteImages.slice(0, max_index));
 
-        convertImage(filepath, destpath).then( function () {
-            convertImages(fulfill, reject, verbetePath, verbeteImages.slice(1), foldername, result);
+        var groupPromise = new Promise.all(verbeteImages.slice(0, max_index).map(function (img) {
+            return convertImage(path.join(verbetePath, img + '.tif'), path.join(foldername, img + '.png'));
+        })).then( function (value) {
+            value.forEach(function (item) {
+                result.push(item);
+            });
+
+            convertImages(fulfill, reject, verbetePath, verbeteImages.slice(max_index), foldername, result);
         }, function (error) {
             reject(error);
         });
@@ -103,7 +111,7 @@ function convertImages (fulfill, reject, verbetePath, verbeteImages, foldername,
 }
 
 
-exports.convertVerbete = function (verbete) {
+exports.convertVerbete = function (verbete, $scope) {
     var foldername = path.join(config.TEMP_FOLDER, verbete.path.slice(3));
 
     return new Promise(function (fulfill, reject) {
