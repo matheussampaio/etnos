@@ -13,7 +13,7 @@ winston.add(winston.transports.File, {
     return '[' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + ']';
   },
   json: false,
-  maxsize: 1024 * 10
+  maxsize: 1024 * 1024 * 1
 });
 
 winston.remove(winston.transports.Console);

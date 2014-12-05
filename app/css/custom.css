@@ -116,6 +116,12 @@ body.snapjs-right .hide-when-open {
   color: white !important;
 }
 
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: #555 !important;
+}
+
 .nav.navbar-nav.navbar-right {
   margin-right: 16px;
 }

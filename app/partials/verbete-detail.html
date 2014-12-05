@@ -50,9 +50,14 @@
           <i class="btn fa fa-2x fa-download"></i> <p class="text-center">Salvar</p>
         </a>
       </li>
-      <li>
+      <li ng-show="complete">
         <a target="_self" href="{{data.pdfpath}}" download="{{data.pdfname}}">
           <i class="btn fa fa-2x fa-print"></i> <p class="text-center">Imprimir</p>
+        </a>
+      </li>
+      <li ng-hide="complete">
+        <a href="" class="disabled">
+          <i class="btn fa fa-2x fa-print disabled"></i> <p class="text-center">Imprimir</p>
         </a>
       </li>
     </ul>

@@ -93,10 +93,13 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     ngProgress.color('white')
     ngProgress.height('8px')
 
+    $scope.complete = false;
+
     convert.convertVerbete(data[$routeParams.verbeteId], $scope).done(function (results) {
       $scope.verbeteDetail.converted = results;
       data[$routeParams.verbeteId].converted = results
       ngProgress.complete()
+      $scope.complete = true;
       $scope.$apply();
 
       pdf.create(data[$routeParams.verbeteId]).done(function(pdffile){
