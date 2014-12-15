@@ -54,13 +54,20 @@ html, body {
   padding-right: 240px;
 }
 
-.texto-info{
+.texto-info {
   padding: 2%;
   text-align: justify;
   text-justify: inter-word;
+  font-family: "Times New Roman", Georgia, Serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-.centered{
+.texto-info h1 {
+  line-height: 3 !important;
+}
+
+.centered {
   margin: 0 auto;
   float: none;
 }
@@ -74,7 +81,7 @@ body.snapjs-right .hide-when-open {
   display: none;
 }
 
-.controls{
+.controls {
   height:80px;
   border: none;
   background-color: rgba(0, 0, 0, 0.6);
@@ -84,11 +91,11 @@ body.snapjs-right .hide-when-open {
   background-color: rgba(0, 0, 0, 0);
 }
 
-.drag{
+.drag {
   -webkit-app-region: drag
 }
 
-.no-drag{
+.no-drag {
   -webkit-app-region: no-drag
 }
 
@@ -245,7 +252,7 @@ a.disabled {
   display:none
 }
 
-.drawer-container{
+.drawer-container {
   /*display:none;*/
   height:100%;
   overflow: auto;
@@ -255,11 +262,11 @@ a.disabled {
   padding:15px 0
 }
 
-.drawer-container::scrollbar{
+.drawer-container::scrollbar {
   display:none
 }
 
-.drawer-transition .drawer-container{
+.drawer-transition .drawer-container {
   display:block;
   width:280px
 }
@@ -282,7 +289,7 @@ a.disabled {
 .drawer-list-item {
   font-family: "Open Sans","Myriad Pro","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 13px;
   color: #909090;
   line-height: 1
 }
