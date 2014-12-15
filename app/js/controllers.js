@@ -103,8 +103,8 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
     $scope.data = {};
 
     ngProgress.set(1);
-    ngProgress.color('white')
-    ngProgress.height('8px')
+    ngProgress.color('#0067bd')
+    ngProgress.height('6px')
 
     $scope.complete = false;
 

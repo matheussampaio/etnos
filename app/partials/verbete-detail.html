@@ -24,7 +24,9 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <audio ng-src="{{data.audio}}" controls type="audio/ogg"></audio>
+                <div class="audio">
+                    <audio ng-src="{{data.audio}}" controls type="audio/ogg"></audio>
+                </div>
             </li>
             <li>
                 <a ng-class="{ 'active' : zoomActive }">

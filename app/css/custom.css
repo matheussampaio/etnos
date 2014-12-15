@@ -81,7 +81,7 @@ body.snapjs-right .hide-when-open {
 .controls {
   height:80px;
   border: none;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #141313;
 }
 
 .transparent {
@@ -335,4 +335,10 @@ a.disabled {
   text-align: left;
   font-size: 22px;
   width: 1.2857142857142858em
+}
+
+/* Audio */
+
+.audio {
+  padding-top: 22px;
 }
