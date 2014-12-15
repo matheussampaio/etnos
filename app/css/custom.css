@@ -1,14 +1,11 @@
 html, body {
   overflow: hidden;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   height: 100%;
   background-image: url('../img/background.jpg');
 }
+
+.nav, .pagination, .carousel, .panel-title a, hyperlink { cursor: pointer; }
 
 .scrollable {
   position: absolute;
@@ -183,8 +180,6 @@ a.disabled {
 .super-rounded {
   border-radius: 20px !important;
 }
-
-
 
 /* Side Menu */
 

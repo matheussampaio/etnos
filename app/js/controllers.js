@@ -6,7 +6,14 @@ var loadAudio = require('./js/loadAudio');
 // Logger
 var logger = require('./js/log');
 
-var verbeteControllers = angular.module('verbeteControllers', ['angular-carousel', 'toaster', 'cfp.hotkeys', 'ngAnimate', 'ngProgress']);
+var verbeteControllers = angular.module('verbeteControllers', [
+  'angular-carousel',
+  'cfp.hotkeys',
+  'ngAnimate',
+  'ngProgress',
+  'toaster',
+  'ui.bootstrap'
+]);
 
 verbeteControllers.factory('Menu', function() {
   return {
@@ -31,15 +38,22 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
     $scope.verbetes = data;
   });
 
-  $scope.go = function(verbete) {
+  $scope.alert = {};
+
+  $scope.search = function(verbete) {
     verbete = zeroPad(verbete, 5);
 
     if ($scope.verbetes[verbete] == undefined) {
-      toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
+      $scope.alert.msg = 'Verbete ' + verbete + ' não encontrado.';
+      $scope.alert.show = true;
+      // toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
     } else {
       $location.path('/verbete/' + verbete);
     }
+  }
 
+  $scope.closeAlert = function() {
+    $scope.alert.show = false;
   }
 
   $scope.pop = function(err){

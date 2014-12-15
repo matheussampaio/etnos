@@ -14,13 +14,16 @@
       <form class="form-horizontal" role="form" name="searchVerbete" style="margin-top: 50px;">
         <div class="form-group">
           <div class="col-sm-6 col-sm-offset-3 col-md-2 col-md-offset-5">
-            <input class="form-control super-rounded" type="text" ng-model="data.search" ng-pattern="/^\d+$/" ng-minlength="1" ng-maxlength="7" placeholder="Digite o número do verbete." title="Número do Verbete" required autofocus />
+
+            <alert class="alert alert-danger" ng-show="alert.show" close="closeAlert()">{{alert.msg}}</alert>
+
+            <input class="form-control super-rounded" type="text" ng-model="data.search" ng-pattern="/^[1-9][0-9]*$/" ng-minlength="1" ng-maxlength="7" placeholder="Digite o número do verbete." title="Número do Verbete" required autofocus />
           </div>
         </div>
 
         <div class="form-group">
           <div class="text-center">
-            <button type="submit" class="btn btn-default" ng-click="go(data.search)" ng-hide="searchVerbete.$invalid">Pesquisar</button>
+            <button type="submit" class="btn btn-primary" ng-click="search(data.search)" ng-hide="searchVerbete.$invalid">Pesquisar</button>
           </div>
         </div>
       </form>
