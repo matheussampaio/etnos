@@ -1,5 +1,4 @@
 var convert = require('./js/convertVerbete');
-var zipVerbete = require('./js/zipVerbete');
 var fs = require('fs');
 var pdf = require('./js/pdfCreator');
 var loadAudio = require('./js/loadAudio');
@@ -119,15 +118,6 @@ verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$
       $scope.verbeteDetail.converted = progress;
       $scope.$apply();
     });
-
-    zipVerbete.zipVerbete(data[$routeParams.verbeteId]).done(function (verbete) {
-      $scope.data.zip = verbete.zip;
-      $scope.data.zipname = verbete.zipname;
-      $scope.$apply();
-    }, function (err) {
-      logger.error(err.stack);
-    });
-
 
     loadAudio.load(data[$routeParams.verbeteId]).done(function (audio) {
       logger.info(audio);
