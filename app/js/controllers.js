@@ -11,8 +11,11 @@ var verbeteControllers = angular.module('verbeteControllers', [
   'cfp.hotkeys',
   'ngAnimate',
   'ngProgress',
+  'panzoom',
+  'panzoomwidget',
   'toaster',
   'ui.bootstrap'
+
 ]);
 
 verbeteControllers.factory('Menu', function() {
@@ -91,6 +94,8 @@ verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location'
 
 
 verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'Menu', 'ngProgress', function ($scope, $routeParams, $http, $location, hotkeys, Menu, ngProgress) {
+  $scope.panzoomConfig = {};
+  $scope.panzoomModel = {};
 
   Menu.data.showMenu = false;
 
