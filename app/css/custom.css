@@ -1,6 +1,7 @@
 html, body {
   overflow: hidden;
   -webkit-touch-callout: none;
+  -webkit-user-select: none;
   height: 100%;
   background-image: url('../img/background.jpg');
 }
@@ -52,6 +53,7 @@ html, body {
 }
 
 .texto-info {
+  -webkit-user-select: initial;
   padding: 2%;
   text-align: justify;
   text-justify: inter-word;
