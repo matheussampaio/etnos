@@ -3,13 +3,8 @@
     <div ng-show="verbeteDetail.converted" class="animate-fadeInOut">
         <ul rn-carousel rn-carousel-indicator rn-carousel-control rn-carousel-buffered class="no-drag">
             <li ng-repeat="image in verbeteDetail.converted" >
-                <panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>
-               <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel"  style="width:800px; height: 600px">
-                    <img ng-src="{{image}}" style="position:absolute">
-                <!--
                 <img ph-elevate-zoom zoom-image="{{image}}" ng-show="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
                 <img ng-hide="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
-            --></panzoom>
             </li>
         </ul>
     </div>
