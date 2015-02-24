@@ -7,249 +7,249 @@ var loadAudio = require('./js/loadAudio');
 var logger = require('./js/log');
 
 var verbeteControllers = angular.module('verbeteControllers', [
-  'angular-carousel',
-  'cfp.hotkeys',
-  'ngAnimate',
-  'ngProgress',
-  'toaster',
-  'ui.bootstrap'
+    'angular-carousel',
+    'cfp.hotkeys',
+    'ngAnimate',
+    'ngProgress',
+    'toaster',
+    'ui.bootstrap'
 ]);
 
 verbeteControllers.factory('Menu', function() {
-  return {
-    data: {
-      showMenu: false,
-      toggleMenu: function() {
-        this.showMenu = !this.showMenu;
-      }
-    }
-    // Other methods or objects can go here
-  };
+    return {
+        data: {
+            showMenu: false,
+            toggleMenu: function() {
+                this.showMenu = !this.showMenu;
+            }
+        }
+        // Other methods or objects can go here
+    };
 });
 
 function zeroPad(num, places) {
-  var zero = places - num.toString().length + 1;
-  return Array(+(zero > 0 && zero)).join("0") + num;
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
 }
 
 verbeteControllers.controller('VerbeteListCtrl', ['$scope', '$http', '$location', 'toaster', 'Menu', function ($scope, $http, $location, toaster, Menu) {
 
-  $http.get('verbetes/verbetes.json').success( function (data) {
-    $scope.verbetes = data;
-  });
+    $http.get('verbetes/verbetes.json').success( function (data) {
+        $scope.verbetes = data;
+    });
 
-  $scope.alert = {};
+    $scope.alert = {};
 
-  $scope.search = function(verbete) {
-    verbete = zeroPad(verbete, 5);
+    $scope.search = function(verbete) {
+        verbete = zeroPad(verbete, 5);
 
-    if ($scope.verbetes[verbete] == undefined) {
-      $scope.alert.msg = 'Verbete ' + verbete + ' não encontrado.';
-      $scope.alert.show = true;
-      // toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
-    } else {
-      $location.path('/verbete/' + verbete);
+        if ($scope.verbetes[verbete] == undefined) {
+            $scope.alert.msg = 'Verbete ' + verbete + ' não encontrado.';
+            $scope.alert.show = true;
+            // toaster.pop('error', 'Verbete ' + verbete + ' não encontrado.', '', 5000, 'trustedHtml');
+        } else {
+            $location.path('/verbete/' + verbete);
+        }
     }
-  }
 
-  $scope.closeAlert = function() {
-    $scope.alert.show = false;
-  }
-
-  $scope.pop = function(err){
-    if (err) {
-      toaster.pop('error', "Erro na instalação", 'Não será possível visualizar as imagens.', 5000, 'trustedHtml');
-    } else {
-      toaster.pop('success', "Dependências instaladas.", 'Todas as dependências foram instaladas com sucesso.', 5000, 'trustedHtml');
+    $scope.closeAlert = function() {
+        $scope.alert.show = false;
     }
-  };
 
-  $scope.data = Menu.data;
-  $scope.data.search = "";
+    $scope.pop = function(err){
+        if (err) {
+            toaster.pop('error', "Erro na instalação", 'Não será possível visualizar as imagens.', 5000, 'trustedHtml');
+        } else {
+            toaster.pop('success', "Dependências instaladas.", 'Todas as dependências foram instaladas com sucesso.', 5000, 'trustedHtml');
+        }
+    };
 
-  // if (process.platform === 'linux') {
-  //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
-  //       if (!exists) {
-  //         var cmd = "pkexec cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/";
-  //         var exec = require('child_process').exec;
+    $scope.data = Menu.data;
+    $scope.data.search = "";
 
-  //         exec(cmd, function (err) {
-  //           $scope.install = true;
-  //           $scope.err = err;
-  //           $scope.$apply();
-  //         });
-  //       }
-  //   });
-  // }
+    // if (process.platform === 'linux') {
+    //   fs.exists('/usr/lib/libtiff.so.5', function(exists) {
+    //       if (!exists) {
+    //         var cmd = "pkexec cp ./app/js/imagemagick-linux/libtiff.so.5 /usr/lib/";
+    //         var exec = require('child_process').exec;
 
-  // $scope.$watch('install', function () {
-  //   if ($scope.install)
-  //     $scope.pop($scope.err);
-  // });
+    //         exec(cmd, function (err) {
+    //           $scope.install = true;
+    //           $scope.err = err;
+    //           $scope.$apply();
+    //         });
+    //       }
+    //   });
+    // }
+
+    // $scope.$watch('install', function () {
+    //   if ($scope.install)
+    //     $scope.pop($scope.err);
+    // });
 
 }]);
 
 
 verbeteControllers.controller('VerbeteDetailCtrl', ['$scope', '$routeParams', '$http', '$location', 'hotkeys', 'Menu', 'ngProgress', function ($scope, $routeParams, $http, $location, hotkeys, Menu, ngProgress) {
 
-  Menu.data.showMenu = false;
+    Menu.data.showMenu = false;
 
-  $http.get('verbetes/verbetes.json').success( function (data) {
+    $http.get('verbetes/verbetes.json').success( function (data) {
 
-    $scope.verbeteDetail = data[$routeParams.verbeteId];
+        $scope.verbeteDetail = data[$routeParams.verbeteId];
 
-    $scope['zoomActive'] = false;
+        $scope['zoomActive'] = false;
 
-    $scope.data = {};
+        $scope.data = {};
 
-    ngProgress.set(1);
-    ngProgress.color('#0067bd')
-    ngProgress.height('6px')
+        ngProgress.set(1);
+        ngProgress.color('#0067bd')
+        ngProgress.height('6px')
 
-    $scope.complete = false;
+        $scope.complete = false;
 
-    convert.convertVerbete(data[$routeParams.verbeteId], $scope).done(function (results) {
-      $scope.verbeteDetail.converted = results;
-      data[$routeParams.verbeteId].converted = results
-      ngProgress.complete()
-      $scope.complete = true;
-      $scope.$apply();
+        convert.convertVerbete(data[$routeParams.verbeteId], $scope).done(function (results) {
+            $scope.verbeteDetail.converted = results;
+            data[$routeParams.verbeteId].converted = results
+            ngProgress.complete()
+            $scope.$apply();
 
-      pdf.create(data[$routeParams.verbeteId]).done(function(pdffile){
-        $scope.data.pdfpath = pdffile.filepath;
-        $scope.data.pdfname = pdffile.filename;
-        $scope.$apply();
+            pdf.create(data[$routeParams.verbeteId]).done(function(pdffile) {
+                $scope.data.pdfpath = pdffile.filepath;
+                $scope.data.pdfname = pdffile.filename;
+                $scope.complete = true;
+                $scope.$apply();
 
-      },function(err){
-        logger.error(err.stack);
-      });
+            },function(err){
+                logger.error(err.stack);
+            });
 
-    }, function (err) {
-      logger.error(err.stack);
-    }, function (progress) {
-      var value = progress.length * 100 / data[$routeParams.verbeteId].images.length;
-      ngProgress.set(value);
-      $scope.verbeteDetail.converted = progress;
-      $scope.$apply();
+        }, function (err) {
+            logger.error(err.stack);
+        }, function (progress) {
+            var value = progress.length * 100 / data[$routeParams.verbeteId].images.length;
+            ngProgress.set(value);
+            $scope.verbeteDetail.converted = progress;
+            $scope.$apply();
+        });
+
+        loadAudio.load(data[$routeParams.verbeteId]).done(function (audio) {
+            logger.info(audio);
+            $scope.data.audio = audio;
+            $scope.$apply();
+        }, function (err) {
+            logger.error(err.stack);
+        });
+
+
+        $scope.removeZoomContainer = function() {
+            $('.zoomContainer').remove();
+        }
+
+        $scope.toggleZoom = function() {
+            $scope.zoomActive = !$scope.zoomActive;
+        }
+
+        $scope.printPDF = function() {
+        }
+
+        hotkeys.bindTo($scope)
+        .add({
+            combo: 'esc',
+            description: 'Move to index',
+            callback: function() {
+                logger.info("Esc pressed, moving to index");
+                $scope.removeZoomContainer();
+                $location.path('/');
+            }
+        })
+        .add({
+            combo: 'l',
+            description: 'Toggle Zoom',
+            callback: function() {
+                logger.info("Z pressed, togglin zoom");
+                $scope.toggleZoom();
+            }
+        })
+        .add({
+            combo: 'ctrl+p',
+            description: 'Print',
+            callback: function() {
+                logger.info("CTRL + P, Printing...");
+                $scope.printPDF();
+
+            }
+        })
+        .add({
+            combo: '?',
+            description: 'Help',
+            callback: function() {
+                logger.info("? pressed, showing help");
+            }
+        });
+
     });
-
-    loadAudio.load(data[$routeParams.verbeteId]).done(function (audio) {
-      logger.info(audio);
-      $scope.data.audio = audio;
-      $scope.$apply();
-    }, function (err) {
-      logger.error(err.stack);
-    });
-
-
-    $scope.removeZoomContainer = function() {
-      $('.zoomContainer').remove();
-    }
-
-    $scope.toggleZoom = function() {
-      $scope.zoomActive = !$scope.zoomActive;
-    }
-
-    $scope.printPDF = function() {
-    }
-
-    hotkeys.bindTo($scope)
-    .add({
-      combo: 'esc',
-      description: 'Move to index',
-      callback: function() {
-        logger.info("Esc pressed, moving to index");
-        $scope.removeZoomContainer();
-        $location.path('/');
-      }
-    })
-    .add({
-      combo: 'l',
-      description: 'Toggle Zoom',
-      callback: function() {
-        logger.info("Z pressed, togglin zoom");
-        $scope.toggleZoom();
-      }
-    })
-    .add({
-      combo: 'ctrl+p',
-      description: 'Print',
-      callback: function() {
-        logger.info("CTRL + P, Printing...");
-        $scope.printPDF();
-
-      }
-    })
-    .add({
-      combo: '?',
-      description: 'Help',
-      callback: function() {
-        logger.info("? pressed, showing help");
-      }
-    });
-
-  });
 }]);
 
 
 
 verbeteControllers.controller("MenuCtrl", function ($scope, $location) {
-  $scope.menuClass = function(page) {
-    var current = $location.path().substring(1);
-    return page === current ? "active" : "";
-  };
+    $scope.menuClass = function(page) {
+        var current = $location.path().substring(1);
+        return page === current ? "active" : "";
+    };
 });
 
 verbeteControllers.directive('hyperlink', function () {
-  return {
-    restrict: 'E',
-    transclude: true,
-    scope: { href:'@' },
-    template: "<a ng-click='openURL(href)' ng-transclude></a>",
-    link: function (scope, element) {
-      scope.openURL = function (href) {
-        gui.Shell.openExternal(href)
-      }
-    }
-  };
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: { href:'@' },
+        template: "<a ng-click='openURL(href)' ng-transclude></a>",
+        link: function (scope, element) {
+            scope.openURL = function (href) {
+                gui.Shell.openExternal(href)
+            }
+        }
+    };
 });
 
 verbeteControllers.directive('navbar', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'partials/navbar.html'
-  };
+    return {
+        restrict: 'E',
+        templateUrl: 'partials/navbar.html'
+    };
 });
 
 verbeteControllers.directive('phResizable', ['$window', function ($window) {
-  return function($scope) {
-    $scope.initializeWindowSize = function() {
-      $scope.windowHeight = $window.innerHeight;
-      $scope.windowWidth = $window.innerWidth;
+    return function($scope) {
+        $scope.initializeWindowSize = function() {
+            $scope.windowHeight = $window.innerHeight;
+            $scope.windowWidth = $window.innerWidth;
+        };
+        $scope.initializeWindowSize();
+        return angular.element($window).bind('resize', function() {
+            $scope.initializeWindowSize();
+            $scope.$apply()
+        });
     };
-    $scope.initializeWindowSize();
-    return angular.element($window).bind('resize', function() {
-      $scope.initializeWindowSize();
-      $scope.$apply()
-    });
-  };
 }]);
 
 verbeteControllers.directive('phElevateZoom', function() {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      element.attr('data-zoom-image',attrs.zoomImage);
-      $(element).elevateZoom({
-        scrollZoom : true,
-        //zoomType  : "inner",
-        zoomType   : "lens",
-        lensShape : "round",
-        lensSize : 200,
-        zoomWindowFadeIn: 500,
-        lensFadeIn: 500
-      });
-    }
-  };
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.attr('data-zoom-image',attrs.zoomImage);
+            $(element).elevateZoom({
+                scrollZoom : true,
+                //zoomType  : "inner",
+                zoomType   : "lens",
+                lensShape : "round",
+                lensSize : 200,
+                zoomWindowFadeIn: 500,
+                lensFadeIn: 500
+            });
+        }
+    };
 });
 
