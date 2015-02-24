@@ -21,7 +21,7 @@ if (!fs.existsSync(tmpFolder)) {
 var DEBUG = process.env.DEBUG || false
 
 module.exports = {
-  'DEBUG': DEBUG,
+  'DEBUG': DEBUG || true,
   'TEMP_FOLDER': tmpFolder,
   'DIRNAME': __dirname
 };

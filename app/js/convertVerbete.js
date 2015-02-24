@@ -84,7 +84,8 @@ function convertImages (deferred, verbetePath, verbeteImages, foldername, result
         logger.warn('convert finished : ' + result.length);
         deferred.resolve(result);
     } else {
-
+        logger.info('converting : ' + verbetePath);
+        
         var min = 1;
         var max = 5;
 

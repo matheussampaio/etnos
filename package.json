@@ -5,7 +5,7 @@
   "main": "app/index.html",
   "window": {
     "title": "Etnos",
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "prestart": "npm install",
-    "start": "DEBUG=true nodewebkit"
+    "start": "nodewebkit"
   },
   "devDependencies": {
     "node-webkit-builder": "^0.2.0",

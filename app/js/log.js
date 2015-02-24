@@ -6,6 +6,8 @@ var path = require('path');
 
 var FILE_LOG = path.join(config.TEMP_FOLDER, 'etnos.log');
 
+console.log('creating log at ' + FILE_LOG);
+
 winston.add(winston.transports.File, {
   filename: FILE_LOG,
   handleExceptions: false,
