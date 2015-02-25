@@ -5,7 +5,7 @@
   "main": "app/index.html",
   "window": {
     "title": "Etnos",
-    "toolbar": false,
+    "toolbar": true,
     "frame": true,
     "width": 800,
     "height": 600,
@@ -15,18 +15,19 @@
     "resizable": true
   },
   "dependencies": {
-    "promise": "~5.0.X",
-    "winston": "^0.8.3",
-    "q": "^1.1.2",
+    "jade-pdf-redline": "0.0.2",
     "mkdirp": "^0.5.0",
-    "jade-pdf-redline": "0.0.2"
+    "promise": "~5.0.X",
+    "q": "^1.1.2",
+    "winston": "^0.8.3"
   },
   "scripts": {
     "prestart": "npm install",
     "start": "nodewebkit"
   },
   "devDependencies": {
-    "node-webkit-builder": "^0.2.0",
+    "fs-extra": "^0.16.3",
+    "node-webkit-builder": "1.0.10",
     "gulp-util": "^3.0.1",
     "gulp": "^3.8.10",
     "gulp-clean": "^0.3.1",
