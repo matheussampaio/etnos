@@ -1,9 +1,49 @@
+@font-face {
+  font-family: Lato;
+  src: url(Lato-Regular.ttf);
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(Lato-Bold.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(Lato-Italic.ttf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(Lato-BoldItalic.ttf);
+  font-weight: bold;
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(Lato-Light.ttf);
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(Lato-LightItalic.ttf);
+  font-weight: lighter;
+  font-style: italic;
+}
+
+
 html, body {
   overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   height: 100%;
   background-image: url('../img/background.jpg');
+  font-family: 'Lato', sans-serif;
 }
 
 .nav, .pagination, .carousel, .panel-title a, hyperlink { cursor: pointer; }
@@ -57,8 +97,8 @@ html, body {
   padding: 2%;
   text-align: justify;
   text-justify: inter-word;
-  font-family: "Times New Roman", Georgia, Serif;
-  font-size: 16px;
+  font-size: 20px;
+  color: #000;
   line-height: 1.5;
 }
 
