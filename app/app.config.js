@@ -44,6 +44,7 @@
         $routeProvider.when('/verbete/:verbeteId', {
             templateUrl: 'verbete-detail/verbete-detail.html',
             controller: 'VerbeteDetailController',
+            controllerAs: 'vdCtrl',
         });
 
         $routeProvider.otherwise({

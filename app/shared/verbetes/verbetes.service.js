@@ -5,7 +5,7 @@
         .module('EtnosApp')
         .service('Verbetes', Verbetes);
 
-    function Verbetes($http) {
+    function Verbetes() {
         var service = {
             data: {
               "00001": {
@@ -48023,6 +48023,8 @@
               }
             },
         };
+
+        return service;
     }
 
 })();
