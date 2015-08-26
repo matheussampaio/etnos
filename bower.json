@@ -1,7 +1,19 @@
 {
   "name": "Etnos",
   "private": "true",
-  "devDependencies": {},
   "dependencies": {
+    "angular": "1.4.4",
+    "angular-animate": "1.4.4",
+    "angular-carousel": "0.3.12",
+    "angular-route": "1.4.4",
+    "angular-touch": "1.4.4",
+    "jquery": "2.1.4",
+    "lodash": "3.10.1",
+    "angular-hotkeys": "chieffancypants/angular-hotkeys#1.5.0",
+    "ngprogress": "1.1.2",
+    "angularjs-toaster": "0.4.15",
+    "angular-bootstrap": "0.13.3",
+    "bootstrap-sass": "3.3.5",
+    "font-awesome": "4.4.0"
   }
 }

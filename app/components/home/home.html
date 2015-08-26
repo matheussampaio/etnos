@@ -1,0 +1,74 @@
+<div ph-resizable class="container-fluid" >
+  <div class="row">
+
+    <div class="animate drawer drawer-open drawer-container col-xs-1 col-md-2 col-sm-3" ng-show="vlCtrl.data.showMenu">
+      <navbar></navbar>
+    </div>
+
+    <div ng-class="{'col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : vlCtrl.data.showMenu}">
+
+      <div class="img-responsive" style="margin-top: {{(windowHeight / 10)}}px; min-height: {{windowHeight * 0.3}}px;">
+        <img class="img-responsive" src="assets/images/logo.png" style="max-height: {{windowHeight * 0.3}}px;" >
+      </div>
+
+      <form class="form-horizontal" role="form" name="searchVerbete" style="margin-top: 50px;">
+        <div class="form-group">
+          <div class="col-sm-6 col-sm-offset-3 col-md-2 col-md-offset-5">
+
+            <alert class="alert alert-danger" ng-show="vlCtrl.alert.show" close="vlCtrl.closeAlert()">{{vlCtrl.alert.msg}}</alert>
+
+            <input class="form-control super-rounded" type="text" ng-model="vlCtrl.data.search" ng-pattern="/^[1-9][0-9]*$/" ng-minlength="1" ng-maxlength="7" placeholder="Digite o número do verbete." title="Número do Verbete" required autofocus />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" ng-click="vlCtrl.search(data.search)" ng-hide="searchVerbete.$invalid">Pesquisar</button>
+          </div>
+        </div>
+      </form>
+
+      <nav ng-class="{'col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : vlCtrl.data.showMenu}" class="navbar navbar-default navbar-fixed-bottom copyright" style = "height : 90px;">
+
+        <div align ="center" >
+          <table cellpadding="{{windowWidth*0.015}}" border="0" >
+            <tr>
+              <td width="53" align="center" valign="middle">&nbsp;</td>
+
+              <td width="102" align="center" valign="middle"><b>Patrocínio:</b></td>
+
+              <td width="72" align="center" valign="middle"><b>Realização:</b></td>
+
+              <td width="72" align="center" valign="middle"><b>Parceria:</b></td>
+
+              <td width="100" align="center" valign="middle">&nbsp;</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle"><img src="assets/images/lic-logo.png" alt="Lei de Incentico à Cultura"  height= "{{(windowHeight * 0.08) > 55 ? 55 : (windowHeight * 0.08)}}" border="0" /></td>
+
+              <td align="center" valign="middle"><img src="assets/images/petrobras-logo.png" alt="Petrobras" height="{{(windowHeight * 0.08) > 55 ? 55 : (windowHeight * 0.08)}}" border="0" /></td>
+
+              <td align="center" valign="middle"><img src="assets/images/paqtcpb-logo.png" alt="Parque Tecnológico" height="{{(windowHeight * 0.08) > 55 ? 55 : (windowHeight * 0.08)}}" border="0" /></td>
+
+              <td align="center" valign="middle"><img src="assets/images/ufcg-logo.png" alt="UFCG" height="{{(windowHeight * 0.08) > 55 ? 55 : (windowHeight * 0.08)}}" border="0" /></td>
+
+              <td align="center" valign="middle"><img src="assets/images/mc-logo.png" alt="Ministério da Cutura" height="{{(windowHeight * 0.08) > 55 ? 55 : (windowHeight * 0.08)}}" border="0" /></td>
+            </tr>
+          </table>
+
+
+        </div>
+      </nav>
+
+      <nav class="navbar navbar-default navbar-fixed-bottom copyright">
+        <ul class="nav navbar-nav navbar-left">
+          <li>
+            <a>
+              <i class="btn fa fa-2x fa-bars" ng-click="vlCtrl.data.toggleMenu();"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

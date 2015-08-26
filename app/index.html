@@ -1,41 +1,47 @@
 <!doctype html>
-<html lang="en"  ng-app="verbeteApp">
+<html lang="en" ng-app="EtnosApp">
 <head>
-  <meta charset="utf-8">
-  <title>Etnos</title>
+    <meta charset="utf-8">
 
-  <link rel="stylesheet" href="css/bootstrap.css"/>
-  <link rel="stylesheet" href="css/angular-carousel.css"/>
-  <link rel="stylesheet" href="css/toaster.css"/>
-  <link rel="stylesheet" href="css/animate.css"/>
-  <link rel="stylesheet" href="css/font-awesome.min.css"/>
-  <link rel="stylesheet" href="css/ngProgress.css"/>
+    <title>Etnos</title>
 
-  <link rel="stylesheet" href="css/custom.css"/>
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/angular-carousel.css"/>
+    <link rel="stylesheet" href="css/toaster.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/ngProgress.css"/>
 
-  <script src="js/lib/angular.js"></script>
-  <script src="js/lib/angular-route.js"></script>
-  <script src="js/lib/angular-animate.js"></script>
-  <script src="js/lib/angular-touch.js"></script>
-  <script src="js/lib/angular-carousel.js"></script>
-  <script src="js/lib/ui-bootstrap-tpls-0.12.0.js"></script>
-  <script src="js/lib/toaster.js"></script>
-  <script src="js/lib/hotkeys.js"></script>
-  <script src="js/lib/ngProgress.js"></script>
+    <link rel="stylesheet" href="css/custom.css"/> -->
 
-  <script src="js/lib/jquery.js"></script>
+    <!-- <script src="js/lib/angular.js"></script>
+    <script src="js/lib/angular-route.js"></script>
+    <script src="js/lib/angular-animate.js"></script>
+    <script src="js/lib/angular-touch.js"></script>
+    <script src="js/lib/angular-carousel.js"></script>
+    <script src="js/lib/ui-bootstrap-tpls-0.12.0.js"></script>
+    <script src="js/lib/toaster.js"></script>
+    <script src="js/lib/hotkeys.js"></script>
+    <script src="js/lib/ngProgress.js"></script>
 
-  <script src="js/lib/jquery.elevatezoom.js"></script>
+    <script src="js/lib/jquery.js"></script>
 
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
+    <script src="js/lib/jquery.elevatezoom.js"></script> -->
 
+    <!-- inject:app-styles:css -->
+    <!-- endinject -->
 
 </head>
 <body>
 
-  <div ng-view></div>
+    <div ng-view></div>
 
-  <toaster-container toaster-options="{'time-out': 3000,'spinner':false}"></toaster-container>
+    <!-- inject:vendor:js -->
+    <!-- endinject -->
+
+    <!-- inject:app:js -->
+    <!-- endinject -->
+
+    <toaster-container toaster-options="{'time-out': 3000,'spinner':false}"></toaster-container>
 </body>
 </html>

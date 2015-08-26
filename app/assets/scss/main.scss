@@ -1,0 +1,12 @@
+/**
+ * INJECTED COMPONENTS SCSS
+ */
+
+//- inject:scss
+//- endinject
+
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "bower_components/font-awesome/scss/font-awesome";
+@import "bower_components/angularjs-toaster/toaster";
+
+@import "_custom";

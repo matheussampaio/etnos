@@ -30,7 +30,7 @@ var config = {
 
     app: {
         src: 'app/',
-        name: 'Etnos',
+        name: 'EtnosApp',
         concatName: 'app.js',
     },
 
@@ -80,7 +80,7 @@ var config = {
 
     vendors: {
         concatName: 'vendor.js',
-        configFile: './vendor.json',
+        filename: './vendor.json',
         debugDist: 'vendor/',
     },
 };
@@ -93,8 +93,16 @@ gulp.task('build:clean', function(done) {
 
 });
 
+gulp.task('build:css', function() {
+
+});
+
 gulp.task('build:scss', function() {
+    var vendorCSSFiles = require(config.vendors.filename).css;
+
     return gulp.src(config.scss.main)
+
+        // Inject others .scss into main.scss
         .pipe(plugins.inject(gulp.src(config.scss.src), {
             read: false,
             starttag: '//- inject:{{ext}}',
@@ -104,6 +112,8 @@ gulp.task('build:scss', function() {
             },
             addRootSlash: false,
         }))
+
+        // Compile SCSS
         .pipe(plugins.sass({
             style: args.release ? 'compressed' : 'expanded',
         }).on('error', function(err) {
@@ -111,13 +121,17 @@ gulp.task('build:scss', function() {
             plugins.util.log('sass', err.message);
             this.emit('end');
         }))
+
+        // Add Plumber to pipe
         .pipe(plugins.plumber({
             inherit: true,
         }))
+
+        // Inject Vendors CSS
+        .pipe(plugins.addSrc(vendorCSSFiles))
+
+        // Autoprefixer CSS
         .pipe(plugins.autoprefixer('last 1 Chrome version', 'last 3 iOS versions', 'last 3 Android versions'))
-        .pipe(plugins.concat(config.scss.concatName))
-        .pipe(plugins.if(args.release, plugins.stripCssComments()))
-        .pipe(plugins.if(args.release && !args.emulate, plugins.rev()))
         .pipe(gulp.dest(path.join(config.dist, config.scss.dist)));
 
 });
@@ -201,21 +215,12 @@ gulp.task('build:images', function() {
 });
 
 gulp.task('build:vendor', function() {
-    var vendorFiles = require(config.vendors.configFile);
+    var vendorJSFiles = require(config.vendors.filename).js;
 
-    if (args.release) {
-        return gulp.src(vendorFiles)
-            .pipe(plugins.plumber())
-            .pipe(plugins.concat(config.vendors.concatName))
-            .pipe(plugins.uglify())
-            .pipe(plugins.rev())
-            .pipe(gulp.dest(config.dist));
+    return gulp.src(vendorJSFiles)
+        .pipe(plugins.plumber())
+        .pipe(gulp.dest(config.dist + config.vendors.debugDist));
 
-    } else {
-        return gulp.src(vendorFiles)
-            .pipe(plugins.plumber())
-            .pipe(gulp.dest(config.dist + config.vendors.debugDist));
-    }
 });
 
 gulp.task('build:inject', function() {
@@ -247,9 +252,9 @@ gulp.task('build:inject', function() {
 
             .pipe(gulp.dest(config.dist));
     } else {
-        var vendorFiles = require('./vendor.json');
+        var vendorFiles = require(config.vendors.filename);
 
-        var vendorsBasename = vendorFiles.map(function(vendor) {
+        var vendorsBasename = vendorFiles.js.map(function(vendor) {
             return 'vendor/' + path.basename(vendor);
         });
 
@@ -281,11 +286,7 @@ gulp.task('lint:jscs', function() {
         .pipe(plugins.jscs())
         .on('error', function() {})
         .pipe(plugins.jscsStylish())
-        .pipe(plugins.jscsStylish.combineWithHintResults())
-        .pipe(plugins.jshint.reporter('gulp-checkstyle-jenkins-reporter', {
-            filename: 'build/reports/jscs/jscs-checkstyle.xml',
-            level: 'ewi',
-        }));
+        .pipe(plugins.jscsStylish.combineWithHintResults());
 });
 
 gulp.task('lint:jshint', function() {

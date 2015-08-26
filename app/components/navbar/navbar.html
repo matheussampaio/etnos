@@ -1,6 +1,6 @@
-<div ng-controller="MenuCtrl">
+<div>
   <ul role="navigation" class="drawer-list">
-    <li ng-class="menuClass('home')" class="drawer-list-item">
+    <li ng-class="navbarCtrl.menuClass('home')" class="drawer-list-item">
       <a href="#" data-pjax="">
         <i class="fa fa-search"></i>Pesquisa
       </a>
@@ -9,22 +9,22 @@
     <li class="drawer-list-item drawer-list-title">
       Conheça
     </li>
-    <li ng-class="menuClass('home/apresentacao')" class="drawer-list-item">
+    <li ng-class="navbarCtrl.menuClass('home/apresentacao')" class="drawer-list-item">
       <a href="#home/apresentacao">
         <i class="fa fa-lightbulb-o"></i>Apresentação
       </a>
     </li>
-    <li ng-class="menuClass('home/fichatecnica')" class="drawer-list-item">
+    <li ng-class="navbarCtrl.menuClass('home/fichatecnica')" class="drawer-list-item">
       <a href="#home/fichatecnica">
         <i class="fa fa-file-text-o"></i>Ficha Técnica
       </a>
     </li>
-    <li ng-class="menuClass('home/catalogo')" class="drawer-list-item">
+    <li ng-class="navbarCtrl.menuClass('home/catalogo')" class="drawer-list-item">
       <a href="#home/catalogo">
         <i class="fa fa-folder-o"></i>Catálogo
       </a>
     </li>
-    <li ng-class="menuClass('home/help')" class="drawer-list-item">
+    <li ng-class="navbarCtrl.menuClass('home/help')" class="drawer-list-item">
       <a href="#home/help">
         <i class="fa fa-question"></i>Ajuda
       </a>
