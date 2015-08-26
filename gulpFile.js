@@ -1,84 +1,356 @@
-var NwBuilder = require('node-webkit-builder');
+'use strict';
+
 var gulp = require('gulp');
-var gutil = require('gulp-util');
-var clean = require('gulp-clean');
-var preprocess = require('gulp-preprocess');
-var fs = require('fs-extra');
+var plugins = require('gulp-load-plugins')({
+    lazy: true,
+});
+var del = require('del');
+var path = require('path');
+var yargs = require('yargs');
+var stylish = require('jshint-stylish');
+var streamqueue = require('streamqueue');
+var runSequence = require('run-sequence');
 
-var filesBuild = [
-    './app/css/**',
-    './app/fonts/**',
-    './app/img/**',
-    './app/js/lib/**',
-    './app/js/*.js',
-    './app/partials/**',
-    './app/verbetes/**',
-    './app/index.html',
-    './node_modules/easy-zip/**',
-    './node_modules/jade-pdf-redline/**',
-    './node_modules/mkdirp/**',
-    './node_modules/promise/**',
-    './node_modules/q/**',
-    './node_modules/winston/**',
-    'package.json',
-    'favicon.ico'
-];
+/**
+ * Parse arguments
+ */
+var args = yargs
+    .boolean('release')
+    .boolean('run')
+    .alias('r', 'run')
+    .default('platform', 'macos')
+    .alias('p', 'platform')
+    .boolean('proxy')
+    .alias('x', 'proxy')
+    .argv;
 
-gulp.task('clean', function () {
-    return gulp.src('build', {read: false})
-        .pipe(clean());
+var config = {
+    dist: 'www/',
+    port: 8100,
+
+    app: {
+        src: 'app/',
+        name: 'Etnos',
+        concatName: 'app.js',
+    },
+
+    scss: {
+        main: 'app/assets/scss/main.scss',
+        src: ['app/components/**/*.scss', 'app/shared/**/*.scss'],
+
+        concatName: 'main.css',
+        dist: 'assets/css/',
+    },
+
+    templates: {
+        src: ['components/**/*.html', 'shared/**/*.html'],
+        concatName: 'templates.js',
+        dist: 'app/',
+    },
+
+    js: {
+        src: [
+            'app.module.js',
+            'app.config.js',
+            '**/*.module.js',
+            '**/*.config.js',
+            '**/*.js',
+            '!**/*.spec.js',
+        ],
+    },
+
+    fonts: {
+        src: ['app/assets/fonts/*.*', 'bower_components/ionic/release/fonts/*.*'],
+        dist: 'assets/fonts/',
+    },
+
+    iconfont: {
+        src: 'app/assets/icons/*.svg',
+        name: 'sppicons',
+        template: 'app/assets/icons/iconfont.template',
+        targetPath: '../css/spp-icons.css',
+        fontPath: '../fonts/',
+        dist: 'assets/fonts/',
+    },
+
+    images: {
+        src: 'app/assets/images/**/*.*',
+        dist: 'assets/images/',
+    },
+
+    vendors: {
+        concatName: 'vendor.js',
+        configFile: './vendor.json',
+        debugDist: 'vendor/',
+    },
+};
+
+gulp.task('build:clean', function(done) {
+    del([
+        config.dist + '/**/*',
+        '!' + config.dist + '/.gitkeep',
+    ], done);
+
 });
 
-gulp.task('build', ['clean'], function () {
-
-    gulp.src('./app/js/config.js')
-        .pipe(preprocess({context: { NODE_ENV: 'production', DEBUG: false }})) //To set environment variables in-line
-    
-    pack = fs.readJsonSync('package.json');
-    
-    pack.window.toolbar = false; 
-    fs.writeJsonSync('package.json', pack);
-
-    var nw = new NwBuilder({
-        appName: 'Etnos',
-        appVersion: '0.0.1',
-        files: filesBuild,
-        platforms: ['linux', 'win'] // change this to 'win' for/on windows
-    });
-
-    // Log stuff you want
-    nw.on('log', function (msg) {
-        gutil.log('node-webkit-builder', msg);
-    });
-
-    // Build returns a promise, return it so the task isn't called in parallel
-    return nw.build().then(function () {
-        pack.window.toolbar = true; 
-        fs.writeJsonSync('package.json', pack);
-    }).catch(function (err) {
-        gutil.log('node-webkit-builder', err);
-    });
+gulp.task('build:scss', function() {
+    return gulp.src(config.scss.main)
+        .pipe(plugins.inject(gulp.src(config.scss.src), {
+            read: false,
+            starttag: '//- inject:{{ext}}',
+            endtag: '//- endinject',
+            transform: function(filepath) {
+                return '@import "' + filepath + '";';
+            },
+            addRootSlash: false,
+        }))
+        .pipe(plugins.sass({
+            style: args.release ? 'compressed' : 'expanded',
+        }).on('error', function(err) {
+            plugins.util.beep();
+            plugins.util.log('sass', err.message);
+            this.emit('end');
+        }))
+        .pipe(plugins.plumber({
+            inherit: true,
+        }))
+        .pipe(plugins.autoprefixer('last 1 Chrome version', 'last 3 iOS versions', 'last 3 Android versions'))
+        .pipe(plugins.concat(config.scss.concatName))
+        .pipe(plugins.if(args.release, plugins.stripCssComments()))
+        .pipe(plugins.if(args.release && !args.emulate, plugins.rev()))
+        .pipe(gulp.dest(path.join(config.dist, config.scss.dist)));
 
 });
 
-gulp.task('move', ['build'], function() {
-    gulp.src('./app/js/imagemagick-linux/**')
-        .pipe(gulp.dest('build/etnos/linux64/imagemagick-linux'));
-
-    gulp.src('./app/js/imagemagick-linux/**')
-        .pipe(gulp.dest('build/etnos/linux32/imagemagick-linux'));
-
-    gulp.src('./app/js/imagemagick-win/**')
-        .pipe(gulp.dest('build/etnos/win32/imagemagick-win'));
-
-    gulp.src('./app/js/imagemagick-win/**')
-        .pipe(gulp.dest('build/etnos/win64/imagemagick-win'));
-
-    gulp.src('./app/js/imagemagick-macos/**')
-        .pipe(gulp.dest('build/etnos/osx/imagemagick-macos'));
-
-    gulp.src('./app/files/**')
-        .pipe(gulp.dest('build/etnos/files'))
+gulp.task('build:templates', function() {
+    // prepare angular template cache from html templates
+    // (remember to change appName var to desired module name)
+    return gulp.src(config.templates.src, {cwd: config.app.src})
+        .pipe(plugins.angularTemplatecache(config.templates.concatName, {
+            module: config.app.name,
+        }))
+        .pipe(gulp.dest(config.dist + config.templates.dist));
 });
 
-gulp.task('dist', ['move']);
+gulp.task('build:js:release', function() {
+
+    var minifyConfig = {
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeComments: true,
+    };
+
+    var filterTemplate = plugins.filter('!template.js');
+
+    // prepare angular template cache from html templates
+    // (remember to change appName var to desired module name)
+    var templateStream = gulp
+        .src(config.templates.src, {cwd: config.app.src})
+        .pipe(plugins.angularTemplatecache(config.templates.concatName, {
+            module: config.app.name,
+            htmlmin: args.release && minifyConfig,
+        }));
+
+    var scriptStream = gulp.src(config.js.src, {cwd: config.app.src});
+
+    return streamqueue({objectMode: true}, scriptStream, templateStream)
+        .pipe(plugins.plumber())
+        .pipe(filterTemplate)
+            .pipe(plugins.jshint())
+            .pipe(plugins.jshint.reporter(stylish))
+        .pipe(filterTemplate.restore())
+        .pipe(plugins.replace(/(\/\/ gulp-inject-debug-mode)/g, 'DEBUG_MODE = false;'))
+        .pipe(plugins.if(args.proxy, plugins.replace(/(\/\/ gulp-inject-proxy-mode)/g, 'PROXY_MODE = true;')))
+        .pipe(plugins.babel())
+        .pipe(plugins.ngAnnotate())
+        .pipe(plugins.stripDebug())
+        .pipe(plugins.concat(config.app.concatName))
+        .pipe(plugins.uglify())
+        .pipe(plugins.if(!args.emulate, plugins.rev()))
+        .pipe(gulp.dest(config.dist));
+
+});
+
+gulp.task('build:fonts', function() {
+    return gulp.src(config.fonts.src)
+        .pipe(plugins.plumber())
+        .pipe(gulp.dest(config.dist + config.fonts.dist));
+});
+
+gulp.task('build:iconfont', function() {
+    return gulp.src(config.iconfont.src, { buffer: false })
+        .pipe(plugins.plumber())
+        .pipe(plugins.iconfontCss({
+            fontName: config.iconfont.name,
+            path: config.iconfont.template,
+            targetPath: config.iconfont.targetPath,
+            fontPath: config.iconfont.fontPath,
+        }))
+        .pipe(plugins.iconfont({
+            fontName: config.iconfont.name,
+            normalize: true,
+        }))
+        .pipe(gulp.dest(config.dist + config.iconfont.dist));
+});
+
+gulp.task('build:images', function() {
+    return gulp.src(config.images.src)
+        .pipe(plugins.plumber())
+        .pipe(gulp.dest(config.dist + config.images.dist));
+});
+
+gulp.task('build:vendor', function() {
+    var vendorFiles = require(config.vendors.configFile);
+
+    if (args.release) {
+        return gulp.src(vendorFiles)
+            .pipe(plugins.plumber())
+            .pipe(plugins.concat(config.vendors.concatName))
+            .pipe(plugins.uglify())
+            .pipe(plugins.rev())
+            .pipe(gulp.dest(config.dist));
+
+    } else {
+        return gulp.src(vendorFiles)
+            .pipe(plugins.plumber())
+            .pipe(gulp.dest(config.dist + config.vendors.debugDist));
+    }
+});
+
+gulp.task('build:inject', function() {
+
+    // build has a '-versionnumber' suffix
+    var cssNaming = 'assets/css/*.css';
+
+    // injects 'src' into index.html at position 'tag'
+    var _inject = function(src, tag) {
+        return plugins.inject(src, {
+            starttag: '<!-- inject:' + tag + ':{{ext}} -->',
+            read: false,
+            addRootSlash: false,
+        });
+    };
+
+    if (args.release) {
+        return gulp.src('app/index.html')
+            .pipe(plugins.plumber())
+
+            // inject css
+            .pipe(_inject(gulp.src(cssNaming, {cwd: config.dist}), 'app-styles'))
+
+            // inject vendors
+            .pipe(_inject(gulp.src('vendor*.js', {cwd: config.dist}), 'vendor'))
+
+            // inject app.js
+            .pipe(_inject(gulp.src('app*.js', {cwd: config.dist}), 'app'))
+
+            .pipe(gulp.dest(config.dist));
+    } else {
+        var vendorFiles = require('./vendor.json');
+
+        var vendorsBasename = vendorFiles.map(function(vendor) {
+            return 'vendor/' + path.basename(vendor);
+        });
+
+        var scriptFiles = config.js.src.map(function(file) {
+            return 'app/' + file;
+        });
+
+        var scriptStream = gulp.src(scriptFiles.concat(config.templates.dist + config.templates.concatName),
+            {cwd: 'www'});
+
+        return gulp.src('app/index.html')
+            .pipe(plugins.plumber())
+
+            // inject css
+            .pipe(_inject(gulp.src(cssNaming, {cwd: config.dist}), 'app-styles'))
+
+            // inject vendors
+            .pipe(_inject(gulp.src(vendorsBasename, {cwd: config.dist}), 'vendor'))
+
+            // inject app.js
+            .pipe(_inject(scriptStream, 'app'))
+
+            .pipe(gulp.dest(config.dist));
+    }
+});
+
+gulp.task('lint:jscs', function() {
+    return gulp.src(config.js.src, {cwd: config.app.src})
+        .pipe(plugins.jscs())
+        .on('error', function() {})
+        .pipe(plugins.jscsStylish())
+        .pipe(plugins.jscsStylish.combineWithHintResults())
+        .pipe(plugins.jshint.reporter('gulp-checkstyle-jenkins-reporter', {
+            filename: 'build/reports/jscs/jscs-checkstyle.xml',
+            level: 'ewi',
+        }));
+});
+
+gulp.task('lint:jshint', function() {
+    return gulp.src(config.js.src, {cwd: config.app.src})
+        .pipe(plugins.plumber())
+        .pipe(plugins.jshint())
+        .pipe(plugins.jshint.reporter('jshint-stylish'));
+});
+
+gulp.task('docs', function() {
+    var command = [
+        'node_modules/.bin/jsdoc',
+        '--configure node_modules/angular-jsdoc/conf.json',   // config file
+        '--template node_modules/angular-jsdoc/template',     // template file
+        '--destination build/docs/',                          // output directory
+        '--recurse app/',                                     // source code directory
+        '--package ./package.json',                           // package.json file
+        '--readme ./README.md',                               // to include README.md as index contents
+    ].join(' ');
+
+    return gulp.src('')
+        .pipe(plugins.plumber())
+        .pipe(plugins.shell(command));
+}).help = 'Gerar documentação da aplicação.';
+
+gulp.task('build:js:debug', function() {
+    return gulp.src(config.js.src, {cwd: config.app.src})
+        .pipe(plugins.plumber())
+        .pipe(plugins.changed(config.dist + config.app.src))
+        .pipe(plugins.if(args.proxy, plugins.replace(/(\/\/ gulp-inject-proxy-mode)/g, 'PROXY_MODE = true;')))
+        .pipe(plugins.babel())
+        .pipe(plugins.ngAnnotate())
+        .pipe(gulp.dest(config.dist + config.app.src));
+});
+
+gulp.task('debug:watchers', function() {
+    gulp.watch(config.app.src + '**/*.scss', ['build:scss']);
+    gulp.watch(config.app.src + 'assets/fonts/**', ['build:fonts']);
+    gulp.watch(config.app.src + 'assets/icons/*.svg', ['build:iconfont']);
+    gulp.watch(config.app.src + 'assets/images/**', ['build:images']);
+    gulp.watch(config.app.src + '**/*.js', ['build:js:debug', 'lint:jshint', 'lint:jscs']);
+    gulp.watch('./vendor.json', ['build:vendor']);
+    gulp.watch([config.app.src + '**/*.html',
+        '!' + config.app.src + '/index.html',
+    ], plugins.if(args.release, ['build:js:release'], ['build:templates']));
+    gulp.watch(config.app.src + 'index.html', ['build:inject']);
+});
+
+gulp.task('debug:js&template', ['build:js:debug', 'build:templates'], function() {});
+
+gulp.task('build', function(done) {
+    runSequence(
+        'build:clean',
+        'build:iconfont',
+        'build:fonts',
+        'build:scss',
+        'build:images',
+        'build:vendor',
+        plugins.if(args.release, 'build:js:release', 'debug:js&template'),
+        'lint:jshint',
+        'lint:jscs',
+        'build:inject',
+        done);
+});
+
+gulp.task('debug', ['build'], function() {
+    gulp.start('debug:watchers');
+});

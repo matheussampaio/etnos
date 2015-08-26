@@ -22,7 +22,7 @@
     "winston": "^0.8.3"
   },
   "scripts": {
-    "prestart": "npm install",
+    "posinstall": "bower install",
     "start": "nodewebkit"
   },
   "devDependencies": {
