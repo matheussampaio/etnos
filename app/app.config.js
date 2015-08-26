@@ -19,18 +19,26 @@
 
         $routeProvider.when('/home/apresentacao', {
             templateUrl: 'home/apresentacao.html',
+            controller: 'VerbeteListController',
+            controllerAs: 'vlCtrl',
         });
 
         $routeProvider.when('/home/fichatecnica', {
             templateUrl: 'home/fichatecnica.html',
+            controller: 'VerbeteListController',
+            controllerAs: 'vlCtrl',
         });
 
         $routeProvider.when('/home/catalogo', {
             templateUrl: 'home/catalogo.html',
+            controller: 'VerbeteListController',
+            controllerAs: 'vlCtrl',
         });
 
         $routeProvider.when('/home/help', {
             templateUrl: 'home/help.html',
+            controller: 'VerbeteListController',
+            controllerAs: 'vlCtrl',
         });
 
         $routeProvider.when('/verbete/:verbeteId', {
