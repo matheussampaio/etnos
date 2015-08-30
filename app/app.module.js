@@ -1,66 +1,100 @@
-// Load native UI library
-var config = require('../nw/config');
+(function() {
+    'use strict';
 
-var gui = require('nw.gui');
+    var gui = require('nw.gui');
+    var os = require('os');
+    var fs = require('fs');
+    var nwUtil = require('../nw/util');
 
-var win = gui.Window.get();
+    var win = gui.Window.get();
 
-// fs Object
-var fs = require('fs');
+    var TEMP_FOLDER = nwUtil.TEMP_FOLDER;
 
-// Focus the window when the app opens
-win.focus();
+    init();
 
-// Cancel all new windows (Middle clicks / New Tab)
-win.on('new-win-policy', function (frame, url, policy) {
-    policy.ignore();
-});
+    angular.module('EtnosApp', [
+      'ngRoute',
+      'ngAnimate',
+      'angular-carousel',
+      'cfp.hotkeys',
+      'ngAnimate',
+      'ngProgress',
+      'ui.bootstrap',
+    ])
+    .constant('nwUtilConstants', nwUtil);
 
-var deleteFolderRecursive = function(folder) {
-    if ( fs.existsSync(folder) ) {
-        fs.readdirSync(folder).forEach(function(file, index){
-            var curPath = folder + "/" + file;
+    function init() {
+        console.info('initializing the app...');
 
-            if (fs.lstatSync(curPath).isDirectory()) { // recurse
-                deleteFolderRecursive(curPath);
-            } else { // delete file
-                fs.unlinkSync(curPath);
-            }
+        _createTempFolder();
+        _configureWindow();
+    }
+
+    function _createTempFolder() {
+        console.info('creating temp folder...');
+
+        //create tmpfolder if not exits
+        if (!fs.existsSync(os.tmpDir())) {
+            fs.mkdir(os.tmpDir());
+        }
+
+        if (!fs.existsSync(TEMP_FOLDER)) {
+            fs.mkdir(TEMP_FOLDER);
+        }
+    }
+
+    function _configureWindow() {
+        console.info('configuring the window...');
+
+        // Cancel all new windows (Middle clicks / New Tab)
+        win.on('new-win-policy', function(frame, url, policy) {
+            policy.ignore();
         });
 
-        fs.rmdirSync(folder);
+        // Wipe the tmpFolder when closing the app (this frees up disk space)
+        win.on('close', function() {
+            try {
+
+                // @TODO: Wipe temp folder.
+                _deleteFolderRecursive(TEMP_FOLDER);
+            } catch (err) {
+                console.error(err);
+            }
+
+            win.close(true);
+        });
+
+        // Focus the window when the app opens
+        win.focus();
+
+        // Prevent dropping files into the window
+        window.addEventListener('dragover', _preventDefault, false);
+        window.addEventListener('drop', _preventDefault, false);
+
+        // Prevent dragging files outside the window
+        window.addEventListener('dragstart', _preventDefault, false);
     }
-};
 
+    var _deleteFolderRecursive = function(folder) {
+        console.info('deleting the temp folder...');
 
-// Wipe the tmpFolder when closing the app (this frees up disk space)
-win.on('close', function(){
-    try{
+        if (fs.existsSync(folder)) {
+            fs.readdirSync(folder).forEach(function(file) {
+                var curPath = folder + '/' + file;
 
-      // @TODO: Wipe temp folder.
-      deleteFolderRecursive(config.TEMP_FOLDER);
-    }catch(err){
+                if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                    _deleteFolderRecursive(curPath);
+                } else { // delete file
+                    fs.unlinkSync(curPath);
+                }
+            });
 
-    }
-    win.close(true);
-});
+            fs.rmdirSync(folder);
+        }
+    };
 
-var preventDefault = function(e) {
-    e.preventDefault();
-}
-// Prevent dropping files into the window
-window.addEventListener("dragover", preventDefault, false);
-window.addEventListener("drop", preventDefault, false);
-// Prevent dragging files outside the window
-window.addEventListener("dragstart", preventDefault, false);
+    var _preventDefault = function(e) {
+        e.preventDefault();
+    };
 
-angular.module('EtnosApp', [
-  'ngRoute',
-  'ngAnimate',
-  'angular-carousel',
-  'cfp.hotkeys',
-  'ngAnimate',
-  'ngProgress',
-  'toaster',
-  'ui.bootstrap',
-]);
+})();

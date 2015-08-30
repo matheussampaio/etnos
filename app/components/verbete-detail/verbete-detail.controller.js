@@ -4,13 +4,17 @@
     angular.module('EtnosApp')
         .controller('VerbeteDetailController', VerbeteDetailController);
 
-    function VerbeteDetailController($log, $scope, $routeParams, $location, hotkeys, Menu, ngProgressFactory, Verbetes) {
+    function VerbeteDetailController($log, $scope, $routeParams, $location, hotkeys,
+        Menu, ngProgressFactory, Verbetes, VerbeteUtils, ProgressBar) {
+
         var vm = this;
+
+        vm.currentVerbeteId = $routeParams.verbeteId;
 
         vm.backToHome = backToHome;
         vm.toggleZoom = toggleZoom;
         vm.printPDF = printPDF;
-        vm.verbeteDetail = Verbetes.data[$routeParams.verbeteId];
+        vm.verbeteDetail = Verbetes.data[vm.currentVerbeteId];
         vm.zoomActive = false;
         vm.data = {};
         vm.complete = false;
@@ -20,79 +24,89 @@
         /////////////////////////
 
         function activate() {
+            bindKeys();
+
+            _startLoadAudio();
+            _loadImages()
+                .then(_loadPDF());
+
             Menu.data.showMenu = false;
-            vm.progressbar = ngProgressFactory.createInstance();
+        }
 
-            vm.progressbar.set(1);
-            vm.progressbar.setColor('blue');
-            vm.progressbar.setHeight('6px');
+        function _loadImages() {
+            return VerbeteUtils.loadImages({
+                    verbete: vm.verbeteDetail,
+                })
+                .then(results => {
+                    vm.verbeteDetail.converted = results;
 
+                    // Verbetes.data[vm.currentVerbeteId].converted = results;
 
-            // convert.convertVerbete(Verbetes.data[$routeParams.verbeteId], vm).done(function(results) {
-            //     vm.verbeteDetail.converted = results;
-            //     Verbetes.data[$routeParams.verbeteId].converted = results;
-            //     ngProgress.complete();
-            //     vm.$apply();
-            //
-            //     pdf.create(Verbetes.data[$routeParams.verbeteId]).done(function(pdffile) {
-            //         vm.data.pdfpath = pdffile.filepath;
-            //         vm.data.pdfname = pdffile.filename;
-            //         vm.complete = true;
-            //         vm.$apply();
-            //
-            //     }, function(err) {
-            //         $log.error(err.stack);
-            //     });
-            //
-            // }, function(err) {
-            //     $log.error(err.stack);
-            // }, function(progress) {
-            //     var value = progress.length * 100 / Verbetes.data[$routeParams.verbeteId].images.length;
-            //     ngProgress.set(value);
-            //     vm.verbeteDetail.converted = progress;
-            //     vm.$apply();
-            // });
-            //
-            // loadAudio.load(Verbetes.data[$routeParams.verbeteId]).done(function(audio) {
-            //     $log.info(audio);
-            //     vm.data.audio = audio;
-            //     vm.$apply();
-            // }, function(err) {
-            //     $log.error(err.stack);
-            // });
+                    $scope.$apply();
+                });
+        }
 
+        function _loadPDF() {
+            return VerbeteUtils.loadPDF({
+                    verbete: vm.verbeteDetail,
+                })
+                .then(pdfFile => {
+                    vm.data.pdfpath = pdfFile.filepath,
+                    vm.data.pdfname = pdfFile.filename,
+                    vm.complete = true;
+
+                    $scope.$apply();
+                })
+                .catch(error => {
+                    $log.error(error.stack);
+                });
+        }
+
+        function _startLoadAudio() {
+            return VerbeteUtils.loadAudio({
+                    verbete: vm.verbeteDetail,
+                })
+                .then(audio => {
+                    vm.data.audio = audio;
+                    $scope.$apply();
+                })
+                .catch(error => {
+                    $log.error(error.stack);
+                });
+        }
+
+        function bindKeys() {
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'esc',
                     description: 'Move to index',
                     callback: function() {
-                        $log.info('Esc pressed, moving to index');
-                        vm.removeZoomContainer();
-                        $location.path('/');
-                        vm.progressbar.reset();
+                        $log.info('ESC pressed.');
+                        backToHome();
                     },
                 })
                 .add({
                     combo: 'l',
                     description: 'Toggle Zoom',
-                    callback: function() {
-                        $log.info('Z pressed, togglin zoom');
-                        vm.toggleZoom();
+                    callback: () => {
+                        $log.info('L pressed');
+                        toggleZoom();
                     },
                 })
                 .add({
                     combo: 'ctrl+p',
                     description: 'Print',
-                    callback: function() {
-                        $log.info('CTRL + P, Printing...');
-                        vm.printPDF();
+                    callback: () => {
+                        $log.info('Ctrl+P pressed.');
+                        printPDF();
                     },
                 })
                 .add({
                     combo: '?',
                     description: 'Help',
-                    callback: function() {
-                        $log.info('? pressed, showing help');
+                    callback: () => {
+                        $log.info('? pressed.');
+                        toggleHelp();
                     },
                 });
         }
@@ -102,10 +116,17 @@
         }
 
         function toggleZoom() {
+            $log.info('toggling zoom...');
+
             vm.zoomActive = !vm.zoomActive;
         }
 
         function printPDF() {
+            $log.info('printing PDF...');
+        }
+
+        function toggleHelp() {
+            $log.info('toggling help...');
         }
 
         function backToHome() {
@@ -114,7 +135,7 @@
             $location.path('/home');
 
             removeZoomContainer();
-            vm.progressbar.reset();
+            ProgressBar.stop();
         }
     }
 

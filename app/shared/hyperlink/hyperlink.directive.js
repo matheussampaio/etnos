@@ -11,7 +11,7 @@
             transclude: true,
             scope: { href:'@' },
             template: `<a ng-click='openURL(href)' ng-transclude></a>`,
-            link: function(scope, element) {
+            link: (scope) => {
                 scope.openURL = function(href) {
                     gui.Shell.openExternal(href);
                 };

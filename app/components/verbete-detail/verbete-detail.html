@@ -1,22 +1,22 @@
 <div ph-resizable class="focus" style="height: {{windowHeight}}px;">
 
-    <div ng-show="vdCtrl.verbeteDetail.converted" class="animate-fadeInOut">
+    <div ng-show="vdCtrl.verbeteDetail.converted.length" class="animate-fadeInOut">
         <ul rn-carousel rn-carousel-indicator rn-carousel-control rn-carousel-buffered class="no-drag">
             <li ng-repeat="image in vdCtrl.verbeteDetail.converted" >
-                <img ph-elevate-zoom zoom-image="{{image}}" ng-show="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
-                <img ng-hide="zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
+                <img ph-elevate-zoom zoom-image="{{image}}" ng-show="vdCtrl.zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
+                <img ng-hide="vdCtrl.zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
             </li>
         </ul>
     </div>
 
-    <div ng-hide="vdCtrl.verbeteDetail.converted" style="height: {{windowHeight - 80}}px;">
+    <div ng-hide="vdCtrl.verbeteDetail.converted.length" style="height: {{windowHeight - 80}}px;">
         <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag" style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"></i>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse controls">
         <ul class="nav navbar-nav navbar-left">
-            <li>
-                <a ng-click="vdCtrl.backToHome()">
+            <li ng-click="vdCtrl.backToHome()">
+                <a >
                     <i class="btn fa fa-2x fa-times"></i> <p class="text-center">Voltar</p>
                 </a>
             </li>

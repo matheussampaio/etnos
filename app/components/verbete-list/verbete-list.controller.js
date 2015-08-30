@@ -4,11 +4,10 @@
     angular.module('EtnosApp')
         .controller('VerbeteListController', VerbeteListController);
 
-    function VerbeteListController($log, $http, $location, toaster, Menu, Verbetes) {
+    function VerbeteListController($log, $http, $location, Menu, Verbetes) {
         var vm = this;
 
         vm.search = search;
-        vm.pop = pop;
         vm.closeAlert = closeAlert;
         vm.alert = {};
         vm.data = Menu.data;
@@ -33,31 +32,9 @@
             vm.alert.show = false;
         }
 
-        function pop(err) {
-            if (err) {
-                toaster.pop(
-                    'error',
-                    'Erro na instalação',
-                    'Não será possível visualizar as imagens.',
-                    5000,
-                    'trustedHtml'
-                );
-
-            } else {
-                toaster.pop(
-                    'success',
-                    'Dependências instaladas.',
-                    'Todas as dependências foram instaladas com sucesso.',
-                    5000,
-                    'trustedHtml'
-                );
-
-            }
-        }
-
         function _zeroPad(num, places) {
             var zero = places - num.toString().length + 1;
-            return Array(+(zero > 0 && zero)).join('0') + num;
+            return new Array(+(zero > 0 && zero)).join('0') + num;
         }
 
     }
