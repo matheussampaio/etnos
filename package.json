@@ -16,9 +16,10 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "nodewebkit"
+    "start": "nw"
   },
   "devDependencies": {
+    "bower": "1.5.2",
     "del": "1.2.1",
     "gulp": "3.9.0",
     "gulp-add-src": "0.2.0",
