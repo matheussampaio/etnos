@@ -25,10 +25,8 @@
 
         function loadPDF({verbete}) {
 
-
-
             var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
-            var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path.slice(3));
+            var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
             var filename = `verbete-${verbete.id}.pdf`;
             var filenamejade = `verbete-${verbete.id}.jade`;
 
@@ -80,7 +78,7 @@
 
             ProgressBar.start();
 
-            var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path.slice(3));
+            var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
 
             return _createFolder(distFolderName)
                 .then(distFolderName => {
@@ -152,6 +150,7 @@
                         $log.error(`error converting ${distPath}: ${error.stack}`);
                         reject(error);
                     } else {
+                        distPath = distPath.replace(/\\/g, `\\\\`);
                         $log.info(`image converted: ${distPath}`);
                         resolve(distPath);
                     }

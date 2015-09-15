@@ -2,7 +2,7 @@ var os = require('os');
 var path = require('path');
 var fs = require('fs');
 
-var DEBUG_MODE = false;
+var DEBUG_MODE = true;
 
 var tmpFolder = path.join(os.tmpDir(), 'etnos');
 
@@ -13,16 +13,14 @@ var isOSX = (process.platform === 'darwin');
 var imageMagickPath = getImageMagickPath();
 var verbeteFilesPath = getVerbetesFilesPath();
 
-// gulp-inject-debug-mode
-
 function getImageMagickPath() {
     if (DEBUG_MODE) {
         if (isWin) {
-            return path.join(__dirname, '/imagemagick-win/convert');
+            return path.join(__dirname, '../imagemagick/win/convert');
         }
 
         if (isLinux) {
-            return path.join(__dirname, '/imagemagick-linux/convert');
+            return path.join(__dirname, '/imagemagick/linux/convert');
         }
 
         if (isOSX) {
