@@ -30,7 +30,7 @@
             _loadImages()
                 .then(_loadPDF());
 
-            Menu.data.showMenu = false;
+            Menu.showMenu = false;
         }
 
         function _loadImages() {

@@ -18,6 +18,8 @@
         /////////////////////////////
 
         function search(verbete) {
+            $log.debug(`search term: ${verbete}`);
+
             verbete = _zeroPad(verbete, 5);
 
             if (Verbetes.data[verbete] === undefined) {
