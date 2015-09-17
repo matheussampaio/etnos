@@ -8,7 +8,7 @@
     function Menu($log) {
         var service = {
             showMenu: false,
-            hideMenu: hideMenu,
+            setShowMenu: setShowMenu,
             toggleMenu: toggleMenu,
         };
 
