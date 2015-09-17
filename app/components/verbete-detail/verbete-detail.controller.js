@@ -43,6 +43,8 @@
                     // Verbetes.data[vm.currentVerbeteId].converted = results;
 
                     $scope.$apply();
+
+                    return;
                 });
         }
 
@@ -58,7 +60,7 @@
                     $scope.$apply();
                 })
                 .catch(error => {
-                    $log.error(error.stack);
+                    $log.error('error on loading pdf', error.stack);
                 });
         }
 

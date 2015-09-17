@@ -30,6 +30,8 @@
             var filename = `verbete-${verbete.id}.pdf`;
             var filenamejade = `verbete-${verbete.id}.jade`;
 
+            $log.debug(`PDF distpath ${distpath}`);
+
             var pdf = {
                 filename: filename,
                 filepath: path.join(distpath, filename),

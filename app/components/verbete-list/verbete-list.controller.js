@@ -4,14 +4,16 @@
     angular.module('EtnosApp')
         .controller('VerbeteListController', VerbeteListController);
 
-    function VerbeteListController($log, $http, $location, Menu, Verbetes) {
+    function VerbeteListController($log, $http, $location, Verbetes, Menu) {
         var vm = this;
 
         vm.search = search;
         vm.closeAlert = closeAlert;
         vm.alert = {};
-        vm.data = Menu.data;
-        vm.data.search = '';
+        vm.Menu = Menu;
+        vm.data = {
+            search: '',
+        };
 
         /////////////////////////////
 
