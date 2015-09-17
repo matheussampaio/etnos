@@ -8,6 +8,7 @@
     function Menu($log) {
         var service = {
             showMenu: false,
+            hideMenu: hideMenu,
             toggleMenu: toggleMenu,
         };
 
@@ -17,6 +18,10 @@
             service.showMenu = !service.showMenu;
 
             $log.info(`Menu toggled: ${service.showMenu}`);
+        }
+
+        function setShowMenu(show) {
+            service.showMenu = show;
         }
     }
 

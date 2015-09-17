@@ -13,7 +13,6 @@
 
         vm.backToHome = backToHome;
         vm.toggleZoom = toggleZoom;
-        vm.printPDF = printPDF;
         vm.verbeteDetail = Verbetes.data[vm.currentVerbeteId];
         vm.zoomActive = false;
         vm.data = {};
@@ -30,7 +29,7 @@
             _loadImages()
                 .then(_loadPDF());
 
-            Menu.showMenu = false;
+            Menu.showMenu(false);
         }
 
         function _loadImages() {
@@ -102,14 +101,6 @@
                         $log.info('Ctrl+P pressed.');
                         printPDF();
                     },
-                })
-                .add({
-                    combo: '?',
-                    description: 'Help',
-                    callback: () => {
-                        $log.info('? pressed.');
-                        toggleHelp();
-                    },
                 });
         }
 
@@ -121,14 +112,6 @@
             $log.info('toggling zoom...');
 
             vm.zoomActive = !vm.zoomActive;
-        }
-
-        function printPDF() {
-            $log.info('printing PDF...');
-        }
-
-        function toggleHelp() {
-            $log.info('toggling help...');
         }
 
         function backToHome() {
