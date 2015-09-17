@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('EtnosApp')
-        .controller('VerbeteListController', VerbeteListController);
+        .controller('InfosController', InfosController);
 
-    function VerbeteListController($log, $http, $location, Verbetes, Menu) {
+    function InfosController($log, $http, $location, Verbetes, Menu) {
         var vm = this;
 
         vm.search = search;

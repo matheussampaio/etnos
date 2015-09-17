@@ -13,31 +13,31 @@
 
         $routeProvider.when('/home', {
             templateUrl: 'home/home.html',
-            controller: 'VerbeteListController',
+            controller: 'HomeController',
             controllerAs: 'vlCtrl',
         });
 
-        $routeProvider.when('/home/apresentacao', {
-            templateUrl: 'home/apresentacao.html',
-            controller: 'VerbeteListController',
+        $routeProvider.when('/infos/apresentacao', {
+            templateUrl: 'infos/content/apresentacao.html',
+            controller: 'InfosController',
             controllerAs: 'vlCtrl',
         });
 
-        $routeProvider.when('/home/fichatecnica', {
-            templateUrl: 'home/fichatecnica.html',
-            controller: 'VerbeteListController',
+        $routeProvider.when('/infos/fichatecnica', {
+            templateUrl: 'infos/content/fichatecnica.html',
+            controller: 'InfosController',
             controllerAs: 'vlCtrl',
         });
 
-        $routeProvider.when('/home/catalogo', {
-            templateUrl: 'home/catalogo.html',
-            controller: 'VerbeteListController',
+        $routeProvider.when('/infos/catalogo', {
+            templateUrl: 'infos/content/catalogo.html',
+            controller: 'InfosController',
             controllerAs: 'vlCtrl',
         });
 
-        $routeProvider.when('/home/help', {
-            templateUrl: 'home/help.html',
-            controller: 'VerbeteListController',
+        $routeProvider.when('/infos/help', {
+            templateUrl: 'infos/content/help.html',
+            controller: 'InfosController',
             controllerAs: 'vlCtrl',
         });
 
