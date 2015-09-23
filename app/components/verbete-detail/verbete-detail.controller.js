@@ -5,14 +5,14 @@
         .controller('VerbeteDetailController', VerbeteDetailController);
 
     function VerbeteDetailController($log, $scope, $routeParams, $location, hotkeys,
-        Menu, ngProgressFactory, Verbetes, VerbeteUtils, ProgressBar) {
+        Menu, ngProgressFactory, VerbetesData, VerbeteImages, VerbeteAudio, VerbetePdf, ProgressBar) {
 
         var vm = this;
 
         vm.zoomActive = false;
 
         vm.currentVerbeteId = $routeParams.verbeteId;
-        vm.verbeteDetail = Verbetes.data[vm.currentVerbeteId];
+        vm.verbeteDetail = VerbetesData.data[vm.currentVerbeteId];
 
         vm.backToHome = backToHome;
         vm.toggleZoom = toggleZoom;
@@ -35,7 +35,7 @@
         }
 
         function _loadImages() {
-            return VerbeteUtils.loadImages({
+            return VerbeteImages.loadImages({
                     verbete: vm.verbeteDetail,
                 })
                 .then(verbetesConvertedPath => {
@@ -47,7 +47,7 @@
         }
 
         function _loadPDF() {
-            return VerbeteUtils.loadPDF({
+            return VerbetePdf.loadPDF({
                     verbete: vm.verbeteDetail,
                 })
                 .then(pdfFile => {
@@ -61,7 +61,7 @@
         }
 
         function _startLoadAudio() {
-            return VerbeteUtils.loadAudio({
+            return VerbeteAudio.loadAudio({
                     verbete: vm.verbeteDetail,
                 })
                 .then(audio => {
@@ -78,7 +78,7 @@
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'esc',
-                    description: 'Move to index',
+                    description: 'Move to home',
                     callback: function() {
                         $log.info('ESC pressed.');
                         backToHome();
@@ -90,14 +90,6 @@
                     callback: () => {
                         $log.info('L pressed');
                         toggleZoom();
-                    },
-                })
-                .add({
-                    combo: 'ctrl+p',
-                    description: 'Print',
-                    callback: () => {
-                        $log.info('Ctrl+P pressed.');
-                        printPDF();
                     },
                 });
         }

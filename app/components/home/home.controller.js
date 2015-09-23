@@ -4,7 +4,7 @@
     angular.module('EtnosApp')
         .controller('HomeController', HomeController);
 
-    function HomeController($log, $http, $location, Verbetes, Menu) {
+    function HomeController($log, $http, $location, VerbetesData, Menu) {
         var vm = this;
 
         vm.search = search;
@@ -22,7 +22,7 @@
 
             verbete = _zeroPad(verbete, 5);
 
-            if (Verbetes.data[verbete] === undefined) {
+            if (VerbetesData.data[verbete] === undefined) {
                 $log.error('Verbete não existe.' + verbete);
 
                 vm.alert.msg = 'Verbete ' + verbete + ' não encontrado.';

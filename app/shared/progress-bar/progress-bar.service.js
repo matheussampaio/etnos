@@ -11,6 +11,7 @@
             start: start,
             stop: stop,
             complete: complete,
+            setProgress: setProgress,
         };
 
         return service;

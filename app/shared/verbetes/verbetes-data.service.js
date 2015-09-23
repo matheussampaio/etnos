@@ -3,9 +3,9 @@
 
     angular
         .module('EtnosApp')
-        .service('Verbetes', Verbetes);
+        .service('VerbetesData', VerbetesData);
 
-    function Verbetes() {
+    function VerbetesData() {
         var service = {
             data: {
                 '00001': {
