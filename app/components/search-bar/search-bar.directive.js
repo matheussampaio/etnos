@@ -3,13 +3,12 @@
 
     angular
         .module('EtnosApp')
-        .directive('infos', infos);
+        .directive('searchBar', searchBar);
 
-    function infos() {
+    function searchBar() {
         return {
             restrict: 'E',
-            templateUrl: 'infos/infos.html',
-            transclude: true,
+            templateUrl: 'search-bar/search-bar.html',
         };
     }
 

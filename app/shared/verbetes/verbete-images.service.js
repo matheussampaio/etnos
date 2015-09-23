@@ -16,7 +16,7 @@
 
         return service;
 
-        function loadImages({verbete}) {
+        function loadImages({verbete, notify}) {
             $log.info('Converting verbetes...');
 
             if (verbete.converted.length === verbete.images.length) {
@@ -34,6 +34,7 @@
                         verbetePath: verbete.path,
                         verbeteImages: verbete.images,
                         distFolderName: distFolderName,
+                        notify: notify,
                     });
                 })
                 .then(destpaths => {
@@ -61,7 +62,7 @@
             });
         }
 
-        function _convertImages({verbetePath, verbeteImages, distFolderName} = {}) {
+        function _convertImages({verbetePath, verbeteImages, distFolderName, notify} = {}) {
             $log.info(`verbetePath: ${verbetePath}`);
             $log.info(`verbeteImages: ${verbeteImages}`);
             $log.info(`distFolderName: ${distFolderName}`);
@@ -73,6 +74,10 @@
                 return _convertImage({
                     filePath: filePath,
                     distPath: distPath,
+                }).then(imagePath => {
+                    console.log(`notifing: ${imagePath}`);
+
+                    return imagePath;
                 });
             });
 

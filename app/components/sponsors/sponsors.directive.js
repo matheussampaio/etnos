@@ -3,13 +3,12 @@
 
     angular
         .module('EtnosApp')
-        .directive('infos', infos);
+        .directive('sponsors', sponsors);
 
-    function infos() {
+    function sponsors() {
         return {
             restrict: 'E',
-            templateUrl: 'infos/infos.html',
-            transclude: true,
+            templateUrl: 'sponsors/sponsors.html',
         };
     }
 
