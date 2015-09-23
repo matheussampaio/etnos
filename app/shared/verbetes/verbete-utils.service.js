@@ -25,7 +25,7 @@
 
             var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
             var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
-            var filename = `verbete-${verbete.id}.pdf`;
+            var filename = `verbete-${verbete.path.replace('/', '-')}.pdf`;
             var filenamejade = `verbete-${verbete.id}.jade`;
 
             $log.debug(`PDF distpath ${distpath}`);
@@ -35,8 +35,8 @@
                 filepath: path.join(distpath, filename),
             };
 
-            if (verbete.converted.length === verbete.images.length) {
-                $log.info('Verbetes already converted...');
+            if (verbete.pdf !== undefined) {
+                $log.info('PDF already generated...');
                 return Promise.resolve(pdf);
             }
 
@@ -61,6 +61,7 @@
 
                         streamPDF.on('close', function() {
                             $log.info('pdf created.');
+
                             resolve(pdf);
                         });
                     });
@@ -149,7 +150,7 @@
                         reject(error);
                     } else {
                         distPath = distPath.replace(/\\/g, `\\\\`);
-                        $log.info(`image converted: ${distPath}`);
+                        $log.debug(`image converted: ${distPath}`);
                         resolve(distPath);
                     }
                 });

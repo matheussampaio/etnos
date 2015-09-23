@@ -9,25 +9,27 @@
 
         var vm = this;
 
+        vm.zoomActive = false;
+
         vm.currentVerbeteId = $routeParams.verbeteId;
+        vm.verbeteDetail = Verbetes.data[vm.currentVerbeteId];
 
         vm.backToHome = backToHome;
         vm.toggleZoom = toggleZoom;
-        vm.verbeteDetail = Verbetes.data[vm.currentVerbeteId];
-        vm.zoomActive = false;
-        vm.data = {};
-        vm.complete = false;
 
         activate();
 
         /////////////////////////
 
         function activate() {
+            console.log(vm.verbeteDetail);
+
+            _loadImages()
+                .then(() => _loadPDF());
+
             bindKeys();
 
             _startLoadAudio();
-            _loadImages()
-                .then(() => _loadPDF());
 
             Menu.setShowMenu(false);
         }
@@ -36,14 +38,11 @@
             return VerbeteUtils.loadImages({
                     verbete: vm.verbeteDetail,
                 })
-                .then(results => {
-                    vm.verbeteDetail.converted = results;
-
-                    // Verbetes.data[vm.currentVerbeteId].converted = results;
-
-                    $scope.$apply();
-
-                    return;
+                .then(verbetesConvertedPath => {
+                    vm.verbeteDetail.converted = verbetesConvertedPath;
+                })
+                .catch(error => {
+                    $log.error('error on loading images', error.stack);
                 });
         }
 
@@ -52,9 +51,7 @@
                     verbete: vm.verbeteDetail,
                 })
                 .then(pdfFile => {
-                    vm.data.pdfpath = pdfFile.filepath,
-                    vm.data.pdfname = pdfFile.filename,
-                    vm.complete = true;
+                    vm.verbeteDetail.pdf = pdfFile;
 
                     $scope.$apply();
                 })
@@ -68,7 +65,8 @@
                     verbete: vm.verbeteDetail,
                 })
                 .then(audio => {
-                    vm.data.audio = audio;
+                    vm.verbeteDetail.audio = audio;
+
                     $scope.$apply();
                 })
                 .catch(error => {
@@ -117,11 +115,12 @@
         function backToHome() {
             $log.info('back to home');
 
-            $location.path('/home');
-
-            removeZoomContainer();
             ProgressBar.stop();
+            removeZoomContainer();
+
+            $location.path('/home');
         }
+
     }
 
 })();

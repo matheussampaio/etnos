@@ -25,7 +25,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <div class="audio">
-                    <audio ng-src="{{vdCtrl.data.audio}}" controls type="audio/ogg"></audio>
+                    <audio ng-src="{{vdCtrl.verbeteDetail.audio}}" controls type="audio/ogg"></audio>
                 </div>
             </li>
             <li>
@@ -33,13 +33,16 @@
                     <i class="btn fa fa-2x fa-search" ng-click="vdCtrl.toggleZoom()"></i> <p class="text-center">Lupa</p>
                 </a>
             </li>
-            <li ng-show="vdCtrl.complete">
-                <a target="_self" href="{{vdCtrl.data.pdfpath}}" download="{{vdCtrl.data.pdfname}}">
+            <li ng-show="vdCtrl.verbeteDetail.pdf">
+                <a  target="_self"
+                    href="{{vdCtrl.verbeteDetail.pdf.filepath}}"
+                    download="{{vdCtrl.verbeteDetail.pdf.filename}}">
                     <i class="btn fa fa-2x fa-download"></i> <p class="text-center">Salvar</p>
                 </a>
             </li>
-            <li ng-hide="vdCtrl.complete" style="cursor:progress">
-                <a href="" class="disabled">
+            <li style="cursor:progress"
+                ng-hide="vdCtrl.verbeteDetail.pdf" >
+                <a class="disabled" href="">
                     <i class="btn fa fa-2x fa-circle-o-notch fa-spin"></i> <p class="text-center">Salvar</p>
                 </a>
             </li>
