@@ -16,7 +16,7 @@
 
         return service;
 
-        function start({progress = 1, color = 'blue', height = '6px'} = {}) {
+        function start({progress = 1, color = 'green', height = '6px'} = {}) {
             $log.info('Starting progress bar...');
 
             service.bar.set(progress);

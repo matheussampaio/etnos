@@ -1,23 +1,47 @@
 <div ph-resizable class="focus" style="height: {{windowHeight}}px;">
 
-    <div ng-show="vdCtrl.verbeteDetail.converted.length" class="animate-fadeInOut">
+
+    <div class="animated fadeIn"
+        ng-if="vdCtrl.verbeteDetail.converted.length > 0"
+        ng-class="{invisible: !vdCtrl.verbeteReady}">
+
         <ul rn-carousel rn-carousel-indicator rn-carousel-control rn-carousel-buffered class="no-drag">
-            <li ng-repeat="image in vdCtrl.verbeteDetail.converted" >
-                <img ph-elevate-zoom zoom-image="{{image}}" ng-show="vdCtrl.zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
-                <img ng-hide="vdCtrl.zoomActive" class="img-responsive no-drag" ng-src="{{image}}" style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;">
+
+            <li ng-repeat="image in vdCtrl.verbeteDetail.converted">
+
+                <img
+                    style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;"
+                    class="img-responsive no-drag"
+                    ph-elevate-zoom
+                    zoom-image="{{image}}"
+                    ng-show="vdCtrl.zoomActive"
+                    ng-src="{{image}}">
+
+                <img
+                    style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;"
+                    class="img-responsive no-drag"
+                    ng-hide="vdCtrl.zoomActive"
+                    ng-src="{{image}}">
+
             </li>
+
         </ul>
+
     </div>
 
-    <div ng-hide="vdCtrl.verbeteDetail.converted.length" style="height: {{windowHeight - 80}}px;">
-        <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag" style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"></i>
+    <div style="height: {{windowHeight - 80}}px;"
+        ng-if="!vdCtrl.verbeteReady">
+        <i class="fa fa-spinner fa-inverse fa-4x fa-spin no-drag"
+            style="position: absolute; left: {{(windowWidth / 2) - 25}}px; top: {{(windowHeight / 2) - 25}}px;"/>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse controls">
+
         <ul class="nav navbar-nav navbar-left">
             <li ng-click="vdCtrl.backToHome()">
-                <a >
-                    <i class="btn fa fa-2x fa-times"></i> <p class="text-center">Voltar</p>
+                <a>
+                    <i class="btn fa fa-2x fa-times"/>
+                    <p class="text-center">Voltar</p>
                 </a>
             </li>
         </ul>
@@ -28,27 +52,35 @@
                     <audio ng-src="{{vdCtrl.verbeteDetail.audio}}" controls type="audio/ogg"></audio>
                 </div>
             </li>
+
             <li>
                 <a ng-class="{ 'active' : vdCtrl.zoomActive }">
-                    <i class="btn fa fa-2x fa-search" ng-click="vdCtrl.toggleZoom()"></i> <p class="text-center">Lupa</p>
+                    <i class="btn fa fa-2x fa-search"
+                        ng-click="vdCtrl.toggleZoom()"/>
+                    <p class="text-center">Lupa</p>
                 </a>
             </li>
+
             <li ng-show="vdCtrl.verbeteDetail.pdf">
-                <a  target="_self"
+                <a target="_self"
                     href="{{vdCtrl.verbeteDetail.pdf.filepath}}"
                     download="{{vdCtrl.verbeteDetail.pdf.filename}}">
-                    <i class="btn fa fa-2x fa-download"></i> <p class="text-center">Salvar</p>
+
+                    <i class="btn fa fa-2x fa-download"/>
+                    <p class="text-center">Salvar</p>
                 </a>
             </li>
+
             <li style="cursor:progress"
-                ng-hide="vdCtrl.verbeteDetail.pdf" >
+                ng-hide="vdCtrl.verbeteDetail.pdf">
                 <a class="disabled" href="">
-                    <i class="btn fa fa-2x fa-circle-o-notch fa-spin"></i> <p class="text-center">Salvar</p>
+
+                    <i class="btn fa fa-2x fa-circle-o-notch fa-spin"/>
+                    <p class="text-center">Salvar</p>
                 </a>
             </li>
         </ul>
 
     </nav>
-
 
 </div>

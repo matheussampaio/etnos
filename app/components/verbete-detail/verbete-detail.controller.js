@@ -10,6 +10,7 @@
         var vm = this;
 
         vm.zoomActive = false;
+        vm.verbeteReady = false;
 
         vm.currentVerbeteId = $routeParams.verbeteId;
         vm.verbeteDetail = VerbetesData.data[vm.currentVerbeteId];
@@ -25,7 +26,16 @@
             console.log(vm.verbeteDetail);
 
             _loadImages()
-                .then(() => _loadPDF());
+                .then(() => {
+                    _loadPDF();
+
+                    // FIXME: Trick function. Wait 1 second to prevent showing the carousel while it still rendering.
+                    setTimeout(function() {
+                        vm.verbeteReady = true;
+
+                        $scope.$apply();
+                    }, 1000);
+                });
 
             bindKeys();
 
@@ -37,9 +47,12 @@
         function _loadImages() {
             return VerbeteImages.loadImages({
                     verbete: vm.verbeteDetail,
+
                 })
                 .then(verbetesConvertedPath => {
                     vm.verbeteDetail.converted = verbetesConvertedPath;
+
+                    $scope.$apply();
                 })
                 .catch(error => {
                     $log.error('error on loading images', error.stack);
