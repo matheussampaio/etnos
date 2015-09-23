@@ -66,6 +66,7 @@ const CONSTANTS = {
     DIRNAME: __dirname,
     IMAGE_MAGICK_PATH: imageMagickPath,
     VERBETES_PATH: verbeteFilesPath,
+    EXEC_PATH: process.execPath,
 };
 
 console.info(`CONSTANTS: ${JSON.stringify(CONSTANTS)}`);

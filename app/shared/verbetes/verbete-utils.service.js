@@ -12,9 +12,6 @@
 
     function VerbeteUtils($log, EtenosAppDebug, nwUtilConstants, ProgressBar) {
 
-        $log.warn(`process.execPath: ${process.execPath}`);
-        $log.warn(`nwUtilConstants.DIRNAME: ${nwUtilConstants.DIRNAME}`);
-
         var service = {
             loadImages: loadImages,
             loadAudio: loadAudio,
@@ -24,6 +21,7 @@
         return service;
 
         function loadPDF({verbete}) {
+            $log.info('starting loadPDF');
 
             var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
             var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
@@ -91,7 +89,7 @@
                     });
                 })
                 .then(destpaths => {
-                    $log.info(`convert finished: ${destpaths}`);
+                    $log.info(`convert finished, images converted: ${destpaths.length}`);
 
                     ProgressBar.complete();
 
@@ -122,9 +120,9 @@
         }
 
         function _convertImages({verbetePath, verbeteImages, distFolderName} = {}) {
-            $log.debug(`verbetePath: ${verbetePath}`);
-            $log.debug(`verbeteImages: ${verbeteImages}`);
-            $log.debug(`distFolderName: ${distFolderName}`);
+            $log.info(`verbetePath: ${verbetePath}`);
+            $log.info(`verbeteImages: ${verbeteImages}`);
+            $log.info(`distFolderName: ${distFolderName}`);
 
             var convertImagesPromises = verbeteImages.map((img) => {
                 var filePath = path.join(verbetePath, img + '.tif');
@@ -144,8 +142,6 @@
 
             return new Promise((resolve, reject) => {
                 var command = `${nwUtilConstants.IMAGE_MAGICK_PATH} -verbose ${filePath} ${distPath}`;
-
-                $log.debug(`COMMAND: ${command}`);
 
                 exec(command, (error) => {
                     if (error) {

@@ -15,7 +15,7 @@
     "resizable": true
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && gulp build",
     "start": "nw"
   },
   "devDependencies": {

@@ -27,9 +27,9 @@
 
             _startLoadAudio();
             _loadImages()
-                .then(_loadPDF());
+                .then(() => _loadPDF());
 
-            Menu.showMenu(false);
+            Menu.setShowMenu(false);
         }
 
         function _loadImages() {
