@@ -4,7 +4,7 @@
     angular.module('EtnosApp')
         .controller('VerbeteDetailController', VerbeteDetailController);
 
-    function VerbeteDetailController($log, $scope, $routeParams, $location, hotkeys,
+    function VerbeteDetailController($log, $scope, $stateParams, $state, hotkeys,
         Menu, ngProgressFactory, VerbetesData, VerbeteImages, VerbeteAudio, VerbetePdf, ProgressBar) {
 
         var vm = this;
@@ -12,7 +12,7 @@
         vm.zoomActive = false;
         vm.verbeteReady = false;
 
-        vm.currentVerbeteId = $routeParams.verbeteId;
+        vm.currentVerbeteId = $stateParams.verbeteId;
         vm.imagesPath = [];
         vm.verbeteDetail = VerbetesData.data[vm.currentVerbeteId];
 
@@ -126,7 +126,7 @@
             ProgressBar.stop();
             removeZoomContainer();
 
-            $location.path('/home');
+            $state.go('home.search');
         }
 
     }

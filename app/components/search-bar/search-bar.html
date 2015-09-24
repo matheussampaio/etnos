@@ -8,16 +8,16 @@
 
             <div class="alert-bar">
                 <alert class="alert alert-danger"
-                ng-show="vlCtrl.alert.show"
-                close="vlCtrl.closeAlert()">
-                    {{vlCtrl.alert.msg}}
+                ng-show="searchCtrl.alert.show"
+                close="searchCtrl.closeAlert()">
+                    {{searchCtrl.alert.msg}}
                 </alert>
             </div>
 
             <div class="search-bar">
                 <input class="form-control super-rounded text-center"
                     type="text"
-                    ng-model="vlCtrl.data.search"
+                    ng-model="searchCtrl.data.search"
                     ng-pattern="/^[1-9][0-9]*$/"
                     ng-minlength="1"
                     ng-maxlength="7"
@@ -32,7 +32,7 @@
             <div class="text-center">
                 <button class="btn btn-primary"
                     type="submit"
-                    ng-click="vlCtrl.search(vlCtrl.data.search)"
+                    ng-click="searchCtrl.search(searchCtrl.data.search)"
                     ng-hide="searchVerbete.$invalid">
                     Pesquisar
                 </button>

@@ -9,47 +9,71 @@
         .constant('EtenosAppDebug', DEBUG_MODE)
         .config(EtnosApp);
 
-    function EtnosApp($routeProvider) {
+    function EtnosApp($stateProvider, $urlRouterProvider) {
 
-        $routeProvider.when('/home', {
-            templateUrl: 'home/home.html',
-            controller: 'HomeController',
-            controllerAs: 'vlCtrl',
-        });
+        $urlRouterProvider.otherwise('/home/search');
 
-        $routeProvider.when('/infos/apresentacao', {
-            templateUrl: 'infos/content/apresentacao.html',
-            controller: 'InfosController',
-            controllerAs: 'vlCtrl',
-        });
-
-        $routeProvider.when('/infos/fichatecnica', {
-            templateUrl: 'infos/content/fichatecnica.html',
-            controller: 'InfosController',
-            controllerAs: 'vlCtrl',
-        });
-
-        $routeProvider.when('/infos/catalogo', {
-            templateUrl: 'infos/content/catalogo.html',
-            controller: 'InfosController',
-            controllerAs: 'vlCtrl',
-        });
-
-        $routeProvider.when('/infos/help', {
-            templateUrl: 'infos/content/help.html',
-            controller: 'InfosController',
-            controllerAs: 'vlCtrl',
-        });
-
-        $routeProvider.when('/verbete/:verbeteId', {
-            templateUrl: 'verbete-detail/verbete-detail.html',
-            controller: 'VerbeteDetailController',
-            controllerAs: 'vdCtrl',
-        });
-
-        $routeProvider.otherwise({
-            redirectTo: '/home',
-        });
+        $stateProvider
+            .state('home', {
+                url: '/home',
+                abstract: true,
+                templateUrl: 'home/home.html',
+                controller: 'HomeController',
+                controllerAs: 'homeCtrl',
+            })
+            .state('home.search', {
+                url: '/search',
+                views: {
+                    homeContent: {
+                        templateUrl: 'search/search.html',
+                        controller: 'SearchController',
+                        controllerAs: 'searchCtrl',
+                    },
+                },
+            })
+            .state('home.info', {
+                url: '/info',
+                views: {
+                    homeContent: {
+                        templateUrl: 'infos/infos.html',
+                    },
+                },
+            })
+            .state('home.info.apresentacao', {
+                url: '/apresentacao',
+                views: {
+                    infoContent: {
+                        templateUrl: 'infos/content/apresentacao.html',
+                    },
+                },
+            }).state('home.info.catalogo', {
+                url: '/catalogo',
+                views: {
+                    infoContent: {
+                        templateUrl: 'infos/content/catalogo.html',
+                    },
+                },
+            }).state('home.info.fichatecnica', {
+                url: '/fichatecnica',
+                views: {
+                    infoContent: {
+                        templateUrl: 'infos/content/fichatecnica.html',
+                    },
+                },
+            }).state('home.info.help', {
+                url: '/help',
+                views: {
+                    infoContent: {
+                        templateUrl: 'infos/content/help.html',
+                    },
+                },
+            })
+            .state('verbete', {
+                url: '/verbete/:verbeteId',
+                templateUrl: 'verbete-detail/verbete-detail.html',
+                controller: 'VerbeteDetailController',
+                controllerAs: 'vdCtrl',
+            });
 
     }
 

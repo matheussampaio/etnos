@@ -14,53 +14,52 @@
         };
     }
 
-    function MenuController($log, $location, Menu) {
+    function MenuController($log, $location, $state, Menu) {
         var vm = this;
 
+        vm.Menu = Menu;
         vm.isActive = isActive;
         vm.changeLocation = changeLocation;
-
         vm.menuOptions = getMenuOptions();
 
         ////////////////////
 
         function isActive(page) {
-            var current = $location.path().substring(1);
-            return page === current ? 'active' : '';
+            return page === $state.current.name ? 'active' : '';
         }
 
-        function changeLocation(location) {
-            $log.info(`change location: ${location}`);
+        function changeLocation(state) {
+            $log.info(`changing state: ${state}`);
 
             Menu.resetAnimation();
 
-            $location.path(location);
+            $state.go(state);
         }
 
         function getMenuOptions() {
             return [
                 {
-                    link: 'home',
+                    state: 'home.search',
                     icon: 'fa-search',
                     name: 'Pesquisa',
                 },
                 {
-                    link: 'infos/apresentacao',
+                    state: 'home.info.apresentacao',
                     icon: 'fa-lightbulb-o',
                     name: 'Apresentação',
                 },
                 {
-                    link: 'infos/fichatecnica',
+                    state: 'home.info.fichatecnica',
                     icon: 'fa-file-text-o',
                     name: 'Ficha Técnica',
                 },
                 {
-                    link: 'infos/catalogo',
+                    state: 'home.info.catalogo',
                     icon: 'fa-folder-o',
                     name: 'Catálogo',
                 },
                 {
-                    link: 'infos/help',
+                    state: 'home.info.help',
                     icon: 'fa-question',
                     name: 'Ajuda',
                 },

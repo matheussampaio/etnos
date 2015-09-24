@@ -13,7 +13,7 @@
     init();
 
     angular.module('EtnosApp', [
-      'ngRoute',
+      'ui.router',
       'ngAnimate',
       'angular-carousel',
       'cfp.hotkeys',
