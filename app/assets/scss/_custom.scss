@@ -92,20 +92,6 @@ html, body {
   padding-right: 240px;
 }
 
-.texto-info {
-  -webkit-user-select: initial;
-  padding: 2%;
-  text-align: justify;
-  text-justify: inter-word;
-  font-size: 20px;
-  color: #000;
-  line-height: 1.5;
-}
-
-.texto-info h1 {
-  line-height: 3 !important;
-}
-
 .centered {
   margin: 0 auto;
   float: none;
@@ -121,7 +107,7 @@ body.snapjs-right .hide-when-open {
 }
 
 .controls {
-  height:80px;
+  height: 80px;
   border: none;
   background-color: #141313;
 }
@@ -174,13 +160,6 @@ a.disabled {
 
 .navbar-nav>li>a {
   padding-top: 8px !important;
-}
-
-.copyright {
-  height: 60px;
-  border: none;
-  background-color: rgba(0, 0, 0, 0);
-  color: #555;
 }
 
 .container {

@@ -3,8 +3,12 @@
 
         <menu></menu>
 
-        <div ng-class="{'col-md-10 col-sm-9 col-xs-11 col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : vlCtrl.Menu.showMenu, 'col-md-12 col-sm-12 col-xs-12 centered' : !vlCtrl.Menu.showMenu}" style="max-height: {{windowHeight }}px" class="texto-info">
-            <div style="padding-left: {{windowWidth * 0.1}}px; padding-right: {{windowWidth * 0.1}}px">
+        <!-- <div ng-class="{'col-md-10 col-sm-9 col-xs-11 col-xs-offset-1 col-md-offset-2 col-sm-offset-3' : vlCtrl.Menu.showMenu, 'col-md-12 col-sm-12 col-xs-12 centered' : !vlCtrl.Menu.showMenu}" style="max-height: {{windowHeight }}px" class="texto-info"> -->
+        <div class="text-etnos"
+            ng-class="{'padding-menu': vlCtrl.Menu.showMenu}">
+
+            <div class="text-infos-container"
+                ng-class="{'padding-infos': vlCtrl.Menu.showMenu}">
 
                 <ng-transclude></ng-transclude>
 
