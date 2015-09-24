@@ -7,6 +7,8 @@
     function HomeController($log, $http, $location, VerbetesData, Menu) {
         var vm = this;
 
+        //Menu.resetAnimation();
+
         vm.search = search;
         vm.closeAlert = closeAlert;
         vm.alert = {};

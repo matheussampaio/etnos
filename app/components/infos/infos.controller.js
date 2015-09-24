@@ -7,6 +7,8 @@
     function InfosController(Menu) {
         var vm = this;
 
+        //Menu.resetAnimation();
+
         vm.Menu = Menu;
     }
 

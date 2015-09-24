@@ -9,21 +9,62 @@
         return {
             restrict: 'E',
             templateUrl: 'menu/menu.html',
-            controller: NavbarController,
-            controllerAs: 'navbarCtrl',
+            controller: MenuController,
+            controllerAs: 'menuCtrl',
         };
     }
 
-    function NavbarController($location) {
+    function MenuController($log, $location, Menu) {
         var vm = this;
 
-        vm.menuClass = menuClass;
+        vm.isActive = isActive;
+        vm.changeLocation = changeLocation;
+
+        vm.menuOptions = getMenuOptions();
 
         ////////////////////
 
-        function menuClass(page) {
+        function isActive(page) {
             var current = $location.path().substring(1);
             return page === current ? 'active' : '';
+        }
+
+        function changeLocation(location) {
+            $log.info(`change location: ${location}`);
+
+            Menu.resetAnimation();
+
+            $location.path(location);
+        }
+
+        function getMenuOptions() {
+            return [
+                {
+                    link: 'home',
+                    icon: 'fa-search',
+                    name: 'Pesquisa',
+                },
+                {
+                    link: 'infos/apresentacao',
+                    icon: 'fa-lightbulb-o',
+                    name: 'Apresentação',
+                },
+                {
+                    link: 'infos/fichatecnica',
+                    icon: 'fa-file-text-o',
+                    name: 'Ficha Técnica',
+                },
+                {
+                    link: 'infos/catalogo',
+                    icon: 'fa-folder-o',
+                    name: 'Catálogo',
+                },
+                {
+                    link: 'infos/help',
+                    icon: 'fa-question',
+                    name: 'Ajuda',
+                },
+            ];
         }
 
     }
