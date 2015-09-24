@@ -1,0 +1,40 @@
+.animationFadeIn {
+    // position: absolute;
+    opacity: 1;
+}
+.animationFadeIn.ng-enter {
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+}
+.animationFadeIn.ng-enter {
+    opacity: 0;
+}
+.animationFadeIn.ng-enter-active {
+    opacity: 1;
+}
+
+.animationFadeInOut {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
+}
+.animationFadeInOut.ng-enter,
+.animationFadeInOut.ng-leave {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.animationFadeInOut.ng-enter {
+    opacity: 0;
+}
+.animationFadeInOut.ng-enter-active {
+    opacity: 1;
+}
+.animationFadeInOut.ng-leave {
+    opacity: 1;
+}
+.animationFadeInOut.ng-leave-active {
+    opacity: 0;
+}
