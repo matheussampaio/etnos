@@ -11,13 +11,18 @@
             start: start,
             stop: stop,
             complete: complete,
-            setProgress: setProgress,
+            increment: increment,
+            setStep: setStep,
+            step: 1,
+            progress: 1,
         };
 
         return service;
 
         function start({progress = 1, color = 'green', height = '6px'} = {}) {
             $log.info('Starting progress bar...');
+
+            service.progress = progress;
 
             service.bar.set(progress);
             service.bar.setColor(color);
@@ -40,6 +45,16 @@
             $log.debug(`Updating progress bar: ${progress}`);
 
             service.bar.set(progress);
+        }
+
+        function setStep(step) {
+            service.step = step;
+        }
+
+        function increment() {
+            service.progress += service.step;
+
+            setProgress(service.progress);
         }
     }
 

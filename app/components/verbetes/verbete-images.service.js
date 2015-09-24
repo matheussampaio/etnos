@@ -8,10 +8,12 @@
     angular.module('EtnosApp')
         .service('VerbeteImages', VerbeteImages);
 
-    function VerbeteImages($log, nwUtilConstants, ProgressBar) {
+    function VerbeteImages($log, _, nwUtilConstants, ProgressBar) {
 
         var service = {
             loadImages: loadImages,
+            notify: null,
+            verbete: null,
         };
 
         return service;
@@ -19,27 +21,28 @@
         function loadImages({verbete, notify}) {
             $log.info('Converting verbetes...');
 
-            if (verbete.converted.length === verbete.images.length) {
-                $log.info('Verbetes already converted...');
-                return Promise.resolve(verbete.converted);
-            }
+            // Save notify function for return results
+            service.notify = notify;
+            service.verbete = verbete;
 
             ProgressBar.start();
+            ProgressBar.setStep(1 * 100 / verbete.images.length);
 
             var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
 
             return _createFolder(distFolderName)
                 .then(distFolderName => {
+                    $log.info(`verbetePath: ${verbete.path}`);
+                    $log.info(`verbeteImages: ${verbete.images}`);
+                    $log.info(`distFolderName: ${distFolderName}`);
+
                     return _convertImages({
                         verbetePath: verbete.path,
                         verbeteImages: verbete.images,
                         distFolderName: distFolderName,
-                        notify: notify,
                     });
                 })
                 .then(destpaths => {
-                    $log.info(`convert finished, images converted: ${destpaths.length}`);
-
                     ProgressBar.complete();
 
                     return destpaths;
@@ -62,11 +65,54 @@
             });
         }
 
-        function _convertImages({verbetePath, verbeteImages, distFolderName, notify} = {}) {
-            $log.info(`verbetePath: ${verbetePath}`);
-            $log.info(`verbeteImages: ${verbeteImages}`);
-            $log.info(`distFolderName: ${distFolderName}`);
+        function _convertImages({verbetePath, verbeteImages, distFolderName} = {}) {
+            return new Promise((resolve, reject) => {
+                _convertImagesRecursive({
+                    verbetePath,
+                    verbeteImages,
+                    distFolderName,
+                    resolve,
+                    reject,
+                });
+            });
+        }
 
+        function _convertImagesRecursive({verbetePath, verbeteImages, distFolderName, resolve, reject} = {}) {
+            if (verbeteImages.length === 0) {
+                resolve();
+            } else {
+
+                var maxElements = _.random(2, 4); // max elements in each group
+
+                _convertGroup({
+                        verbetePath: verbetePath,
+                        verbeteImages: verbeteImages.slice(0, maxElements),
+                        distFolderName: distFolderName,
+                    })
+                    .then(imagePath => {
+
+                        service.verbete.converted = service.verbete.converted.concat(imagePath);
+
+                        if (service.notify) {
+                            service.notify(imagePath);
+                        }
+
+                        _convertImagesRecursive({
+                            verbetePath,
+                            distFolderName,
+                            resolve,
+                            reject,
+
+                            verbeteImages: verbeteImages.slice(maxElements),
+                        });
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            }
+        }
+
+        function _convertGroup({verbetePath, verbeteImages, distFolderName} = {}) {
             var convertImagesPromises = verbeteImages.map((img) => {
                 var filePath = path.join(verbetePath, img + '.tif');
                 var distPath = path.join(distFolderName, img + '.png');
@@ -74,10 +120,6 @@
                 return _convertImage({
                     filePath: filePath,
                     distPath: distPath,
-                }).then(imagePath => {
-                    console.log(`notifing: ${imagePath}`);
-
-                    return imagePath;
                 });
             });
 
@@ -86,6 +128,13 @@
 
         function _convertImage({filePath, distPath}) {
             filePath = path.resolve(nwUtilConstants.VERBETES_PATH, filePath);
+
+            // If image is already converted, skip
+            if (_.includes(service.verbete.converted, distPath)) {
+                $log.debug(`already converted: ${distPath}`);
+
+                return new Promise(resolve => resolve(distPath));
+            }
 
             return new Promise((resolve, reject) => {
                 var command = `${nwUtilConstants.IMAGE_MAGICK_PATH} -verbose ${filePath} ${distPath}`;
@@ -97,6 +146,9 @@
                     } else {
                         distPath = distPath.replace(/\\/g, `\\\\`);
                         $log.debug(`image converted: ${distPath}`);
+
+                        ProgressBar.increment();
+
                         resolve(distPath);
                     }
                 });

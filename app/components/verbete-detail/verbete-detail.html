@@ -2,12 +2,12 @@
 
 
     <div class="animated fadeIn"
-        ng-if="vdCtrl.verbeteDetail.converted.length > 0"
+        ng-if="vdCtrl.imagesPath.length > 0"
         ng-class="{invisible: !vdCtrl.verbeteReady}">
 
         <ul rn-carousel rn-carousel-indicator rn-carousel-control rn-carousel-buffered class="no-drag">
 
-            <li ng-repeat="image in vdCtrl.verbeteDetail.converted">
+            <li ng-repeat="image in vdCtrl.imagesPath">
 
                 <img
                     style="max-height: {{windowHeight - 100}}px; padding-bottom: 8px; padding-top: 8px;"

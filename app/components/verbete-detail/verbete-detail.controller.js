@@ -13,6 +13,7 @@
         vm.verbeteReady = false;
 
         vm.currentVerbeteId = $routeParams.verbeteId;
+        vm.imagesPath = [];
         vm.verbeteDetail = VerbetesData.data[vm.currentVerbeteId];
 
         vm.backToHome = backToHome;
@@ -28,13 +29,6 @@
             _loadImages()
                 .then(() => {
                     _loadPDF();
-
-                    // FIXME: Trick function. Wait 1 second to prevent showing the carousel while it still rendering.
-                    setTimeout(function() {
-                        vm.verbeteReady = true;
-
-                        $scope.$apply();
-                    }, 1000);
                 });
 
             bindKeys();
@@ -47,12 +41,21 @@
         function _loadImages() {
             return VerbeteImages.loadImages({
                     verbete: vm.verbeteDetail,
+                    notify: (verbete) => {
+                        console.log(`callback verbete: ${verbete}`);
 
-                })
-                .then(verbetesConvertedPath => {
-                    vm.verbeteDetail.converted = verbetesConvertedPath;
+                        vm.imagesPath = vm.imagesPath.concat(verbete);
 
-                    $scope.$apply();
+                        // FIXME: Trick function. Wait 1 second to prevent showing the
+                        //        carousel while it still rendering.
+                        if (!vm.verbeteReady) {
+                            setTimeout(function() {
+                                vm.verbeteReady = true;
+
+                                $scope.$apply();
+                            }, 1000);
+                        }
+                    },
                 })
                 .catch(error => {
                     $log.error('error on loading images', error.stack);

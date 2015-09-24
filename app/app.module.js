@@ -20,6 +20,8 @@
       'ngAnimate',
       'ngProgress',
       'ui.bootstrap',
+
+      'Lodash',
     ])
     .constant('nwUtilConstants', nwUtil);
 
