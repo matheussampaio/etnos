@@ -3,12 +3,12 @@
 
     angular
         .module('EtnosApp')
-        .directive('navbar', navbar);
+        .directive('menu', menu);
 
-    function navbar() {
+    function menu() {
         return {
             restrict: 'E',
-            templateUrl: 'navbar/navbar.html',
+            templateUrl: 'menu/menu.html',
             controller: NavbarController,
             controllerAs: 'navbarCtrl',
         };

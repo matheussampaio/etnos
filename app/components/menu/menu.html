@@ -1,0 +1,38 @@
+<div class="animated drawer drawer-open drawer-container col-xs-1 col-md-2 col-sm-3"
+    ng-show="vlCtrl.Menu.showMenu"
+    ng-class="{slideInLeft: vlCtrl.Menu.showMenu, slideOutLeft: !vlCtrl.Menu.showMenu}">
+
+    <div>
+        <ul role="navigation" class="drawer-list">
+            <li ng-class="navbarCtrl.menuClass('home')" class="drawer-list-item">
+                <a href="#home/home" data-pjax="">
+                    <i class="fa fa-search"></i>Pesquisa
+                </a>
+            </li>
+            <li class="drawer-list-divider"></li>
+            <li class="drawer-list-item drawer-list-title">
+                Conheça
+            </li>
+            <li ng-class="navbarCtrl.menuClass('infos/apresentacao')" class="drawer-list-item">
+                <a href="#infos/apresentacao">
+                    <i class="fa fa-lightbulb-o"></i>Apresentação
+                </a>
+            </li>
+            <li ng-class="navbarCtrl.menuClass('infos/fichatecnica')" class="drawer-list-item">
+                <a href="#infos/fichatecnica">
+                    <i class="fa fa-file-text-o"></i>Ficha Técnica
+                </a>
+            </li>
+            <li ng-class="navbarCtrl.menuClass('infos/catalogo')" class="drawer-list-item">
+                <a href="#infos/catalogo">
+                    <i class="fa fa-folder-o"></i>Catálogo
+                </a>
+            </li>
+            <li ng-class="navbarCtrl.menuClass('infos/help')" class="drawer-list-item">
+                <a href="#infos/help">
+                    <i class="fa fa-question"></i>Ajuda
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

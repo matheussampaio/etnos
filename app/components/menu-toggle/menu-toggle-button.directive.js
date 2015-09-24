@@ -10,7 +10,7 @@
             restrict: 'E',
             controller: MenuButtonController,
             controllerAs: 'menuButtonCtrl',
-            templateUrl: 'menu/menu-toggle-button.html',
+            templateUrl: 'menu-toggle/menu-toggle-button.html',
         };
     }
 
