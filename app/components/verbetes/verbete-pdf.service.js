@@ -17,6 +17,30 @@
         return service;
 
         function loadPDF({verbete}) {
+            if (verbete.pdf) {
+                if (verbete.pdf.loading) {
+                    $log.info('pdf already loading, waiting...');
+
+                    return new Promise(resolve => {
+                        var interval = setInterval(() => {
+
+                            if (verbete.pdf.finished) {
+                                resolve(verbete.pdf);
+                                clearInterval(interval);
+                            } else {
+                                $log.info('pdf still loading, waiting...');
+                            }
+
+                        }, 5000);
+                    });
+                }
+
+                if (verbete.pdf.finished) {
+                    $log.info('pdf already created, skiping...');
+                    return Promise.resolve(verbete.pdf);
+                }
+            }
+
             $log.info('starting loadPDF');
 
             var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
@@ -26,15 +50,12 @@
 
             $log.debug(`PDF distpath ${distpath}`);
 
-            var pdf = {
+            verbete.pdf = {
                 filename: filename,
                 filepath: path.join(distpath, filename),
+                loading: true,
+                finished: false,
             };
-
-            if (verbete.pdf !== undefined) {
-                $log.info('PDF already generated...');
-                return Promise.resolve(pdf);
-            }
 
             return new Promise(resolve => {
                 var stream = fs.createWriteStream(path.join(distpath, filenamejade));
@@ -58,7 +79,10 @@
                         streamPDF.on('close', function() {
                             $log.info('pdf created.');
 
-                            resolve(pdf);
+                            verbete.pdf.loading = false;
+                            verbete.pdf.finished = true;
+
+                            resolve(verbete.pdf);
                         });
                     });
                 });

@@ -33,6 +33,7 @@
             $log.info('Stoping progress bar...');
 
             service.bar.reset();
+            service.bar.setHeight('0px');
         }
 
         function complete() {

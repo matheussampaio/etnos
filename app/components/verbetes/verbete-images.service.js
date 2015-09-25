@@ -8,7 +8,7 @@
     angular.module('EtnosApp')
         .service('VerbeteImages', VerbeteImages);
 
-    function VerbeteImages($log, _, nwUtilConstants, ProgressBar) {
+    function VerbeteImages($log, _, nwUtilConstants) {
 
         var service = {
             loadImages: loadImages,
@@ -25,9 +25,6 @@
             service.notify = notify;
             service.verbete = verbete;
 
-            ProgressBar.start();
-            ProgressBar.setStep(1 * 100 / verbete.images.length);
-
             var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
 
             return _createFolder(distFolderName)
@@ -40,11 +37,11 @@
                         verbetePath: verbete.path,
                         verbeteImages: verbete.images,
                         distFolderName: distFolderName,
+                    }).then(() => {
+                        // return service.verbete.;
                     });
                 })
                 .then(destpaths => {
-                    ProgressBar.complete();
-
                     return destpaths;
                 });
         }
@@ -138,7 +135,7 @@
                 return new Promise(resolve => {
                     setTimeout(() => {
                         resolve(distPath);
-                    }, 300);
+                    }, 1000);
                 });
             }
 
@@ -152,8 +149,6 @@
                     } else {
                         distPath = distPath.replace(/\\/g, `\\\\`);
                         $log.debug(`image converted: ${distPath}`);
-
-                        ProgressBar.increment();
 
                         resolve(distPath);
                     }

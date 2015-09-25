@@ -40,23 +40,16 @@
         }
 
         function _loadImages() {
+            ProgressBar.start();
+            ProgressBar.setStep(1 * 100 / vm.verbeteDetail.images.length);
+
             return VerbeteImages.loadImages({
                     verbete: vm.verbeteDetail,
-                    notify: (verbete) => {
-                        console.log(`callback verbete: ${verbete}`);
-
-                        vm.imagesPath = vm.imagesPath.concat(verbete);
-
-                        // FIXME: Trick function. Wait 1 second to prevent showing the
-                        //        carousel while it still rendering.
-                        if (!vm.verbeteReady) {
-                            setTimeout(function() {
-                                vm.verbeteReady = true;
-
-                                $scope.$apply();
-                            }, 1000);
-                        }
-                    },
+                    notify: _notify,
+                }).then(() => {
+                    $log.info(`Loading images finished.`);
+                    $scope.$apply();
+                    ProgressBar.complete();
                 })
                 .catch(error => {
                     $log.error('error on loading images', error.stack);
@@ -68,12 +61,12 @@
                     verbete: vm.verbeteDetail,
                 })
                 .then(pdfFile => {
-                    vm.verbeteDetail.pdf = pdfFile;
+                    // vm.verbeteDetail.pdfLoad = true;
 
                     $scope.$apply();
                 })
                 .catch(error => {
-                    $log.error('error on loading pdf', error.stack);
+                    $log.error('error on loading pdf', error.message);
                 });
         }
 
@@ -109,6 +102,26 @@
                         toggleZoom();
                     },
                 });
+        }
+
+        function _notify(verbete) {
+            console.log(`callback verbete: ${verbete}`);
+
+            for (var i = 0; i < verbete.length; i++) {
+                ProgressBar.increment();
+            }
+
+            vm.imagesPath = vm.imagesPath.concat(verbete);
+
+            // FIXME: Trick function. Wait 1 second to prevent showing the
+            //        carousel while it still rendering.
+            if (!vm.verbeteReady) {
+                setTimeout(function() {
+                    vm.verbeteReady = true;
+
+                    $scope.$apply();
+                }, 1000);
+            }
         }
 
         function removeZoomContainer() {

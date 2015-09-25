@@ -66,7 +66,7 @@
                 </a>
             </li>
 
-            <li ng-show="vdCtrl.verbeteDetail.pdf">
+            <li ng-show="vdCtrl.verbeteDetail.pdf.finished">
                 <a target="_self"
                     href="{{vdCtrl.verbeteDetail.pdf.filepath}}"
                     download="{{vdCtrl.verbeteDetail.pdf.filename}}">
@@ -77,7 +77,7 @@
             </li>
 
             <li style="cursor:progress"
-                ng-hide="vdCtrl.verbeteDetail.pdf">
+                ng-hide="vdCtrl.verbeteDetail.pdf.finished">
                 <a class="disabled" href="">
 
                     <i class="btn fa fa-2x fa-circle-o-notch fa-spin"/>
