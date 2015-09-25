@@ -18,6 +18,7 @@
 
         vm.backToHome = backToHome;
         vm.toggleZoom = toggleZoom;
+        vm.showHelp = showHelp;
 
         activate();
 
@@ -118,6 +119,10 @@
             $log.info('toggling zoom...');
 
             vm.zoomActive = !vm.zoomActive;
+        }
+
+        function showHelp() {
+            hotkeys.toggleCheatSheet();
         }
 
         function backToHome() {
