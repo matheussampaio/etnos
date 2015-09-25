@@ -14,9 +14,36 @@
 
 .text-infos-container {
     padding-left: 75px;
-    padding-right: 50px;
+    padding-right: 5px;
+}
+
+.info-content {
+    padding-right: 20px;
 }
 
 .padding-infos {
     padding-left: 20px;
+}
+
+.scrollable {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    margin-top: 30px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: rgba(0,0,0,0.4);
+}
+
+::-webkit-scrollbar-track-piece {
+    background: transparent;
 }
