@@ -94,17 +94,17 @@
             hotkeys.bindTo($scope)
                 .add({
                     combo: 'esc',
-                    description: 'Move to home',
+                    description: 'Voltar.',
                     callback: function() {
                         $log.info('ESC pressed.');
                         backToHome();
                     },
                 })
                 .add({
-                    combo: 'l',
-                    description: 'Toggle Zoom',
+                    combo: 'z',
+                    description: 'Ativar/Desativar Lupa.',
                     callback: () => {
-                        $log.info('L pressed');
+                        $log.info('z pressed');
                         toggleZoom();
                     },
                 });
@@ -125,6 +125,9 @@
 
             ProgressBar.stop();
             removeZoomContainer();
+
+            vm.imagesPath = [];
+            vm.verbeteReady = false;
 
             $state.go('home.search');
         }

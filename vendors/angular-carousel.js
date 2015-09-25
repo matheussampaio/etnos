@@ -21,124 +21,125 @@ angular.module('angular-carousel', [
 angular.module('angular-carousel')
 
 .directive('rnCarouselAutoSlide', ['$timeout', function($timeout) {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-        var delay = Math.round(parseFloat(attrs.rnCarouselAutoSlide) * 1000),
-            timer = increment = false, slidesCount = element.children().length;
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var delay = Math.round(parseFloat(attrs.rnCarouselAutoSlide) * 1000),
+                timer = increment = false,
+                slidesCount = element.children().length;
 
-        if(!scope.carouselExposedIndex){
-            scope.carouselExposedIndex = 0;
-        }
-        stopAutoplay = function () {
-            if (angular.isDefined(timer)) {
-                $timeout.cancel(timer);
-            }
-            timer = undefined;
-        };
-
-        increment = function () {
-            if (scope.carouselExposedIndex < slidesCount - 1) {
-                scope.carouselExposedIndex =  scope.carouselExposedIndex + 1;
-            } else {
+            if (!scope.carouselExposedIndex) {
                 scope.carouselExposedIndex = 0;
             }
-        };
+            stopAutoplay = function() {
+                if (angular.isDefined(timer)) {
+                    $timeout.cancel(timer);
+                }
+                timer = undefined;
+            };
 
-        restartTimer = function (){
-            stopAutoplay();
-            timer = $timeout(increment, delay);
-        };
+            increment = function() {
+                if (scope.carouselExposedIndex < slidesCount - 1) {
+                    scope.carouselExposedIndex = scope.carouselExposedIndex + 1;
+                } else {
+                    scope.carouselExposedIndex = 0;
+                }
+            };
 
-        scope.$watch('carouselIndex', function(){
-           restartTimer();
-        });
+            restartTimer = function() {
+                stopAutoplay();
+                timer = $timeout(increment, delay);
+            };
 
-        restartTimer();
-        if (attrs.rnCarouselPauseOnHover && attrs.rnCarouselPauseOnHover != 'false'){
-            element.on('mouseenter', stopAutoplay);
+            scope.$watch('carouselIndex', function() {
+                restartTimer();
+            });
 
-            element.on('mouseleave', restartTimer);
+            restartTimer();
+            if (attrs.rnCarouselPauseOnHover && attrs.rnCarouselPauseOnHover != 'false') {
+                element.on('mouseenter', stopAutoplay);
+
+                element.on('mouseleave', restartTimer);
+            }
+
+            scope.$on('$destroy', function() {
+                stopAutoplay();
+                element.off('mouseenter', stopAutoplay);
+                element.off('mouseleave', restartTimer);
+            });
+
+
         }
-
-        scope.$on('$destroy', function(){
-            stopAutoplay();
-            element.off('mouseenter', stopAutoplay);
-            element.off('mouseleave', restartTimer);
-        });
-
-
-    }
-  };
+    };
 }]);
 angular.module('angular-carousel')
 
 .directive('rnCarouselControls', ['hotkeys', function(hotkeys) {
-  return {
-    restrict: 'A',
-    replace: true,
-    scope: {
-      items: '=',
-      index: '='
-    },
-    link: function(scope, element, attrs) {
-      scope.prev = function() {
-        if (scope.index > 0) scope.index--;
-      };
-      scope.next = function() {
-        if (scope.index < scope.items.length-1) scope.index++;
-      };
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            items: '=',
+            index: '='
+        },
+        link: function(scope, element, attrs) {
+            scope.prev = function() {
+                if (scope.index > 0) scope.index--;
+            };
+            scope.next = function() {
+                if (scope.index < scope.items.length - 1) scope.index++;
+            };
 
-      hotkeys.bindTo(scope)
-      .add({
-        combo: 'right',
-        description: 'Move Right',
-        callback: function() {
-          console.log("Right pressed, moving to right");
-          scope.next();
-        }
-      }).add({
-        combo: 'left',
-        description: 'Move Left',
-        callback: function() {
-          console.log("Left pressed, moving to left");
-          scope.prev();
-        }
-      });
-    },
-    templateUrl: 'carousel-controls.html'
-  };
+            hotkeys.bindTo(scope)
+                .add({
+                    combo: 'right',
+                    description: 'Avançar página.',
+                    callback: function() {
+                        console.log("Right pressed, moving to right");
+                        scope.next();
+                    }
+                }).add({
+                    combo: 'left',
+                    description: 'Voltar página.',
+                    callback: function() {
+                        console.log("Left pressed, moving to left");
+                        scope.prev();
+                    }
+                });
+        },
+        templateUrl: 'carousel-controls.html'
+    };
 }]);
 
 angular.module('angular-carousel').run(['$templateCache', function($templateCache) {
-  $templateCache.put('carousel-controls.html',
-    '<div class="rn-carousel-controls">\n' +
-    '  <span class="rn-carousel-control rn-carousel-control-prev" ng-click="prev()" ng-if="index > 0"></span>\n' +
-    '  <span class="rn-carousel-control rn-carousel-control-next" ng-click="next()" ng-if="index < items.length - 1"></span>\n' +
-    '</div>'
-  );
+    $templateCache.put('carousel-controls.html',
+        '<div class="rn-carousel-controls">\n' +
+        '  <span class="rn-carousel-control rn-carousel-control-prev" ng-click="prev()" ng-if="index > 0"></span>\n' +
+        '  <span class="rn-carousel-control rn-carousel-control-next" ng-click="next()" ng-if="index < items.length - 1"></span>\n' +
+        '</div>'
+    );
 }]);
 angular.module('angular-carousel')
 
 .directive('rnCarouselIndicators', [function() {
-  return {
-    restrict: 'A',
-    replace: true,
-    scope: {
-      items: '=',
-      index: '='
-    },
-    template: '<div>{{index + 1}}/{{items.length}}</div>'
-  };
+    return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+            items: '=',
+            index: '='
+        },
+        template: '<div>{{index + 1}}/{{items.length}}</div>'
+    };
 }]);
 
 angular.module('angular-carousel').run(['$templateCache', function($templateCache) {
-  $templateCache.put('carousel-indicators.html',
-      '<div class="rn-carousel-indicator">\n' +
-      ' <span ng-repeat="item in items" ng-click="$parent.index=$index" ng-class="{active: $index==$parent.index}"></span>\n' +
-      + '<div>teste</div>\n' +
-      '</div>'
-  );
+    $templateCache.put('carousel-indicators.html',
+        '<div class="rn-carousel-indicator">\n' +
+        ' <span ng-repeat="item in items" ng-click="$parent.index=$index" ng-class="{active: $index==$parent.index}"></span>\n' +
+        +'<div>teste</div>\n' +
+        '</div>'
+    );
 }]);
 
 (function() {
@@ -223,7 +224,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                         timestamp;
 
                     // add a wrapper div that will hide the overflow
-                    var carousel = iElement.wrap("<div id='carousel-" + carouselId +"' class='rn-carousel-container'></div>"),
+                    var carousel = iElement.wrap("<div id='carousel-" + carouselId + "' class='rn-carousel-container'></div>"),
                         container = carousel.parent();
 
                     // if indicator or controls, setup the watch
@@ -249,13 +250,13 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
                     // enable carousel indicator
                     if (angular.isDefined(iAttributes.rnCarouselIndicator)) {
-                        var indicator = $compile("<div id='carousel-" + carouselId +"-indicator' index='indicatorIndex' items='carouselIndicatorArray' rn-carousel-indicators class='rn-carousel-indicator'></div>")(scope);
+                        var indicator = $compile("<div id='carousel-" + carouselId + "-indicator' index='indicatorIndex' items='carouselIndicatorArray' rn-carousel-indicators class='rn-carousel-indicator'></div>")(scope);
                         container.append(indicator);
                     }
 
                     // enable carousel controls
                     if (angular.isDefined(iAttributes.rnCarouselControl)) {
-                        var controls = $compile("<div id='carousel-" + carouselId +"-controls' index='indicatorIndex' items='carouselIndicatorArray' rn-carousel-controls class='rn-carousel-controls'></div>")(scope);
+                        var controls = $compile("<div id='carousel-" + carouselId + "-controls' index='indicatorIndex' items='carouselIndicatorArray' rn-carousel-controls class='rn-carousel-controls'></div>")(scope);
                         container.append(controls);
                     }
 
@@ -276,7 +277,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                             });
                             scope.carouselIndex = indexModel(scope);
                             scope.$parent.$watch(indexModel, function(newValue, oldValue) {
-                                if (newValue!==undefined) {
+                                if (newValue !== undefined) {
                                     if (newValue >= slidesCount) {
                                         newValue = slidesCount - 1;
                                         updateParentIndex(newValue);
@@ -289,8 +290,8 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                             });
                             isIndexBound = true;
                         } else if (!isNaN(iAttributes.rnCarouselIndex)) {
-                          /* if user just set an initial number, set it */
-                          scope.carouselIndex = parseInt(iAttributes.rnCarouselIndex, 10);
+                            /* if user just set an initial number, set it */
+                            scope.carouselIndex = parseInt(iAttributes.rnCarouselIndex, 10);
                         }
                     }
 
@@ -321,7 +322,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                     }
 
                     function getCarouselWidth() {
-                       // container.css('width', 'auto');
+                        // container.css('width', 'auto');
                         var slides = carousel.children();
                         if (slides.length === 0) {
                             containerWidth = carousel[0].getBoundingClientRect().width;
@@ -351,7 +352,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                         var move = -Math.round(offset);
                         move += (scope.carouselBufferIndex * containerWidth);
 
-                        if(!is3dAvailable) {
+                        if (!is3dAvailable) {
                             carousel[0].style[transformProperty] = 'translate(' + move + 'px, 0)';
                         } else {
                             carousel[0].style[transformProperty] = 'translate3d(' + move + 'px, 0, 0)';
@@ -379,7 +380,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
                     function capIndex(idx) {
                         // ensure given index it inside bounds
-                        return (idx >= slidesCount) ? slidesCount: (idx <= 0) ? 0 : idx;
+                        return (idx >= slidesCount) ? slidesCount : (idx <= 0) ? 0 : idx;
                     }
 
                     function updateBufferIndex() {
@@ -415,7 +416,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                         updateBufferIndex();
                         // if outside of angular scope, trigger angular digest cycle
                         // use local digest only for perfs if no index bound
-                        if ($rootScope.$$phase!=='$apply' && $rootScope.$$phase!=='$digest') {
+                        if ($rootScope.$$phase !== '$apply' && $rootScope.$$phase !== '$digest') {
                             if (isIndexBound) {
                                 scope.$apply();
                             } else {
@@ -442,10 +443,10 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                     function capPosition(x) {
                         // limit position if start or end of slides
                         var position = x;
-                        if (scope.carouselIndex===0) {
+                        if (scope.carouselIndex === 0) {
                             position = Math.max(-getAbsMoveTreshold(), position);
-                        } else if (scope.carouselIndex===slidesCount-1) {
-                            position = Math.min(((slidesCount-1)*containerWidth + getAbsMoveTreshold()), position);
+                        } else if (scope.carouselIndex === slidesCount - 1) {
+                            position = Math.min(((slidesCount - 1) * containerWidth + getAbsMoveTreshold()), position);
                         }
                         return position;
                     }
@@ -486,7 +487,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                         //console.log('swipeEnd', 'scope.carouselIndex', scope.carouselIndex);
 
                         // Prevent clicks on buttons inside slider to trigger "swipeEnd" event on touchend/mouseup
-                        if(event && !swipeMoved) {
+                        if (event && !swipeMoved) {
                             return;
                         }
 
@@ -499,16 +500,16 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                         var minMove = getAbsMoveTreshold(),
                             currentOffset = (scope.carouselIndex * containerWidth),
                             absMove = currentOffset - destination,
-                            slidesMove = -Math[absMove>=0?'ceil':'floor'](absMove / containerWidth),
+                            slidesMove = -Math[absMove >= 0 ? 'ceil' : 'floor'](absMove / containerWidth),
                             shouldMove = Math.abs(absMove) > minMove;
 
-                        if ((slidesMove + scope.carouselIndex) >= slidesCount ) {
+                        if ((slidesMove + scope.carouselIndex) >= slidesCount) {
                             slidesMove = slidesCount - 1 - scope.carouselIndex;
                         }
                         if ((slidesMove + scope.carouselIndex) < 0) {
                             slidesMove = -scope.carouselIndex;
                         }
-                        var moveOffset = shouldMove?slidesMove:0;
+                        var moveOffset = shouldMove ? slidesMove : 0;
 
                         destination = (moveOffset + scope.carouselIndex) * containerWidth;
                         amplitude = destination - offset;
@@ -525,13 +526,13 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
                     iAttributes.$observe('rnCarouselSwipe', function(newValue, oldValue) {
                         // only bind swipe when it's not switched off
-                        if(newValue !== 'false' && newValue !== 'off') {
+                        if (newValue !== 'false' && newValue !== 'off') {
                             $swipe.bind(carousel, {
                                 start: swipeStart,
                                 move: swipeMove,
                                 end: swipeEnd,
                                 cancel: function(event) {
-                                  swipeEnd({}, event);
+                                    swipeEnd({}, event);
                                 }
                             });
                         } else {
@@ -548,7 +549,7 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
 
                     // detect supported CSS property
                     transformProperty = 'transform';
-                    ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
+                    ['webkit', 'Moz', 'O', 'ms'].every(function(prefix) {
                         var e = prefix + 'Transform';
                         if (typeof document.body.style[e] !== 'undefined') {
                             transformProperty = e;
@@ -558,18 +559,18 @@ angular.module('angular-carousel').run(['$templateCache', function($templateCach
                     });
 
                     //Detect support of translate3d
-                    function detect3dSupport(){
+                    function detect3dSupport() {
                         var el = document.createElement('p'),
-                        has3d,
-                        transforms = {
-                            'webkitTransform':'-webkit-transform',
-                            'msTransform':'-ms-transform',
-                            'transform':'transform'
-                        };
+                            has3d,
+                            transforms = {
+                                'webkitTransform': '-webkit-transform',
+                                'msTransform': '-ms-transform',
+                                'transform': 'transform'
+                            };
                         // Add it to the body to get the computed style
                         document.body.insertBefore(el, null);
-                        for(var t in transforms){
-                            if( el.style[t] !== undefined ){
+                        for (var t in transforms) {
+                            if (el.style[t] !== undefined) {
                                 el.style[t] = 'translate3d(1px,1px,1px)';
                                 has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
                             }
