@@ -133,7 +133,13 @@
             if (_.includes(service.verbete.converted, distPath)) {
                 $log.debug(`already converted: ${distPath}`);
 
-                return new Promise(resolve => resolve(distPath));
+                // FIXME: For some reason, if I serve the paths to fast, the carousel will bug.
+                //        So I add 300ms.
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(distPath);
+                    }, 300);
+                });
             }
 
             return new Promise((resolve, reject) => {
