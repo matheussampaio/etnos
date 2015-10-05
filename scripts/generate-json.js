@@ -5,7 +5,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var utils = require('./utils');
 
-function generateJSON({rootPath = '', outputName = 'verbetes.json'}) {
+function generateJSON({rootPath = '', verbetes = [], outputName = 'verbetes.json'}) {
     if (_.isEmpty(rootPath)) {
         console.error(`ERROR: rootPath is undefined.`);
         return false;
@@ -15,12 +15,13 @@ function generateJSON({rootPath = '', outputName = 'verbetes.json'}) {
     var json = {};
 
     // Leitura sincronizada da paste raiz dos verbetes
-    var rootFolder = utils.readdirSync(rootPath);
+    // var rootFolder = utils.readdirSync(rootPath);
 
     // Para cada pasta (estado) no diretorio raiz dos verbetes
-    for (var i = 0; i < rootFolder.length; i++) {
+    for (var i = 0; i < verbetes.length; i++) {
+        var estadoName = verbetes[i].name;
 
-        var estadoPath = path.join(rootPath, rootFolder[i]);
+        var estadoPath = path.join(rootPath, estadoName);
         var estadoFolder = utils.readdirSync(estadoPath);
 
         // Para cada verbete dentro do estado
@@ -30,7 +31,7 @@ function generateJSON({rootPath = '', outputName = 'verbetes.json'}) {
             json[estadoFolder[j]] = {
                 id: estadoFolder[j],
                 images: verbeteFolder,
-                path: rootFolder[i] + '/' + estadoFolder[j],
+                path: estadoName + '/' + estadoFolder[j],
                 converted: [],
             };
 

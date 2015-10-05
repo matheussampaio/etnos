@@ -20,7 +20,7 @@
         function search(verbete) {
             $log.debug(`search term: ${verbete}`);
 
-            verbete = _zeroPad(verbete, 5);
+            verbete = verbete;
 
             if (VerbetesData.data[verbete] === undefined) {
                 $log.error('Verbete não existe.' + verbete);
@@ -34,11 +34,6 @@
 
         function closeAlert() {
             vm.alert.show = false;
-        }
-
-        function _zeroPad(num, places) {
-            var zero = places - num.toString().length + 1;
-            return new Array(+(zero > 0 && zero)).join('0') + num;
         }
 
     }

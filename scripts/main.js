@@ -6,8 +6,8 @@ var formatFilenames = require('./format-filenames');
 var renameFolders = require('./rename-folders');
 
 /* Variables */
-var parentPath = '/Users/matheussampaio/historia/chien';
-var folderName = '/historia_indigena';
+var parentPath = path.resolve(__dirname, '..');
+var folderName = '/files';
 var outputName = 'files/verbetes.json';
 var verbetes = [
     {
@@ -129,7 +129,7 @@ var verbetes = [
         name: 'sergipe',
         begin: 3044,
         end: 3045,
-    }
+    },
 ];
 
 /* Removing special characters from file names */
@@ -158,5 +158,6 @@ console.info('Generating JSON file...');
 generate({
     rootPath: path.join(parentPath, folderName),
     outputName: outputName,
+    verbetes: verbetes,
 });
 console.info('JSON file generated');
