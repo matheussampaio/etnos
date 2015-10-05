@@ -1,31 +1,28 @@
 (function() {
     'use strict';
 
+    var path = require('path');
+    var fs = require('fs');
+
     angular
         .module('EtnosApp')
         .service('VerbetesData', VerbetesData);
 
-    function VerbetesData() {
+    function VerbetesData(nwUtilConstants) {
         var service = {
-            data: {
-                '00001': {
-                    id: '00001',
-                    images: [
-                        '00001',
-                        '00002',
-                        '00003',
-                        '00004',
-                        '00005',
-                        '00006',
-                        '00007',
-                    ],
-                    path: 'alagoas/00001',
-                    converted: [],
-                },
-            },
+            data: {},
         };
 
+        loadVerbete();
+
         return service;
+
+        function loadVerbete() {
+            var verbeteJsonPath = path.join(nwUtilConstants.VERBETES_PATH, 'verbetes.json');
+            var verbetesJsonFile = fs.readFileSync(verbeteJsonPath, 'utf8');
+
+            service.data = JSON.parse(verbetesJsonFile);
+        }
     }
 
 })();
