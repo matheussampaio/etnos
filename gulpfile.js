@@ -59,10 +59,11 @@ var config = {
 
     filesBuild: [
         './www/**',
-        './node_modules/easy-zip/**',
         './node_modules/jade-pdf-redline/**',
         './node_modules/mkdirp/**',
+        './node_modules/lodash/**',
         './nw/**',
+        'favicon.ico',
         'package.json',
     ],
 
@@ -206,16 +207,20 @@ gulp.task('build:inject', function() {
 
 });
 
-gulp.task('build:nw:compile', ['build'], function() {
+gulp.task('build:nw', ['build'], function() {
 
     var nw = new NwBuilder({
         appName: 'Etnos',
         appVersion: '1.0.0',
         files: config.filesBuild,
+        buildDir: './build',
+        cacheDir: './cache',
         macIcns: 'favicon.ico',
-        winIco: 'favicon.ico',
         version: '0.12.2',
-        platforms: ['osx'], // change this to 'win' for/on windows
+        window: {
+            toolbar: false,
+        },
+        platforms: ['win'], // change this to 'win' for/on windows
     });
 
     // Log stuff you want
