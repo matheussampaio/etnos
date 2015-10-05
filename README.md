@@ -1,23 +1,21 @@
 # Etnos
 
+## Requirements
 
-## Introdução
+* NodeJS v0.12.x
+* Gulp **Developers**
 
-Repositório destinado ao prototipo da aplicação para o Cliente.
+## Installation
 
-Iremos usar o [Node Web Kit](https://github.com/rogerwang/node-webkit) e [NodeJS](https://github.com/joyent/node) para desenvolver a aplicação.
+```
+$ npm install
+```
 
-## Como executar
-
+## Execute
 ```
 $ npm start
 ```
 
-## Build
+## Developers
 
-```
-$ npm install
-$ npm install gulp -g
-$ gulp dist
-
-```
+If you want to developer, execute `gulp debug` (for re-compile the project after changes) on one terminal window and `npm start` on another one.

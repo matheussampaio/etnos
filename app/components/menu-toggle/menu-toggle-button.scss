@@ -1,0 +1,11 @@
+.menu-toggle-button {
+    height: 60px;
+    border: none !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    color: #555;
+
+    .btn:active {
+        color: #777;
+        box-shadow: none;
+    }
+}

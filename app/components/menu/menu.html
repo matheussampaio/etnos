@@ -1,0 +1,33 @@
+<div class="menu animated drawer drawer-open drawer-container"
+    ng-show="menuCtrl.Menu.showMenu"
+    ng-class="{slideInLeft: menuCtrl.Menu.animationIn, slideOutLeft: menuCtrl.Menu.animationOut}">
+
+    <div>
+        <ul role="navigation" class="drawer-list">
+
+            <li class="drawer-list-item"
+                ng-repeat="option in menuCtrl.menuOptions.slice(0, 1)"
+                ng-class="menuCtrl.isActive(option.state)">
+
+                <a ng-click="menuCtrl.changeLocation(option.state)">
+                    <i class="fa {{option.icon}}" ng-class="menuCtrl.isActive(option.state)"></i>{{option.name}}
+                </a>
+            </li>
+
+            <li class="drawer-list-divider"></li>
+            <li class="drawer-list-item drawer-list-title">
+                Conheça
+            </li>
+
+            <li class="drawer-list-item"
+                ng-repeat="option in menuCtrl.menuOptions.slice(1)"
+                ng-class="menuCtrl.isActive(option.state)">
+
+                <a ng-click="menuCtrl.changeLocation(option.state)">
+                    <i class="fa {{option.icon}}" ng-class="menuCtrl.isActive(option.state)"></i>{{option.name}}
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

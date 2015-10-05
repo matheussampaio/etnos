@@ -1,0 +1,15 @@
+<div ph-resizable class="container-fluid" >
+    <div class="row">
+
+        <menu></menu>
+
+        <div class="home"
+            ng-class="{'padding-menu': homeCtrl.Menu.showMenu }">
+
+            <div ui-view="homeContent" class="animationFadeIn"></div>
+        </div>
+
+        <menu-toggle-button></menu-toggle-button>
+
+    </div>
+</div>

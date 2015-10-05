@@ -1,20 +1,21 @@
+# Ignoring folders developers folders
+bower_components/
+node_modules/
 
+# Ignoring IDE folders
+.idea/
+
+# Ignoring SO files
+*Thumbs.db
+*.DS_Store
+
+# Ignoring Logs files
 *.log
 
+# Ignoring build folders
+build/
+cache/
+www/
 
-# Folders
-bower_components
-build
-cache
+# Ignoring others files
 app/files
-node_modules
-.idea
-
-*Thumbs.db
-
-
-
-
-
-
-

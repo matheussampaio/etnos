@@ -1,0 +1,17 @@
+/**
+ * INJECTED COMPONENTS SCSS
+ */
+
+//- inject:scss
+//- endinject
+
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "bower_components/font-awesome/scss/font-awesome";
+
+@import "hotkeys";
+
+@import "_animate";
+@import "_custom-animation";
+
+@import "_custom";
+@import "_angular-carousel";
