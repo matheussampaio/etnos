@@ -18,4 +18,4 @@ cache/
 www/
 
 # Ignoring others files
-app/files
+files/
