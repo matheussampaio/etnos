@@ -4,6 +4,7 @@
     var path = require('path');
     var jadepdf = require('jade-pdf-redline');
     var fs = require('fs');
+    var StopWatch = require('moorea-stopwatch');
 
     angular.module('EtnosApp')
         .service('VerbetePdf', VerbetePdf);
@@ -57,6 +58,8 @@
 
                 var stream = fs.createWriteStream(path.join(distpath, filenamejade));
 
+                var stopWatch = new StopWatch();
+
                 stream.once('open', function() {
                     $log.info(`Creating PDF template for verbete ${verbete.id}...`);
 
@@ -84,6 +87,9 @@
                             verbete.pdf.finished = true;
 
                             resolve(verbete.pdf);
+
+                            var elapsed = stopWatch.elapsed() / 1000;
+                            console.log(`PDF Creating time: ${elapsed.toFixed(2)}s. Avg: ${(elapsed / verbete.images.length).toFixed(2)}s per image.`);
 
                         });
                     });

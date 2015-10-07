@@ -4,6 +4,7 @@
     var path = require('path');
     var mkdirp = require('mkdirp');
     var exec = require('child_process').exec;
+    var StopWatch = require('moorea-stopwatch');
 
     angular.module('EtnosApp')
         .service('VerbeteImages', VerbeteImages);
@@ -26,6 +27,7 @@
             service.verbete = verbete;
 
             var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
+            var stopWatch = new StopWatch();
 
             return _createFolder(distFolderName)
                 .then(distFolderName => {
@@ -43,6 +45,9 @@
                     });
                 })
                 .then(destpaths => {
+
+                    var elapsed = stopWatch.elapsed() / 1000;
+                    console.log(`Image conversion time: ${elapsed.toFixed(2)}s. Avg: ${(elapsed / verbete.images.length).toFixed(2)}s per image.`);
 
                     return destpaths;
                 });
