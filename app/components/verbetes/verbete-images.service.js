@@ -1,17 +1,16 @@
 (function() {
     'use strict';
 
-    var path = require('path');
-    var mkdirp = require('mkdirp');
-    var exec = require('child_process').exec;
-    var StopWatch = require('moorea-stopwatch');
+    const path = require('path');
+    const mkdirp = require('mkdirp');
+    const exec = require('child_process').exec;
+    const StopWatch = require('moorea-stopwatch');
 
     angular.module('EtnosApp')
         .service('VerbeteImages', VerbeteImages);
 
     function VerbeteImages($log, _, nwUtilConstants) {
-
-        var service = {
+        const service = {
             loadImages: loadImages,
             notify: null,
             verbete: null,
@@ -26,8 +25,8 @@
             service.notify = notify;
             service.verbete = verbete;
 
-            var distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
-            var stopWatch = new StopWatch();
+            const distFolderName = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
+            const stopWatch = new StopWatch();
 
             return _createFolder(distFolderName)
                 .then(distFolderName => {
@@ -46,8 +45,9 @@
                 })
                 .then(destpaths => {
 
-                    var elapsed = stopWatch.elapsed() / 1000;
-                    console.log(`Image conversion time: ${elapsed.toFixed(2)}s. Avg: ${(elapsed / verbete.images.length).toFixed(2)}s per image.`);
+                    const elapsed = stopWatch.elapsed() / 1000;
+                    console.log(`Image conversion time: ${elapsed.toFixed(2)}s. ` +
+                        `Avg: ${(elapsed / verbete.images.length).toFixed(2)}s per image.`);
 
                     return destpaths;
                 });
@@ -82,15 +82,17 @@
             });
         }
 
-        function _convertImagesRecursive({verbeteId, verbetePath, verbeteImages, distFolderName, resolve, reject} = {}) {
+        function _convertImagesRecursive({verbeteId, verbetePath, verbeteImages,
+            distFolderName, resolve, reject} = {}) {
             if (verbeteImages.length === 0) {
                 resolve();
             } else if (service.verbete.id !== verbeteId) {
-                console.info(`Stop converting, different verbetes. Current: ${service.verbete.id}. Old: ${verbeteId}.`);
+                console.info(`Stop converting, different verbetes. ` +
+                    `Current: ${service.verbete.id}. Old: ${verbeteId}.`);
                 reject();
             } else {
 
-                var maxElements = _.random(2, 4); // max elements in each group
+                const maxElements = _.random(2, 4); // max elements in each group
 
                 _convertGroup({
                         verbetePath,
@@ -107,7 +109,8 @@
                                 service.notify(imagePath);
                             }
                         } else {
-                            console.info(`Skiping notify, different verbets. Current: ${service.verbete.id}. Old: ${verbeteId}.`);
+                            console.info(`Skiping notify, different verbets. ` +
+                                `Current: ${service.verbete.id}. Old: ${verbeteId}.`);
                         }
 
                         _convertImagesRecursive({
@@ -127,9 +130,9 @@
         }
 
         function _convertGroup({verbetePath, verbeteImages, distFolderName} = {}) {
-            var convertImagesPromises = verbeteImages.map((img) => {
-                var filePath = path.join(verbetePath, img + '.tif');
-                var distPath = path.join(distFolderName, img + '.png');
+            const convertImagesPromises = verbeteImages.map((img) => {
+                const filePath = path.join(verbetePath, img + '.tif');
+                const distPath = path.join(distFolderName, img + '.png');
 
                 return _convertImage({
                     filePath,

@@ -5,9 +5,7 @@
         .controller('HomeController', HomeController);
 
     function HomeController($log, Menu) {
-        var vm = this;
-
-        vm.Menu = Menu;
+        this.Menu = Menu;
 
         /////////////////////////////
 

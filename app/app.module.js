@@ -1,14 +1,14 @@
 (function() {
     'use strict';
 
-    var gui = require('nw.gui');
-    var os = require('os');
-    var fs = require('fs');
-    var nwUtil = require('../nw/util');
+    const gui = require('nw.gui');
+    const os = require('os');
+    const fs = require('fs');
+    const nwUtil = require('../nw/util');
 
-    var win = gui.Window.get();
+    const win = gui.Window.get();
 
-    var TEMP_FOLDER = nwUtil.TEMP_FOLDER;
+    const TEMP_FOLDER = nwUtil.TEMP_FOLDER;
 
     init();
 
@@ -77,12 +77,12 @@
         window.addEventListener('dragstart', _preventDefault, false);
     }
 
-    var _deleteFolderRecursive = function(folder) {
+    function _deleteFolderRecursive(folder) {
         console.info('deleting the temp folder...');
 
         if (fs.existsSync(folder)) {
             fs.readdirSync(folder).forEach(function(file) {
-                var curPath = folder + '/' + file;
+                const curPath = folder + '/' + file;
 
                 if (fs.lstatSync(curPath).isDirectory()) { // recurse
                     _deleteFolderRecursive(curPath);
@@ -93,10 +93,10 @@
 
             fs.rmdirSync(folder);
         }
-    };
+    }
 
-    var _preventDefault = function(e) {
+    function _preventDefault(e) {
         e.preventDefault();
-    };
+    }
 
 })();

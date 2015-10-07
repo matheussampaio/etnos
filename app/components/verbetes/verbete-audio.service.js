@@ -1,14 +1,13 @@
 (function() {
     'use strict';
 
-    var path = require('path');
+    const path = require('path');
 
     angular.module('EtnosApp')
         .service('VerbeteAudio', VerbeteAudio);
 
     function VerbeteAudio($log, nwUtilConstants) {
-
-        var service = {
+        const service = {
             loadAudio: loadAudio,
         };
 

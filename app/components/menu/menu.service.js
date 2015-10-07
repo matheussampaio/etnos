@@ -6,7 +6,7 @@
         .service('Menu', Menu);
 
     function Menu($log) {
-        var service = {
+        const service = {
             animationOut: false,
             animationIn: false,
             showMenu: false,

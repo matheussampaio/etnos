@@ -7,7 +7,7 @@
     function VerbeteDetailController($log, $scope, $stateParams, $state, hotkeys,
         Menu, ngProgressFactory, VerbetesData, VerbeteImages, VerbeteAudio, VerbetePdf, ProgressBar) {
 
-        var vm = this;
+        const vm = this;
 
         vm.zoomActive = false;
         vm.verbeteReady = false;
@@ -105,7 +105,7 @@
         }
 
         function _notify(verbete) {
-            for (var i = 0; i < verbete.length; i++) {
+            for (let i = 0; i < verbete.length; i++) {
                 ProgressBar.increment();
             }
 

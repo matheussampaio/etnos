@@ -1,17 +1,17 @@
 (function() {
     'use strict';
 
-    var path = require('path');
-    var jadepdf = require('jade-pdf-redline');
-    var fs = require('fs');
-    var StopWatch = require('moorea-stopwatch');
+    const path = require('path');
+    const jadepdf = require('jade-pdf-redline');
+    const fs = require('fs');
+    const StopWatch = require('moorea-stopwatch');
 
     angular.module('EtnosApp')
         .service('VerbetePdf', VerbetePdf);
 
     function VerbetePdf($log, nwUtilConstants) {
 
-        var service = {
+        const service = {
             loadPDF: loadPDF,
         };
 
@@ -42,10 +42,10 @@
                 }
             }
 
-            var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
-            var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
-            var filename = `verbete-${verbete.path.replace('/', '-')}.pdf`;
-            var filenamejade = `verbete-${verbete.id}.jade`;
+            const templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
+            const distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
+            const filename = `verbete-${verbete.path.replace('/', '-')}.pdf`;
+            const filenamejade = `verbete-${verbete.id}.jade`;
 
             verbete.pdf = {
                 filename: filename,
@@ -56,9 +56,9 @@
 
             return new Promise(resolve => {
 
-                var stream = fs.createWriteStream(path.join(distpath, filenamejade));
+                const stream = fs.createWriteStream(path.join(distpath, filenamejade));
 
-                var stopWatch = new StopWatch();
+                const stopWatch = new StopWatch();
 
                 stream.once('open', function() {
                     $log.info(`Creating PDF template for verbete ${verbete.id}...`);
@@ -76,7 +76,7 @@
                     stream.on('close', function() {
                         $log.info(`Saving PDF of verbete ${verbete.id}...`);
 
-                        var streamPDF = fs.createReadStream(path.join(distpath, filenamejade))
+                        const streamPDF = fs.createReadStream(path.join(distpath, filenamejade))
                             .pipe(jadepdf())
                             .pipe(fs.createWriteStream(path.join(distpath, filename)));
 
@@ -88,7 +88,7 @@
 
                             resolve(verbete.pdf);
 
-                            var elapsed = stopWatch.elapsed() / 1000;
+                            const elapsed = stopWatch.elapsed() / 1000;
                             console.log(`PDF Creating time: ${elapsed.toFixed(2)}s. Avg: ${(elapsed / verbete.images.length).toFixed(2)}s per image.`);
 
                         });
@@ -98,16 +98,16 @@
         }
 
         function _createImgTag(pathname) {
-            var normalizedPath = _normalizePath(pathname);
+            const normalizedPath = _normalizePath(pathname);
 
             return `    img(src='${normalizedPath}.png' width='1000' height='1400')\n`;
         }
 
         function _normalizePath(pathname) {
-            var temp = pathname.split(path.sep);
+            const temp = pathname.split(path.sep);
             var returned = '';
 
-            for (var i = 0; i < temp.length; i++) {
+            for (let i = 0; i < temp.length; i++) {
                 returned += temp[i];
 
                 if (i !== temp.length - 1) {

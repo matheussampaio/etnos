@@ -15,7 +15,7 @@
     }
 
     function MenuController($log, $location, $state, Menu) {
-        var vm = this;
+        const vm = this;
 
         vm.Menu = Menu;
         vm.isActive = isActive;

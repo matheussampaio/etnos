@@ -5,7 +5,7 @@
         .controller('SearchController', SearchController);
 
     function SearchController($log, $http, $location, VerbetesData, Menu) {
-        var vm = this;
+        const vm = this;
 
         vm.search = search;
         vm.closeAlert = closeAlert;
