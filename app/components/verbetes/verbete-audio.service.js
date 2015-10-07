@@ -17,7 +17,7 @@
         function loadAudio({verbete}) {
             $log.info('loading audio...');
 
-            return Promise.resolve(path.join(nwUtilConstants.VERBETES_PATH, verbete.path, 'audio.ogg'));
+            return Promise.resolve(path.join(nwUtilConstants.VERBETES_PATH, verbete.path, verbete.id + '.ogg'));
         }
     }
 
