@@ -105,8 +105,6 @@
         }
 
         function _notify(verbete) {
-            console.log(`callback verbete: ${verbete}`);
-
             for (var i = 0; i < verbete.length; i++) {
                 ProgressBar.increment();
             }

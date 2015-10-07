@@ -34,6 +34,7 @@
                     $log.info(`distFolderName: ${distFolderName}`);
 
                     return _convertImages({
+                        verbeteId: verbete.id,
                         verbetePath: verbete.path,
                         verbeteImages: verbete.images,
                         distFolderName: distFolderName,
@@ -42,6 +43,7 @@
                     });
                 })
                 .then(destpaths => {
+
                     return destpaths;
                 });
         }
@@ -62,9 +64,10 @@
             });
         }
 
-        function _convertImages({verbetePath, verbeteImages, distFolderName} = {}) {
+        function _convertImages({verbeteId, verbetePath, verbeteImages, distFolderName} = {}) {
             return new Promise((resolve, reject) => {
                 _convertImagesRecursive({
+                    verbeteId,
                     verbetePath,
                     verbeteImages,
                     distFolderName,
@@ -74,27 +77,36 @@
             });
         }
 
-        function _convertImagesRecursive({verbetePath, verbeteImages, distFolderName, resolve, reject} = {}) {
+        function _convertImagesRecursive({verbeteId, verbetePath, verbeteImages, distFolderName, resolve, reject} = {}) {
             if (verbeteImages.length === 0) {
                 resolve();
+            } else if (service.verbete.id !== verbeteId) {
+                console.info(`Stop converting, different verbetes. Current: ${service.verbete.id}. Old: ${verbeteId}.`);
+                reject();
             } else {
 
                 var maxElements = _.random(2, 4); // max elements in each group
 
                 _convertGroup({
-                        verbetePath: verbetePath,
+                        verbetePath,
+                        distFolderName,
+
                         verbeteImages: verbeteImages.slice(0, maxElements),
-                        distFolderName: distFolderName,
                     })
                     .then(imagePath => {
 
-                        service.verbete.converted = service.verbete.converted.concat(imagePath);
+                        if (service.verbete.id === verbeteId) {
+                            service.verbete.converted = service.verbete.converted.concat(imagePath);
 
-                        if (service.notify) {
-                            service.notify(imagePath);
+                            if (service.notify) {
+                                service.notify(imagePath);
+                            }
+                        } else {
+                            console.info(`Skiping notify, different verbets. Current: ${service.verbete.id}. Old: ${verbeteId}.`);
                         }
 
                         _convertImagesRecursive({
+                            verbeteId,
                             verbetePath,
                             distFolderName,
                             resolve,
@@ -115,8 +127,8 @@
                 var distPath = path.join(distFolderName, img + '.png');
 
                 return _convertImage({
-                    filePath: filePath,
-                    distPath: distPath,
+                    filePath,
+                    distPath,
                 });
             });
 
@@ -131,7 +143,7 @@
                 $log.debug(`already converted: ${distPath}`);
 
                 // FIXME: For some reason, if I serve the paths to fast, the carousel will bug.
-                //        So I add 300ms.
+                //        So I add 1000ms.
                 return new Promise(resolve => {
                     setTimeout(() => {
                         resolve(distPath);

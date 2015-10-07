@@ -41,14 +41,10 @@
                 }
             }
 
-            $log.info('starting loadPDF');
-
             var templateIMG = 'doctype html\nhtml(lang="en")\n  head\n    title= "pdf"\n  body\n';
             var distpath = path.join(nwUtilConstants.TEMP_FOLDER, verbete.path);
             var filename = `verbete-${verbete.path.replace('/', '-')}.pdf`;
             var filenamejade = `verbete-${verbete.id}.jade`;
-
-            $log.debug(`PDF distpath ${distpath}`);
 
             verbete.pdf = {
                 filename: filename,
@@ -58,31 +54,37 @@
             };
 
             return new Promise(resolve => {
+
                 var stream = fs.createWriteStream(path.join(distpath, filenamejade));
 
                 stream.once('open', function() {
+                    $log.info(`Creating PDF template for verbete ${verbete.id}...`);
+
                     stream.write(templateIMG);
 
                     for (var i in verbete.images) {
                         stream.write(_createImgTag(path.join(distpath, verbete.images[i])));
                     }
 
+                    $log.info(`PDF template for verbete ${verbete.id} created.`);
+
                     stream.end();
 
                     stream.on('close', function() {
-                        $log.info('creating pdf...');
+                        $log.info(`Saving PDF of verbete ${verbete.id}...`);
 
                         var streamPDF = fs.createReadStream(path.join(distpath, filenamejade))
                             .pipe(jadepdf())
                             .pipe(fs.createWriteStream(path.join(distpath, filename)));
 
                         streamPDF.on('close', function() {
-                            $log.info('pdf created.');
+                            $log.info(`Verbete ${verbete.id} PDF saved.`);
 
                             verbete.pdf.loading = false;
                             verbete.pdf.finished = true;
 
                             resolve(verbete.pdf);
+
                         });
                     });
                 });
