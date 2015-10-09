@@ -20,7 +20,7 @@ function getImageMagickPath() {
         }
 
         if (isLinux) {
-            return path.join(__dirname, '/imagemagick/linux/convert');
+            return path.join(__dirname, '../imagemagick/linux/convert');
         }
 
         if (isOSX) {
