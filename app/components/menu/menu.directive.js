@@ -53,16 +53,6 @@
                     icon: 'fa-file-text-o',
                     name: 'Ficha Técnica',
                 },
-                {
-                    state: 'home.info.catalogo',
-                    icon: 'fa-folder-o',
-                    name: 'Catálogo',
-                },
-                {
-                    state: 'home.info.help',
-                    icon: 'fa-question',
-                    name: 'Ajuda',
-                },
             ];
         }
 

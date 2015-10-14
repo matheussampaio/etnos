@@ -46,25 +46,12 @@
                         templateUrl: 'infos/content/apresentacao.html',
                     },
                 },
-            }).state('home.info.catalogo', {
-                url: '/catalogo',
-                views: {
-                    infoContent: {
-                        templateUrl: 'infos/content/catalogo.html',
-                    },
-                },
-            }).state('home.info.fichatecnica', {
+            })
+            .state('home.info.fichatecnica', {
                 url: '/fichatecnica',
                 views: {
                     infoContent: {
                         templateUrl: 'infos/content/fichatecnica.html',
-                    },
-                },
-            }).state('home.info.help', {
-                url: '/help',
-                views: {
-                    infoContent: {
-                        templateUrl: 'infos/content/help.html',
                     },
                 },
             })
