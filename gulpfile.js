@@ -69,12 +69,12 @@ var config = {
 
     filesCopy: [
         {
-            from: './app/files/**',
-            to: 'build/etnos/files',
+            from: './files/**',
+            to: 'build/Etnos/files',
         },
         {
-            from: './app/js/imagemagick-macos/**',
-            to: 'build/etnos/osx/imagemagick-macos',
+            from: './imagemagick/**',
+            to: 'build/Etnos/imagemagick',
         },
     ],
 };
@@ -207,7 +207,7 @@ gulp.task('build:inject', function() {
 
 });
 
-gulp.task('build:nw', ['build'], function() {
+gulp.task('build:nw', function() {
 
     var nw = new NwBuilder({
         appName: 'Etnos',
@@ -217,9 +217,6 @@ gulp.task('build:nw', ['build'], function() {
         cacheDir: './cache',
         macIcns: 'favicon.ico',
         version: '0.12.2',
-        window: {
-            toolbar: false,
-        },
         platforms: ['win'], // change this to 'win' for/on windows
     });
 
@@ -256,6 +253,15 @@ gulp.task('build:nw:copy', function() {
     //
     // gulp.src('./app/js/imagemagick-macos/**')
     //     .pipe(gulp.dest('build/etnos/osx/imagemagick-macos'));
+});
+
+gulp.task('package', function(done) {
+    runSequence(
+        'build',
+        'build:nw',
+        'build:nw:copy',
+        done
+    );
 });
 
 gulp.task('lint:jscs', function() {
