@@ -1,13 +1,21 @@
 'use strict';
 
+var del = require('del');
+var path = require('path');
 var gulp = require('gulp');
+var yargs = require('yargs');
+var NwBuilder = require('nw-builder');
+var runSequence = require('run-sequence');
 var plugins = require('gulp-load-plugins')({
     lazy: true,
 });
-var del = require('del');
-var path = require('path');
-var runSequence = require('run-sequence');
-var NwBuilder = require('nw-builder');
+
+const argv = yargs
+  .option('release', {
+    description: 'Build a release version',
+    type: 'boolean',
+  })
+  .argv;
 
 var config = {
     dist: 'www/',
@@ -16,12 +24,13 @@ var config = {
     app: {
         src: 'app/',
         name: 'EtnosApp',
+        concatName: 'app.js',
     },
 
     scss: {
         main: 'app/assets/scss/main.scss',
         src: ['app/components/**/*.scss', 'app/shared/**/*.scss'],
-
+        concatName: 'styles.css',
         dist: 'assets/css/',
     },
 
@@ -55,28 +64,8 @@ var config = {
     vendors: {
         filename: './vendor.json',
         debugDist: 'vendor/',
+        concatName: 'vendors.js',
     },
-
-    filesBuild: [
-        './www/**',
-        './node_modules/jade-pdf-redline/**',
-        './node_modules/mkdirp/**',
-        './node_modules/lodash/**',
-        './nw/**',
-        'favicon.ico',
-        'package.json',
-    ],
-
-    filesCopy: [
-        {
-            from: './files/**',
-            to: 'build/Etnos/files',
-        },
-        {
-            from: './imagemagick/**',
-            to: 'build/Etnos/imagemagick',
-        },
-    ],
 };
 
 gulp.task('build:clean', function(done) {
@@ -121,6 +110,10 @@ gulp.task('build:scss', function() {
 
         // Autoprefixer CSS
         .pipe(plugins.autoprefixer('last 1 Chrome version', 'last 3 iOS versions', 'last 3 Android versions'))
+
+        .pipe(plugins.if(argv.release, plugins.concat(config.scss.concatName)))
+        .pipe(plugins.if(argv.release, plugins.rev()))
+
         .pipe(gulp.dest(path.join(config.dist, config.scss.dist)));
 
 });
@@ -142,6 +135,9 @@ gulp.task('build:vendor', function() {
 
     return gulp.src(vendorJSFiles)
         .pipe(plugins.plumber())
+        .pipe(plugins.if(argv.release, plugins.uglify()))
+        .pipe(plugins.if(argv.release, plugins.concat(config.vendors.concatName)))
+        .pipe(plugins.if(argv.release, plugins.rev()))
         .pipe(gulp.dest(config.dist + config.vendors.debugDist));
 });
 
@@ -161,6 +157,9 @@ gulp.task('build:js', function() {
         .pipe(plugins.changed(config.dist + config.app.src))
         .pipe(plugins.babel())
         .pipe(plugins.ngAnnotate())
+        .pipe(plugins.if(argv.release, plugins.uglify()))
+        .pipe(plugins.if(argv.release, plugins.concat(config.app.concatName)))
+        .pipe(plugins.if(argv.release, plugins.rev()))
         .pipe(gulp.dest(config.dist + config.app.src));
 });
 
@@ -191,20 +190,45 @@ gulp.task('build:inject', function() {
     var scriptStream = gulp.src(scriptFiles.concat(config.templates.dist + config.templates.concatName),
         {cwd: 'www'});
 
-    return gulp.src('app/index.html')
-        .pipe(plugins.plumber())
+    if (argv.release) {
+        return gulp.src('app/index.html')
+          .pipe(plugins.plumber())
 
         // inject css
-        .pipe(_inject(gulp.src(cssNaming, {cwd: config.dist}), 'app-styles'))
+        .pipe(_inject(gulp.src('assets/css/styles*.css', {
+          cwd: config.dist,
+        }), 'app-styles'))
 
         // inject vendors
-        .pipe(_inject(gulp.src(vendorsBasename, {cwd: config.dist}), 'vendor'))
+        .pipe(_inject(gulp.src('vendor/vendor*.js', {
+          cwd: config.dist,
+        }), 'vendor'))
 
         // inject app.js
-        .pipe(_inject(scriptStream, 'app'))
+        .pipe(_inject(gulp.src(['app/app*.js', 'app/templates.js'], {
+          cwd: config.dist,
+        }), 'app'))
 
         .pipe(gulp.dest(config.dist));
+    } else {
+        return gulp.src('app/index.html')
+            .pipe(plugins.plumber())
 
+            // inject css
+            .pipe(_inject(gulp.src(cssNaming, {cwd: config.dist}), 'app-styles'))
+
+            // inject vendors
+            .pipe(_inject(gulp.src(vendorsBasename, {cwd: config.dist}), 'vendor'))
+
+            // inject app.js
+            .pipe(_inject(scriptStream, 'app'))
+
+            .pipe(gulp.dest(config.dist));
+    }
+});
+
+gulp.task('build:pre:nw', function(done) {
+    del('./build', done);
 });
 
 gulp.task('build:nw', function() {
@@ -212,7 +236,7 @@ gulp.task('build:nw', function() {
     var nw = new NwBuilder({
         appName: 'Etnos',
         appVersion: '1.0.0',
-        files: config.filesBuild,
+        files: ['./package.json'],
         buildDir: './build',
         cacheDir: './cache',
         macIcns: 'favicon.ico',
@@ -233,33 +257,81 @@ gulp.task('build:nw', function() {
 
 });
 
-gulp.task('build:nw:copy', function() {
-    config.filesCopy.forEach(function(files) {
-        gulp.src(files.from)
-            .pipe(gulp.dest(files.to));
+gulp.task('build:pos:nw', function(done) {
+    var flag = '<platform>';
+    var dist = 'build/Etnos/' + flag;
+    var OSs = ['win32', 'win64'];
+
+    var filesCopy = [
+        {
+            from: './imagemagick/**/*',
+            to: dist + '/imagemagick',
+        },
+        {
+            from: './cache/0.12.2/' + flag + '/nw.exe',
+            to: dist,
+        },
+        {
+            from: './www/**/*',
+            to: dist + '/www',
+        },
+        {
+            from: './node_modules/jade-pdf-redline/**/*',
+            to: dist + '/node_modules/jade-pdf-redline',
+        },
+        {
+            from: './node_modules/jade-pdf-redline/**/*',
+            to: dist + '/node_modules/jade-pdf-redline',
+        },
+        {
+            from: './node_modules/mkdirp/**/*',
+            to: dist + '/node_modules/mkdirp',
+        },
+        {
+            from: './node_modules/lodash/**/*',
+            to: dist + '/node_modules/lodash',
+        },
+        {
+            from: './node_modules/moorea-stopwatch/**/*',
+            to: dist + '/node_modules/moorea-stopwatch',
+        },
+        {
+            from: './nw/**/*',
+            to: dist + '/nw',
+        },
+        {
+            from: './package.json',
+            to: dist,
+        },
+        {
+            from: './favicon.ico',
+            to: dist,
+        },
+    ];
+
+    filesCopy.forEach(function(files) {
+        OSs.forEach(function(os) {
+            var fromPath = files.from.replace(flag, os);
+            var toPath = files.to.replace(flag, os);
+
+            gulp.src(fromPath).pipe(gulp.dest(toPath));
+        });
     });
 
-    // gulp.src('./app/js/imagemagick-linux/**')
-    //     .pipe(gulp.dest('build/etnos/linux64/imagemagick-linux'));
-    //
-    // gulp.src('./app/js/imagemagick-linux/**')
-    //     .pipe(gulp.dest('build/etnos/linux32/imagemagick-linux'));
-    //
-    // gulp.src('./app/js/imagemagick-win/**')
-    //     .pipe(gulp.dest('build/etnos/win32/imagemagick-win'));
-    //
-    // gulp.src('./app/js/imagemagick-win/**')
-    //     .pipe(gulp.dest('build/etnos/win64/imagemagick-win'));
-    //
-    // gulp.src('./app/js/imagemagick-macos/**')
-    //     .pipe(gulp.dest('build/etnos/osx/imagemagick-macos'));
+    OSs.forEach(function(os) {
+        var exec = dist.replace(flag, os) + '/Etnos.exe';
+        del(exec);
+    });
+
+    done();
 });
 
 gulp.task('package', function(done) {
     runSequence(
         'build',
+        'build:pre:nw',
         'build:nw',
-        'build:nw:copy',
+        'build:pos:nw',
         done
     );
 });
