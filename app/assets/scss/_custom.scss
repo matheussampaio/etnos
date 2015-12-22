@@ -89,7 +89,15 @@ body.snapjs-right .hide-when-open {
     margin: 0 auto;
 }
 .focus {
-    background-color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    height: 100%;
+    background-image: url("../images/background2.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .margintop {
     margin-top: 20px;
