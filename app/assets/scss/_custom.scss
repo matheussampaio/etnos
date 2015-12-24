@@ -99,6 +99,17 @@ body.snapjs-right .hide-when-open {
     -o-background-size: cover;
     background-size: cover;
 }
+.text-infos-container{
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    height: 100%;
+    background-image: url("../images/backgroundt.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 .margintop {
     margin-top: 20px;
 }

@@ -9,6 +9,7 @@
 
         const vm = this;
 
+        vm.zoomNeverOpen = true;
         vm.zoomActive = false;
         vm.verbeteReady = false;
 
@@ -128,6 +129,13 @@
 
         function toggleZoom() {
             $log.info('toggling zoom...');
+
+            if(vm.zoomNeverOpen){
+
+                alert("Use a botão de rolagem do mouse para obter zoom");
+                vm.zoomNeverOpen = false;
+            }
+
 
             vm.zoomActive = !vm.zoomActive;
         }
