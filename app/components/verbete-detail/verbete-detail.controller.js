@@ -4,12 +4,12 @@
     angular.module('EtnosApp')
         .controller('VerbeteDetailController', VerbeteDetailController);
 
-    function VerbeteDetailController($log, $scope, $stateParams, $state, hotkeys,
-        Menu, ngProgressFactory, VerbetesData, VerbeteImages, VerbeteAudio, VerbetePdf, ProgressBar) {
+    function VerbeteDetailController($log, $scope, $stateParams, $state, $rootScope,
+         hotkeys, Menu, ngProgressFactory, VerbetesData, VerbeteImages, VerbeteAudio,
+         VerbetePdf, ProgressBar) {
 
         const vm = this;
 
-        vm.zoomNeverOpen = true;
         vm.zoomActive = false;
         vm.verbeteReady = false;
 
@@ -130,10 +130,10 @@
         function toggleZoom() {
             $log.info('toggling zoom...');
 
-            if(vm.zoomNeverOpen){
+            if(!$rootScope.firstRun){
 
-                alert("Use a botão de rolagem do mouse para obter zoom");
-                vm.zoomNeverOpen = false;
+                alert("Use o botão de rolagem do mouse para obter zoom.");
+                $rootScope.firstRun = true;
             }
 
 
